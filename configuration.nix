@@ -80,7 +80,9 @@
       openFirewall = true;
       port = 2283;
       host = "0.0.0.0";
-      # accelerationDevices = null;
+      accelerationDevices = null;
+      # change to loc in zpool
+      # mediaLocation = "/var/lib/immich"
     };
     jellyfin = {
       enable = true;
