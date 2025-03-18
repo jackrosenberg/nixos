@@ -75,11 +75,6 @@
   programs.home-manager.enable = true;
 
   programs = {
-    git = {
-      enable = true;
-      userName = "jack";
-      userEmail = "j.n.rosenberg@students.uu.nl";
-    };
     zsh = {
       enable = true;
       enableCompletion = true;
@@ -104,6 +99,16 @@
         # theme = "powerlevel10k";
       };
     };
+    git = {
+      enable = true;
+      userName = "jack";
+      userEmail = "j.n.rosenberg@uu.nl";
+      extraConfig = {
+        init.defaultBranch = "main";
+        safe.directory = "/etc/nixos";
+      };
+    };
+
     kitty = {
       enable = true;
     };

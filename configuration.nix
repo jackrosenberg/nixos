@@ -10,6 +10,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
 
+
       ./mods/nextcloud.nix
       ./mods/cloudflared.nix
     ];
@@ -159,7 +160,6 @@
       wget
       btop
       geekbench
-      git
       neofetch
       kitty
       zsh
