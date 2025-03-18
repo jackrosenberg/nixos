@@ -9,8 +9,10 @@ Ok, basic idea:
     ZFS Stripe set?
 
   Current idea:
-  4 SATA + 1 M2 = 5 max vdevs???
-    possible to split into multiple for faster speeds/more storage?
-  use M2 as special vdev since its only 1TB??
-  how does swap work/arc something?
+  zpool:
+    vdev1: 3 SATA 1TB HDD
+    vdev2: nvme ssd 1TB
+    vdev3: 3 SATA 3TB HDD
+  
+
   
