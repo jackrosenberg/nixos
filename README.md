@@ -9,10 +9,13 @@ Ok, basic idea:
     ZFS Stripe set?
 
   Current idea:
+  OS + swap: nvme ssd 1TB
   zpool:
-    vdev1: 3 SATA 1TB HDD
-    vdev2: nvme ssd 1TB
-    vdev3: 3 SATA 3TB HDD
+    vdev1: raidz1 2x 1TB HDD + 1 2TB HDD (total: 2 TB, protected for 1 disk failure)
+      plan to swap in the 4, and another <2TB HDD eventually/when a disk fails
+    vdev3: stripe 1x 4TB HDD
+        
+
   
 
   
