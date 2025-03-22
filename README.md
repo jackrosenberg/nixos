@@ -1,5 +1,10 @@
 # Jack's Nixos
 
+
+## NixOs
+## ZFS
+
+### Immich
 Ok, basic idea:
   Fast, reliable, declarative server that can provide as close to a guarantee to 100% uptime as I can get.
   Modular, understandable, and abstract.
