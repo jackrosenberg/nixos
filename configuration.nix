@@ -10,8 +10,8 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
 
-
       ./mods/nextcloud.nix
+      ./mods/vpncontainer.nix
       ./mods/cloudflared.nix
     ];
 
@@ -105,7 +105,10 @@
   };
   # Enable common container config files in /etc/containers
   virtualisation = {
-    containers.enable = true;
+    containers = { 
+      enable = true;
+    };
+
     podman = {
       enable = true;
 
@@ -125,6 +128,7 @@
     hibernate.enable = false;
     hybrid-sleep.enable = false;
   };
+
 
   nix = {
     package = pkgs.nix;
@@ -157,6 +161,10 @@
     variables.EDITOR = "nvim";
     systemPackages = with pkgs; [
       neovim
+      tmux
+      xdg-utils # needed for xdg-open
+      xorg.xhost # needed for xdg-open
+      xorg.xauth # needed for xdg-open
       wget
       btop
       geekbench
@@ -175,6 +183,7 @@
     ];
   };
     programs = { 
+      ssh.forwardX11 = true; # allow ssh x forwarding
       zsh.enable = true;
       neovim = {
         enable = true;

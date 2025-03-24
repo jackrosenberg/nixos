@@ -102,7 +102,7 @@
     git = {
       enable = true;
       userName = "jack";
-      userEmail = "j.n.rosenberg@uu.nl";
+      userEmail = "github@jackr.eu";
       extraConfig = {
         init.defaultBranch = "main";
         safe.directory = "/etc/nixos";
