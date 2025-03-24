@@ -23,5 +23,6 @@ Ok, basic idea:
 
   
 ## R-suite
+https://nixos.org/manual/nixos/stable/#sec-declarative-containers
 https://srid.ca/protonvpn-nixos-container
   
