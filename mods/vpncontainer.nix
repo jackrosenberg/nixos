@@ -1,6 +1,6 @@
-{ config, pkgs, ... }:
-{
 
+{ config, lib, pkgs, ... }:
+{
   environment.etc.openvpn.source = "${pkgs.update-resolv-conf}/libexec/openvpn";
   services.openvpn.servers = {
     torrentvpn = {
@@ -36,13 +36,31 @@
     # # jellyfin lib here
     # };
 
-    config =  { config, pkgs, lib, ... }: 
+    config = { config, lib, pkgs, ... }: 
     {
       environment.systemPackages = with pkgs; [
         kitty
         neovim
         fastfetch
       ];
+
+      services.prowlarr = {
+        enable = true;
+        openFirewall = true;
+      };
+      # services.flaresolverr = {
+      #   # package = pkgs.nur.repos.xddxdd.flaresolverr-21hsmw; # fix for broken
+      #   enable = true;
+      #   openFirewall = true;
+      # };
+      # services.radarr = {
+      #   enable = true;
+      #   openFirewall = true;
+      # };
+      services.sonarr = {
+        enable = true;
+        openFirewall = true;
+      };
 
       environment.etc = { # grosshack
         "resolv.conf".text = "nameserver 10.96.0.1\n";
@@ -51,6 +69,11 @@
       networking = {
         # Workaround for bug https://github.com/NixOS/nixpkgs/issues/162686
         useHostResolvConf = lib.mkForce false;
+
+        firewall = {
+          enable = true;
+          allowedTCPPorts = [ 80 ];
+        };
       };
 
       users.extraUsers.vpnuser = {

@@ -3,7 +3,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs,... }:
 
 {
   imports =
@@ -11,13 +11,24 @@
       ./hardware-configuration.nix
 
       ./mods/nextcloud.nix
-      ./mods/vpncontainer.nix
+      ./mods/vpncontainer.nix 
       ./mods/cloudflared.nix
     ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  
+  # ZFS
+  boot.supportedFilesystems = [ "zfs" ];
+  boot.zfs.forceImportRoot = false;
+  networking.hostId = "575777f9"; # head -c4 /dev/urandom | od -A none -t x4
+  services.zfs.autoScrub = {
+    enable = true;
+    interval = "*-*-1,15 02:30";
+  };
+
 
   networking = { 
     hostName = "nixos"; # Define your hostname.
@@ -160,19 +171,17 @@
     '';
     variables.EDITOR = "nvim";
     systemPackages = with pkgs; [
+      nur.repos.mic92.hello-nur
       neovim
       tmux
-      xdg-utils # needed for xdg-open
-      xorg.xhost # needed for xdg-open
-      xorg.xauth # needed for xdg-open
       wget
       btop
+      lsscsi
       geekbench
       neofetch
       kitty
       zsh
       zsh-powerlevel10k
-      vimPlugins.nvim-treesitter.withAllGrammars
       docker-compose
       dive # look into docker image layers
       podman-tui # status of containers in the terminal
@@ -197,6 +206,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = "25.05"; # Did you read the comment?
 
 }

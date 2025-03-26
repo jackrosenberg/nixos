@@ -3,15 +3,29 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    # thats what im talking about babayyy
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    }; 
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, ... }: {
+  outputs = inputs@{ self, nixpkgs, home-manager, nur, ... }: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+        };
         system = "x86_64-linux";
         modules = [
+          # Adds the NUR overlay
+          nur.modules.nixos.default
+          # NUR modules to import
+          nur.legacyPackages."x86_64-linux".repos.iopq.modules.xraya
           ./configuration.nix
           home-manager.nixosModules.home-manager
           {
