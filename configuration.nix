@@ -3,13 +3,14 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, pkgs,... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
 
+      ./mods/zfs.nix
       ./mods/nextcloud.nix
       ./mods/vpncontainer.nix 
       ./mods/cloudflared.nix
@@ -18,17 +19,6 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  
-  # ZFS
-  boot.supportedFilesystems = [ "zfs" ];
-  boot.zfs.forceImportRoot = false;
-  networking.hostId = "575777f9"; # head -c4 /dev/urandom | od -A none -t x4
-  services.zfs.autoScrub = {
-    enable = true;
-    interval = "*-*-1,15 02:30";
-  };
-
 
   networking = { 
     hostName = "nixos"; # Define your hostname.
@@ -93,12 +83,13 @@
       port = 2283;
       host = "0.0.0.0";
       accelerationDevices = null;
-      # change to loc in zpool
-      # mediaLocation = "/var/lib/immich"
+      # loc in zpool
+      mediaLocation = "/mnt/nixpool/immich";
     };
     jellyfin = {
       enable = true;
       openFirewall = true;
+      # dataDir = "/mnt/media";
     };
 
     pipewire = {
@@ -171,8 +162,8 @@
     '';
     variables.EDITOR = "nvim";
     systemPackages = with pkgs; [
-      nur.repos.mic92.hello-nur
       neovim
+      xclip
       tmux
       wget
       btop

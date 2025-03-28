@@ -1,4 +1,3 @@
-
 { config, lib, pkgs, ... }:
 {
   environment.etc.openvpn.source = "${pkgs.update-resolv-conf}/libexec/openvpn";
@@ -21,6 +20,28 @@
     networkmanager.unmanaged = [ "interface-name:ve-*" ];
   };
 
+  # syncusers and groups
+  users = {
+  #   extraUsers = {
+  #     sonarr = {
+  #       uid = 274;
+  #       home  = "/var/lib/sonarr";
+  #       group = "media";
+  #     };
+  #     radarr = {
+  #       uid = 275;
+  #       home  = "/var/lib/radarr";
+  #       group = "media";
+  #     };
+  #     transmission = {
+  #       uid = 70;
+  #       home  = "/var/lib/transmission";
+  #       group = "media";
+  #     };
+  #   };
+  };
+
+
   containers.vpn = {
     autoStart = true;
   
@@ -28,13 +49,13 @@
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.11";
     
-    # bindMounts = {
-    # "/etc/nixos/openvpn" = { # path in container
-    #   hostPath = "/etc/nixos/openvpn"; # path in host
-    #   isReadOnly = true;
-    #   };
-    # # jellyfin lib here
-    # };
+    # privateUsers = "pick";
+    bindMounts = {
+      "/home/media" = { # path in container
+        hostPath = "/mnt/media"; # path in host
+        isReadOnly = false;
+      };
+    };
 
     config = { config, lib, pkgs, ... }: 
     {
@@ -43,24 +64,46 @@
         neovim
         fastfetch
       ];
-
-      services.prowlarr = {
-        enable = true;
-        openFirewall = true;
+      # stupid ass fix for transmission
+      systemd.services.transmission.serviceConfig = {
+        RootDirectoryStartOnly = lib.mkForce false;
+        RootDirectory = lib.mkForce "";
+        BindReadOnlyPaths = lib.mkForce [ builtins.storeDir "/etc" ];
       };
-      # services.flaresolverr = {
-      #   # package = pkgs.nur.repos.xddxdd.flaresolverr-21hsmw; # fix for broken
-      #   enable = true;
-      #   openFirewall = true;
-      # };
-      # services.radarr = {
-      #   enable = true;
-      #   openFirewall = true;
-      # };
-      services.sonarr = {
-        enable = true;
-        openFirewall = true;
+      services = {
+        transmission = {
+          enable = true;
+          openFirewall = true;
+          package = pkgs.transmission_4;
+          settings = {
+            # home = "/home/media";
+            download-dir = "/home/media/downloads";
+            # incomplete-dir = "/home/media/incomplete";
+            rpc-bind-address = "0.0.0.0";
+          };
+        };
+        prowlarr = {
+          enable = true;
+          openFirewall = true;
+        };
+        # flaresolverr = {
+        #   enable = true;
+        #   package = nur.repos.xddxdd.flaresolverr-21hsmw;
+        #   openFirewall = true;
+        # };
+         radarr = {
+            enable = true;
+            openFirewall = true;
+          };
+         sonarr = {
+            # dataDir = "/home/media/downloads";
+            enable = true;
+            # group = "media";
+            openFirewall = true;
+        };
       };
+      # add a group that can edit the folder "/var/lib/nixos-containers/vpn/home/media"
+      users.groups.media.members = [ "vpnuser" "radarr" "sonarr" "transmission" ];
 
       environment.etc = { # grosshack
         "resolv.conf".text = "nameserver 10.96.0.1\n";
