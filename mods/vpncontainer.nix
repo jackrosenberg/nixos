@@ -20,27 +20,21 @@
     networkmanager.unmanaged = [ "interface-name:ve-*" ];
   };
 
-  # syncusers and groups
-  users = {
-  #   extraUsers = {
-  #     sonarr = {
-  #       uid = 274;
-  #       home  = "/var/lib/sonarr";
-  #       group = "media";
-  #     };
-  #     radarr = {
-  #       uid = 275;
-  #       home  = "/var/lib/radarr";
-  #       group = "media";
-  #     };
-  #     transmission = {
-  #       uid = 70;
-  #       home  = "/var/lib/transmission";
-  #       group = "media";
-  #     };
-  #   };
+  # remake users
+  users.groups.media = {
+    gid = 1000;
+    members = ["radarr" "sonarr"];
   };
-
+  users.extraUsers = {
+    "radarr" = {
+      group = "media";
+      uid = 275;
+    };
+   "sonarr" = {
+      group = "media";
+      uid = 274;
+    };
+  };
 
   containers.vpn = {
     autoStart = true;
@@ -49,7 +43,6 @@
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.11";
     
-    # privateUsers = "pick";
     bindMounts = {
       "/home/media" = { # path in container
         hostPath = "/mnt/media"; # path in host
@@ -64,6 +57,10 @@
         neovim
         fastfetch
       ];
+
+     # add users to correct group
+     users.groups.media.members = ["radarr" "sonarr" "transmission"];
+
       # stupid ass fix for transmission
       systemd.services.transmission.serviceConfig = {
         RootDirectoryStartOnly = lib.mkForce false;
@@ -76,9 +73,8 @@
           openFirewall = true;
           package = pkgs.transmission_4;
           settings = {
-            # home = "/home/media";
             download-dir = "/home/media/downloads";
-            # incomplete-dir = "/home/media/incomplete";
+            incomplete-dir = "/home/media/.incomplete";
             rpc-bind-address = "0.0.0.0";
           };
         };
@@ -91,37 +87,16 @@
         #   package = nur.repos.xddxdd.flaresolverr-21hsmw;
         #   openFirewall = true;
         # };
-         radarr = {
-            enable = true;
-            openFirewall = true;
-          };
-         sonarr = {
-            # dataDir = "/home/media/downloads";
-            enable = true;
-            # group = "media";
-            openFirewall = true;
-        };
-      };
-      # add a group that can edit the folder "/var/lib/nixos-containers/vpn/home/media"
-      users.groups.media.members = [ "vpnuser" "radarr" "sonarr" "transmission" ];
-
-      environment.etc = { # grosshack
-        "resolv.conf".text = "nameserver 10.96.0.1\n";
-      };
-
-      networking = {
-        # Workaround for bug https://github.com/NixOS/nixpkgs/issues/162686
-        useHostResolvConf = lib.mkForce false;
-
-        firewall = {
-          enable = true;
-          allowedTCPPorts = [ 80 ];
-        };
-      };
-
-      users.extraUsers.vpnuser = {
-        isNormalUser = true;
-        uid = 1000;
+        radarr = {
+           enable = true;
+           openFirewall = true;
+           user = "radarr";
+         };
+        sonarr = {
+           enable = true;
+           openFirewall = true;
+           user = "sonarr";
+        }; 
       };
     };
   };
