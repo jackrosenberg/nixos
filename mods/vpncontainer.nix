@@ -58,6 +58,20 @@
         fastfetch
       ];
 
+     environment.etc = { # grosshack
+        "resolv.conf".text = "nameserver 10.96.0.1\n";
+      };
+
+      networking = {
+        # Workaround for bug https://github.com/NixOS/nixpkgs/issues/162686
+        useHostResolvConf = lib.mkForce false;
+
+        firewall = {
+          enable = true;
+          allowedTCPPorts = [ 80 ];
+        };
+      };
+
      # add users to correct group
      users.groups.media.members = ["radarr" "sonarr" "transmission"];
 

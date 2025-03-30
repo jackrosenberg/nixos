@@ -14,6 +14,8 @@
       ./mods/nextcloud.nix
       ./mods/vpncontainer.nix 
       ./mods/cloudflared.nix
+      # ./mods/actualbudget.nix
+      ./mods/dashy.nix
     ];
 
   # Bootloader.
@@ -89,7 +91,10 @@
     jellyfin = {
       enable = true;
       openFirewall = true;
-      # dataDir = "/mnt/media";
+    };
+    jellyseerr = {
+      enable = true;
+      openFirewall = true;
     };
 
     pipewire = {
@@ -163,6 +168,7 @@
     variables.EDITOR = "nvim";
     systemPackages = with pkgs; [
       neovim
+      cmatrix
       xclip
       tmux
       wget
