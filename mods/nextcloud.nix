@@ -10,8 +10,7 @@
       dbtype = "sqlite";
     };
     settings = {
-      trusted_domains = [ "nextcloud.jackr.eu" ];
-      overwriteprotocol = "https";
+      trusted_domains = [ "nextcloud.jackr.eu" "10.89.0.1" ];
     };
   };
  networking.firewall.allowedTCPPorts = [ 8080 ];

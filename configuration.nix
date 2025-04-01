@@ -15,7 +15,8 @@
       ./mods/vpncontainer.nix 
       ./mods/cloudflared.nix
       # ./mods/actualbudget.nix
-      ./mods/dashy.nix
+
+      ./dockerimgs/homarr/docker-compose.nix
     ];
 
   # Bootloader.
