@@ -14,9 +14,15 @@
       ./mods/nextcloud.nix
       ./mods/vpncontainer.nix 
       ./mods/cloudflared.nix
-      # ./mods/actualbudget.nix
+
+      ./mods/grafana.nix
+      ./mods/prometheus.nix
+      ./mods/loki.nix
+      ./mods/alloy.nix
 
       ./dockerimgs/homarr/docker-compose.nix
+      ./dockerimgs/actual/docker-compose.nix
+      ./dockerimgs/dashdot/docker-compose.nix
     ];
 
   # Bootloader.
