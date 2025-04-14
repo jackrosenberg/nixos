@@ -3,6 +3,9 @@
 services.grafana = {
   enable = true;
   settings = {
+    dashboards = {
+      min_refresh_interval = "1s";
+    };
     server = {
       # Listening Address
       http_addr = "0.0.0.0";

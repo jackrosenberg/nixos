@@ -17,12 +17,13 @@
 
       ./mods/grafana.nix
       ./mods/prometheus.nix
+      ./mods/graphite.nix
       ./mods/loki.nix
       ./mods/alloy.nix
 
       ./dockerimgs/homarr/docker-compose.nix
       ./dockerimgs/actual/docker-compose.nix
-      ./dockerimgs/dashdot/docker-compose.nix
+      # ./dockerimgs/dashdot/docker-compose.nix
     ];
 
   # Bootloader.
@@ -193,6 +194,7 @@
       jellyfin
       jellyfin-web
       jellyfin-ffmpeg
+      nvtopPackages.full
     ];
   };
     programs = { 

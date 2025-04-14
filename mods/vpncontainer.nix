@@ -1,13 +1,15 @@
-{ config, lib, pkgs, ... }:
+{ config, inputs, lib, pkgs, ... }:
 {
   environment.etc.openvpn.source = "${pkgs.update-resolv-conf}/libexec/openvpn";
-  services.openvpn.servers = {
-    torrentvpn = {
-      config = ''
-        config /etc/nixos/openvpn/nl-01.protonvpn.udp.ovpn
-        auth-user-pass /etc/nixos/openvpn/auth-user-pass
-      ''; 
-      # updateResolvConf = true; needs to be off otherwise tailscale fucks up
+  services = {
+    openvpn.servers = {
+      torrentvpn = {
+        config = ''
+          config /etc/nixos/openvpn/nl-01.protonvpn.udp.ovpn
+          auth-user-pass /etc/nixos/openvpn/auth-user-pass
+        ''; 
+        # updateResolvConf = true; needs to be off otherwise tailscale fucks up
+      };
     };
   };
 
@@ -33,6 +35,10 @@
    "sonarr" = {
       group = "media";
       uid = 274;
+    };
+   "bazarr" = {
+      group = "media";
+      uid = 997;
     };
   };
 
@@ -73,7 +79,7 @@
       };
 
      # add users to correct group
-     users.groups.media.members = ["radarr" "sonarr" "transmission"];
+     users.groups.media.members = ["radarr" "sonarr" "bazarr" "transmission"];
 
       # stupid ass fix for transmission
       systemd.services.transmission.serviceConfig = {
@@ -102,18 +108,23 @@
         };
         # flaresolverr = {
         #   enable = true;
-        #   package = nur.repos.xddxdd.flaresolverr-21hsmw;
+        #   package = inputs.nur.repos.xddxdd.flaresolverr-21hsmw;
         #   openFirewall = true;
         # };
+        bazarr = {
+          enable = true;
+          openFirewall = true;
+          user = "bazarr";
+        };
         radarr = {
-           enable = true;
-           openFirewall = true;
-           user = "radarr";
+          enable = true;
+          openFirewall = true;
+          user = "radarr";
          };
         sonarr = {
-           enable = true;
-           openFirewall = true;
-           user = "sonarr";
+          enable = true;
+          openFirewall = true;
+          user = "sonarr";
         }; 
       };
     };
