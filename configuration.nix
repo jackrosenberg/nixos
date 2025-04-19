@@ -25,12 +25,13 @@
       ./mods/graphite.nix
       ./mods/loki.nix
       ./mods/alloy.nix
-      ./mods/keycloak.nix
+      # ./mods/keycloak.nix
+
+      ./mods/nvf.nix
 
       ./dockerimgs/homarr/docker-compose.nix
       ./dockerimgs/actual/docker-compose.nix
       ./dockerimgs/dawarich/docker-compose.nix
-      # ./dockerimgs/dashdot/docker-compose.nix
     ];
 
   # Bootloader.
@@ -38,7 +39,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking = { 
-    hostName = "nixos"; # Define your hostname.
+    hostName = "pantheon"; # Define your hostname.
     # Enable networking
     networkmanager.enable = true;
     # Open ports in the firewall.
