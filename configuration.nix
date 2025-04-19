@@ -9,20 +9,24 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./mods/hyprland.nix
 
       ./mods/zfs.nix
       ./mods/nextcloud.nix
       ./mods/vpncontainer.nix 
       ./mods/cloudflared.nix
+      # ./mods/pangolin.nix
 
       ./mods/grafana.nix
       ./mods/prometheus.nix
       ./mods/graphite.nix
       ./mods/loki.nix
       ./mods/alloy.nix
+      ./mods/keycloak.nix
 
       ./dockerimgs/homarr/docker-compose.nix
       ./dockerimgs/actual/docker-compose.nix
+      ./dockerimgs/dawarich/docker-compose.nix
       # ./dockerimgs/dashdot/docker-compose.nix
     ];
 
@@ -36,9 +40,7 @@
     networkmanager.enable = true;
     # Open ports in the firewall.
     firewall.allowedTCPPorts = [ 80 443 ];
-    # firewall.allowedUDPPorts = [ ... ];
     # Or disable the firewall altogether.
-    # nat.enable = true;
     # firewall.enable = false;
   };
 
@@ -72,12 +74,6 @@
         #fuck u autosus
         autoSuspend = false;
       };
-      desktopManager.gnome.enable = true;
-      xkb = {
-        layout = "us";
-        variant = "";
-      };
-
     };
     # Enable CUPS to print documents.
     printing.enable = true;
@@ -87,15 +83,6 @@
       useRoutingFeatures = "server";
     };
 
-    immich = {
-      enable = true;
-      openFirewall = true;
-      port = 2283;
-      host = "0.0.0.0";
-      accelerationDevices = null;
-      # loc in zpool
-      mediaLocation = "/mnt/nixpool/immich";
-    };
     jellyfin = {
       enable = true;
       openFirewall = true;
@@ -176,6 +163,8 @@
     variables.EDITOR = "nvim";
     systemPackages = with pkgs; [
       neovim
+      unzip
+      rofi
       cmatrix
       xclip
       tmux
@@ -195,6 +184,7 @@
       jellyfin-web
       jellyfin-ffmpeg
       nvtopPackages.full
+      smartmontools
     ];
   };
     programs = { 

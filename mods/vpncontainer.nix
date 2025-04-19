@@ -93,13 +93,14 @@
           openFirewall = true;
           openRPCPort = true;
           package = pkgs.transmission_4;
+          credentialsFile = "/var/lib/secrets/trans.json";
           settings = {
             download-dir = "/home/media/downloads";
             incomplete-dir = "/home/media/.incomplete";
             rpc-bind-address = "0.0.0.0";
-            # rpc-whitelist =  "127.0.0.1,192.168.100.10";
-            # rpc-host-whitelist =  "*.jackr.eu";
-            # rpc-authentication-required = true;
+            rpc-whitelist =  "127.0.0.1,192.168.100.10";
+            rpc-host-whitelist =  "*.jackr.eu";
+            rpc-authentication-required = true;
           };
         };
         prowlarr = {
