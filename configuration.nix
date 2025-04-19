@@ -13,6 +13,9 @@
 
       ./mods/zfs.nix
       ./mods/nextcloud.nix
+      ./mods/immich.nix
+      ./mods/tailscale.nix
+      ./mods/jelly.nix
       ./mods/vpncontainer.nix 
       ./mods/cloudflared.nix
       # ./mods/pangolin.nix
@@ -78,20 +81,6 @@
     # Enable CUPS to print documents.
     printing.enable = true;
     # bigboi
-    tailscale = { 
-      enable = true;
-      useRoutingFeatures = "server";
-    };
-
-    jellyfin = {
-      enable = true;
-      openFirewall = true;
-    };
-    jellyseerr = {
-      enable = true;
-      openFirewall = true;
-    };
-
     pipewire = {
       enable = true;
       alsa.enable = true;
@@ -139,7 +128,6 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
     defaultUserShell = pkgs.zsh;
-    users.immich.extraGroups = [ "video" "render" ];
     users.jack = {
       isNormalUser = true;
       description = "jack";
