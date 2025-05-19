@@ -1,22 +1,22 @@
-
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
+  imports = [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./mods/hyprland.nix
 
+      ./mods/hyprland.nix
       ./mods/zfs.nix
-      ./mods/nextcloud.nix
+
+      # ./mods/nextcloud.nix
       ./mods/immich.nix
       ./mods/tailscale.nix
       ./mods/jelly.nix
       ./mods/vpncontainer.nix 
+      ./mods/audiobookshelf.nix 
       ./mods/cloudflared.nix
       # ./mods/pangolin.nix
 
@@ -25,14 +25,22 @@
       ./mods/graphite.nix
       ./mods/loki.nix
       ./mods/alloy.nix
-      # ./mods/keycloak.nix
 
       ./mods/nvf.nix
 
       ./dockerimgs/homarr/docker-compose.nix
       ./dockerimgs/actual/docker-compose.nix
       ./dockerimgs/dawarich/docker-compose.nix
-    ];
+  ];
+
+  # services.fossorial = {
+  #   enable = true;
+  #   baseDomain = "spectrumtijger.nl";
+  #   dashboardDomain = "pangolin.spectrumtijger.nl";
+  #   letsEncryptEmail = "letsencrypt@jackr.eu";
+  #   gerbilPort = 3004;
+  #   openFirewall = true;
+  # };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -44,7 +52,7 @@
     networkmanager.enable = true;
     # Open ports in the firewall.
     firewall.allowedTCPPorts = [ 80 443 ];
-    # Or disable the firewall altogether.
+    # firewall.allowedUDPPorts = [ 51820 ];
     # firewall.enable = false;
   };
 
@@ -79,35 +87,15 @@
         autoSuspend = false;
       };
     };
-    # Enable CUPS to print documents.
-    printing.enable = true;
-    # bigboi
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      # If you want to use JACK applications, uncomment this
-      #jack.enable = true;
-
-      # use the example session manager (no others are packaged yet so this is enabled by default,
-      # no need to redefine it in your config for now)
-      #media-session.enable = true;
-    };
   };
   # Enable common container config files in /etc/containers
   virtualisation = {
     containers = { 
       enable = true;
     };
-
     podman = {
       enable = true;
-
-      # Create a `docker` alias for podman, to use it as a drop-in replacement
       dockerCompat = true;
-
-      # Required for containers under podman-compose to be able to talk to each other.
       defaultNetwork.settings.dns_enabled = true;
     };
   };
@@ -141,8 +129,6 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment = {
     extraInit = ''
       if [ -z "$DOCKER_HOST" -a -n "$XDG_RUNTIME_DIR" ]; then
@@ -152,15 +138,13 @@
     variables.EDITOR = "nvim";
     systemPackages = with pkgs; [
       neovim
+      jujutsu
       unzip
       rofi
-      cmatrix
       xclip
       tmux
       wget
       btop
-      lsscsi
-      geekbench
       neofetch
       kitty
       zsh
@@ -172,8 +156,15 @@
       jellyfin
       jellyfin-web
       jellyfin-ffmpeg
-      nvtopPackages.full
       smartmontools
+      tree
+      morph
+      dysk
+      wireguard-tools
+
+      # fossorial-newt
+      # fossorial-gerbil
+      
     ];
   };
     programs = { 
@@ -181,16 +172,7 @@
       zsh.enable = true;
       neovim = {
         enable = true;
-	# extraConfig = ":luafile ~/.config/nvim/init.lua";
-        # plugins = [ pkgs.vimPlugins.nvim-treesitter.withAllGrammars ];
       };
   };
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
-
 }

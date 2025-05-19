@@ -1,0 +1,6 @@
+{ ... }:
+{
+  programs.goldwarden = {
+    enable = true;
+  };
+}

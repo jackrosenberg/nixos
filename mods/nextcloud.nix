@@ -4,7 +4,6 @@
   services.nextcloud = {
     enable = true;
     hostName = "nextcloud";
-    package = pkgs.nextcloud31;
     config = {
       adminpassFile = "/etc/nextcloud-admin-pass";
       dbtype = "sqlite";

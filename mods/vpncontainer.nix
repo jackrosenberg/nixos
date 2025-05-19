@@ -40,6 +40,10 @@
       group = "media";
       uid = 997;
     };
+   "readarr" = {
+      group = "media";
+      uid = 996;
+    };
   };
 
   containers.vpn = {
@@ -79,7 +83,7 @@
       };
 
      # add users to correct group
-     users.groups.media.members = ["radarr" "sonarr" "bazarr" "transmission"];
+     users.groups.media.members = ["radarr" "sonarr" "bazarr" "readarr" "transmission"];
 
       # stupid ass fix for transmission
       systemd.services.transmission.serviceConfig = {
@@ -126,6 +130,11 @@
           enable = true;
           openFirewall = true;
           user = "sonarr";
+        }; 
+        readarr = {
+          enable = true;
+          openFirewall = true;
+          user = "readarr";
         }; 
       };
     };

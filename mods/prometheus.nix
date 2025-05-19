@@ -16,6 +16,10 @@ services.prometheus = {
         pools = ["nixpool"];
         port = 9012;
       };
+      influxdb = {
+        enable = true;
+        port = 9122;
+      };
   };
 
   scrapeConfigs = [
@@ -29,6 +33,12 @@ services.prometheus = {
         job_name = "zfs";
         static_configs = [{
           targets = [ "127.0.0.1:9012" ];
+        }];
+      }
+      {
+        job_name = "influxdb";
+        static_configs = [{
+          targets = [ "127.0.0.1:9122" ];
         }];
       }
   ];

@@ -45,9 +45,9 @@
       "dawarich_dawarich_watched:/var/app/tmp/imports/watched:rw"
     ];
     ports = [
-      "3000:3000/tcp"
+      "3009:3009/tcp"
     ];
-    cmd = [ "bin/rails" "server" "-p" "3000" "-b" "::" ];
+    cmd = [ "bin/rails" "server" "-p" "3009" "-b" "::" ];
     dependsOn = [
       "dawarich_db"
       "dawarich_redis"
@@ -56,7 +56,7 @@
     extraOptions = [
       "--cpus=0.5"
       "--entrypoint=[\"web-entrypoint.sh\"]"
-      "--health-cmd=wget -qO - http://127.0.0.1:3000/api/v1/health | grep -q '\"status\"\\s*:\\s*\"ok\"'"
+      "--health-cmd=wget -qO - http://127.0.0.1:3009/api/v1/health | grep -q '\"status\"\\s*:\\s*\"ok\"'"
       "--health-interval=10s"
       "--health-retries=30"
       "--health-start-period=30s"

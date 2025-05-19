@@ -13,7 +13,15 @@
         options = {
           shiftwidth = 4;
         };
-        autocomplete.nvim-cmp.enable = true;
+        autocomplete.nvim-cmp = {
+            enable = true;
+            mappings = {
+              confirm = "<CR>";
+              next = "<Tab>";
+              previous = "<S-Tab>";
+              complete = "<C-Space>";
+            };
+        };
         highlight = {
           NormalFloat = { bg = "#555555"; };
           FloatBorder = { fg = "#00FFFF"; };
@@ -44,10 +52,16 @@
             treesitter.enable = true;
           };
         };
+        lazy.plugins = {
+          "neo-tree.nvim" = {
+            package  = pkgs.vimPlugins.neo-tree-nvim;
+             event = [{event = "User"; pattern = "LazyFile";}];
+          };
+        };
       };
     };
   };
-    # config.vim.lazy.plugins = {};
+
 }
 #
 # --TODO: add lang agnostic comment command for cmd /  

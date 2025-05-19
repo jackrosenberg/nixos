@@ -3,6 +3,9 @@
   environment.systemPackages = with pkgs; [
     hyprlock
     nwg-look
+    grim
+    slurp
+    wl-clipboard-rs
   ];
   programs.hyprland = {
     enable = true;
