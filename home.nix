@@ -84,8 +84,8 @@
       initExtraFirst = "source ~/.p10k.zsh";
       shellAliases = {
         v = "nvim";
-      	ne = "sudoedit /etc/nixos/configuration.nix";
-        ns = "sudo nixos-rebuild switch";
+      	ne = "nvim /etc/nixos/configuration.nix";
+        ns = "sudo nixos-rebuild --cores 0 switch";
         hs = "home-manager switch";
 	he = "nvim ~/nix-config/home.nix";
         cl = "clear";

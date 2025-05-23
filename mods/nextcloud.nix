@@ -3,6 +3,7 @@
   environment.etc."nextcloud-admin-pass".text = "PWD";
   services.nextcloud = {
     enable = true;
+    package = pkgs.nextcloud31;
     hostName = "nextcloud";
     config = {
       adminpassFile = "/etc/nextcloud-admin-pass";

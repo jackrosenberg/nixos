@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   imports = [ # Include the results of the hardware scan.
@@ -11,7 +11,7 @@
       ./mods/hyprland.nix
       ./mods/zfs.nix
 
-      # ./mods/nextcloud.nix
+      ./mods/nextcloud.nix
       ./mods/immich.nix
       ./mods/tailscale.nix
       ./mods/jelly.nix
@@ -120,7 +120,8 @@
     users.jack = {
       isNormalUser = true;
       description = "jack";
-      extraGroups = [ "networkmanager" "wheel" "nix-users" ];
+      extraGroups = [ "
+      networkmanager" "wheel" "nix-users" ];
       packages = with pkgs; [
       ];
     };
@@ -138,6 +139,7 @@
     variables.EDITOR = "nvim";
     systemPackages = with pkgs; [
       neovim
+      inputs.agenix.packages."${system}".default
       jujutsu
       unzip
       rofi
@@ -161,6 +163,8 @@
       morph
       dysk
       wireguard-tools
+      nvtopPackages.full
+      rocmPackages.rocm-smi
 
       # fossorial-newt
       # fossorial-gerbil
@@ -174,5 +178,5 @@
         enable = true;
       };
   };
-  system.stateVersion = "25.05"; # Did you read the comment?
+  system.stateVersion = "25.11"; # Did you read the comment?
 }
