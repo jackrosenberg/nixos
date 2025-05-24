@@ -1,4 +1,4 @@
-{ config, inputs, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 {
   environment.etc.openvpn.source = "${pkgs.update-resolv-conf}/libexec/openvpn";
   services = {
@@ -25,24 +25,28 @@
   # remake users
   users.groups.media = {
     gid = 1000;
-    members = ["radarr" "sonarr"];
+    members = ["prowlarr" "radarr" "sonarr" "bazarr" "readarr"];
   };
   users.extraUsers = {
-    "radarr" = {
-      group = "media";
-      uid = 275;
-    };
    "sonarr" = {
       group = "media";
       uid = 274;
     };
-   "bazarr" = {
+    "radarr" = {
       group = "media";
-      uid = 997;
+      uid = 275;
+    };
+    "prowlarr" = {
+      group = "media";
+      uid = 995;
     };
    "readarr" = {
       group = "media";
       uid = 996;
+    };
+   "bazarr" = {
+      group = "media";
+      uid = 997;
     };
   };
 
@@ -83,7 +87,7 @@
       };
 
      # add users to correct group
-     users.groups.media.members = ["radarr" "sonarr" "bazarr" "readarr" "transmission"];
+     users.groups.media.members = ["prowlarr" "radarr" "sonarr" "bazarr" "readarr" "transmission"];
 
       # stupid ass fix for transmission
       systemd.services.transmission.serviceConfig = {
@@ -98,6 +102,7 @@
           openRPCPort = true;
           package = pkgs.transmission_4;
           credentialsFile = "/var/lib/secrets/trans.json";
+          # extraFlags = [ "--log-debug" ];
           settings = {
             download-dir = "/home/media/downloads";
             incomplete-dir = "/home/media/.incomplete";
@@ -113,28 +118,24 @@
         };
         # flaresolverr = {
         #   enable = true;
-        #   package = inputs.nur.repos.xddxdd.flaresolverr-21hsmw;
+        #   package = config.inputs.nur.repos.xddxdd.flaresolverr-21hsmw;
         #   openFirewall = true;
         # };
         bazarr = {
           enable = true;
           openFirewall = true;
-          user = "bazarr";
         };
         radarr = {
           enable = true;
           openFirewall = true;
-          user = "radarr";
          };
         sonarr = {
           enable = true;
           openFirewall = true;
-          user = "sonarr";
         }; 
         readarr = {
           enable = true;
           openFirewall = true;
-          user = "readarr";
         }; 
       };
     };

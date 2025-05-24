@@ -7,5 +7,6 @@ let
 in
 {
   "secret1.age".publicKeys = [ user1 system1 ];
+  "resticPDrivePass.age".publicKeys = [ user1 system1 ];
 }
 

@@ -1,21 +1,28 @@
 { pkgs, config, ...}:
 {
-    services.restic.backups = {
-    remotebackup = {
+    environment.systemPackages = with pkgs; [
+     rclone
+     restic
+    ];
+  # agenix
+  age = {
+    secrets.resticPDrivePass.file = ../secrets/resticPDrivePass.age;
+    identityPaths = [
+      "/etc/age/id_ed25519"
+    ];
+  };
+  
+  services.restic.backups = {
+    PDrive = {
       initialize = true;
       paths = [ # what to backup
-        "/persistent"
+        "/home/jack/Screenshots/"
       ];
-      passwordFile = config.age.secrets.restic-hetzner-password.path; # encryption
-      repository = "sftp://<boxname>-<subN>@<boxname>.your-storagebox.de/"; # @ where to store it
-      
-      extraOptions = [
-        # how to connect
-        "sftp.command='${pkgs.sshpass}/bin/sshpass -f ${config.age.secrets.restic-hetzner.path} -- ssh -4 u419690.your-storagebox.de -l u419690-sub1 -s sftp'"
-      ];
+      passwordFile = config.age.secrets.resticPDrivePass.path; # encryption
+      repository = "rclone:PDrive:/backups"; # @ where to store it
+
       timerConfig = { # when to backup
         OnCalendar = "00:05";
-        RandomizedDelaySec = "5h";
       };
     };
   };
