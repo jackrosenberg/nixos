@@ -6,7 +6,7 @@ let
   systems = [ system1 ];
 in
 {
-  "secret1.age".publicKeys = [ user1 system1 ];
+  "rcloneConf.age".publicKeys = [ user1 system1 ];
   "resticPDrivePass.age".publicKeys = [ user1 system1 ];
 }
 
