@@ -13,7 +13,7 @@ Ok, basic idea:
 - media storage: (ext4)
     - /mnt/media: 1x 4TB HDD
 ### Backups:
-- Kopia + rclone + ProtonDrive
+- Restic + rclone + ProtonDrive
  
 ## Services
 ### Immich
