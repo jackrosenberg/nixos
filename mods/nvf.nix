@@ -11,15 +11,17 @@
           style = "light";
         };
         options = {
-          shiftwidth = 4;
+          shiftwidth = 2;
         };
-        autocomplete.nvim-cmp = {
-            enable = true;
-            mappings = {
-              confirm = "<CR>";
-              next = "<Tab>";
-              previous = "<S-Tab>";
-              complete = "<C-Space>";
+        autocomplete = {
+            nvim-cmp = { 
+                enable = true;
+                mappings = {
+                  confirm = "<CR>";
+                  next = "<Tab>";
+                  previous = "<S-Tab>";
+                  complete = "<C-Space>";
+                };
             };
         };
         highlight = {
