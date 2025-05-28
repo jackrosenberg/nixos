@@ -8,6 +8,9 @@
   # will be outdated. This needs to be done without a vpn becuz Proton is stupid.
   # After this, the rest goes through a vpn like usual
 
+  # init repo with: 
+  # restic -v -r rclone:PDrive:/backups init
+
   environment.systemPackages = with pkgs; [
    rclone
    restic
@@ -20,9 +23,7 @@
       "/etc/age/id_ed25519"
     ];
   };
-  # systemd.services.pre-restic = {
-  # };
-  
+
   services.restic.backups = {
     PDrive = {
       backupPrepareCommand = ''
@@ -34,7 +35,6 @@
           client_salted_key_pass= 
         # add ip rule
         IP=$(${lib.getExe pkgs.dig} +short mail.proton.me | head -1)
-        echo "Destination IP: $IP"
         
         # Add route
         ${lib.getExe' pkgs.iproute2 "ip"} route add $IP via 192.168.2.1 dev enp5s0
@@ -46,14 +46,18 @@
         ${lib.getExe' pkgs.iproute2 "ip"} route del $IP via 192.168.2.1 dev enp5s0
       '';
       rcloneConfigFile = config.age.secrets.rcloneConf.path;
+      # needed for if backup failed
+      rcloneOptions.protondrive-replace-existing-draft = true;
+      progressFps = 0.01666; # print one update per min
       paths = [ # what to backup
         "/mnt/nixpool/immich/library/"
       ];
       passwordFile = config.age.secrets.resticPDrivePass.path; # encryption
+      initialize = true;
       repository = "rclone:PDrive:/backups"; # @ where to store it
 
       timerConfig = { # when to backup
-        OnCalendar = "00:05";
+        OnCalendar = "04:00";
       };
     };
   };

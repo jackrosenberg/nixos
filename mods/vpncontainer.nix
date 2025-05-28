@@ -25,7 +25,7 @@
   # remake users
   users.groups.media = {
     gid = 1000;
-    members = ["prowlarr" "radarr" "sonarr" "bazarr" "readarr"];
+    members = ["jellyfin" "prowlarr" "radarr" "sonarr" "bazarr" "readarr"];
   };
   users.extraUsers = {
    "sonarr" = {
@@ -86,14 +86,21 @@
         };
       };
 
-     # add users to correct group
-     users.groups.media.members = ["prowlarr" "radarr" "sonarr" "bazarr" "readarr" "transmission"];
+      # add users to correct group
+      users.groups.media.members = ["prowlarr" "radarr" "sonarr" "bazarr" "readarr" "transmission"];
 
-      # stupid ass fix for transmission
-      systemd.services.transmission.serviceConfig = {
-        RootDirectoryStartOnly = lib.mkForce false;
-        RootDirectory = lib.mkForce "";
-        BindReadOnlyPaths = lib.mkForce [ builtins.storeDir "/etc" ];
+      systemd = {
+        # stupid ass fix for transmission
+        services.transmission.serviceConfig = {
+          RootDirectoryStartOnly = lib.mkForce false;
+          RootDirectory = lib.mkForce "";
+          BindReadOnlyPaths = lib.mkForce [ builtins.storeDir "/etc" ];
+        };
+        # recursive chown of folders so bazarr can write subs
+        tmpfiles.rules = [
+            "Z /home/media/shows 771 sonarr media"
+            "Z /home/media/movies 771 radarr media"
+        ];
       };
       services = {
         transmission = {
@@ -114,6 +121,7 @@
         };
         prowlarr = {
           enable = true;
+          group = "media";
           openFirewall = true;
         };
         # flaresolverr = {
@@ -123,18 +131,22 @@
         # };
         bazarr = {
           enable = true;
+          group = "media";
           openFirewall = true;
         };
         radarr = {
           enable = true;
+          group = "media";
           openFirewall = true;
          };
         sonarr = {
           enable = true;
+          group = "media";
           openFirewall = true;
         }; 
         readarr = {
           enable = true;
+          group = "media";
           openFirewall = true;
         }; 
       };
