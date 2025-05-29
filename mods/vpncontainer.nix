@@ -23,30 +23,32 @@
   };
 
   # remake users
-  users.groups.media = {
-    gid = 1000;
-    members = ["jellyfin" "prowlarr" "radarr" "sonarr" "bazarr" "readarr"];
-  };
-  users.extraUsers = {
-   "sonarr" = {
-      group = "media";
-      uid = 274;
+  users = {
+    groups.media = {
+      gid = 1000;
+      members = ["jellyfin" "prowlarr" "radarr" "sonarr" "bazarr" "readarr"];
     };
-    "radarr" = {
-      group = "media";
-      uid = 275;
-    };
-    "prowlarr" = {
-      group = "media";
-      uid = 995;
-    };
-   "readarr" = {
-      group = "media";
-      uid = 996;
-    };
-   "bazarr" = {
-      group = "media";
-      uid = 997;
+    users = {
+     "sonarr" = {
+        group = "media";
+        uid = 274;
+      };
+      "radarr" = {
+        group = "media";
+        uid = 275;
+      };
+      "prowlarr" = {
+        uid = 995;
+        group = "media";
+      };
+     "readarr" = {
+        group = "media";
+        uid = 996;
+      };
+     "bazarr" = {
+        group = "media";
+        uid = 997;
+      };
     };
   };
 
@@ -121,7 +123,7 @@
         };
         prowlarr = {
           enable = true;
-          group = "media";
+          # group = "media";
           openFirewall = true;
         };
         # flaresolverr = {
