@@ -19,6 +19,7 @@
       ./mods/vpncontainer.nix 
       ./mods/audiobookshelf.nix 
       ./mods/cloudflared.nix
+      ./mods/wastebin.nix
       # ./mods/pangolin.nix
 
       ./mods/grafana.nix
@@ -163,6 +164,7 @@
       tree
       morph
       dysk
+      wastebin
       wireguard-tools
       nvtopPackages.full
       rocmPackages.rocm-smi

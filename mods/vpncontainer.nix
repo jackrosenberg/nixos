@@ -1,6 +1,7 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   environment.etc.openvpn.source = "${pkgs.update-resolv-conf}/libexec/openvpn";
+
   services = {
     openvpn.servers = {
       torrentvpn = {
@@ -21,6 +22,10 @@
     };
     networkmanager.unmanaged = [ "interface-name:ve-*" ];
   };
+  systemd.tmpfiles.rules = [
+      "Z /mnt/media/shows 771 sonarr media"
+      "Z /mnt/media/movies 771 radarr media"
+  ];
 
   # remake users
   users = {
@@ -52,21 +57,19 @@
     };
   };
 
-  containers.vpn = {
+  containers.pirateship = {
     autoStart = true;
   
     privateNetwork = true; # needed for vpn 
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.11";
     
-    bindMounts = {
-      "/home/media" = { # path in container
-        hostPath = "/mnt/media"; # path in host
-        isReadOnly = false;
-      };
+    bindMounts."/home/media" = { # path in container
+      hostPath = "/mnt/media"; # path in host
+      isReadOnly = false;
     };
 
-    config = { config, lib, pkgs, ... }: 
+    config = { lib, pkgs, ... }: 
     {
       environment.systemPackages = with pkgs; [
         kitty
@@ -110,6 +113,7 @@
           openFirewall = true;
           openRPCPort = true;
           package = pkgs.transmission_4;
+          # grosshack, needs to be made manually :(
           credentialsFile = "/var/lib/secrets/trans.json";
           # extraFlags = [ "--log-debug" ];
           settings = {
