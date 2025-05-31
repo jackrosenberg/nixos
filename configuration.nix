@@ -20,6 +20,7 @@
       ./mods/audiobookshelf.nix 
       ./mods/cloudflared.nix
       ./mods/wastebin.nix
+      ./mods/healthchecks.nix
       # ./mods/pangolin.nix
 
       ./mods/grafana.nix
