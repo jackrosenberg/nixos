@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   environment.etc.openvpn.source = "${pkgs.update-resolv-conf}/libexec/openvpn";
 
@@ -25,34 +25,35 @@
   systemd.tmpfiles.rules = [
       "Z /mnt/media/shows 771 sonarr media"
       "Z /mnt/media/movies 771 radarr media"
+      "Z /mnt/media/books 771 readarr media"
   ];
 
   # remake users
   users = {
     groups.media = {
-      gid = 1000;
-      members = ["jellyfin" "prowlarr" "radarr" "sonarr" "bazarr" "readarr"];
+      gid = lib.mkForce 999;
+      members = ["jellyfin" "prowlarr" "radarr" "sonarr" "bazarr" "readarr" "audiobookshelf"];
     };
     users = {
      "sonarr" = {
         group = "media";
-        uid = 274;
+        uid = lib.mkForce 274;
       };
       "radarr" = {
         group = "media";
-        uid = 275;
+        uid = lib.mkForce 275;
       };
       "prowlarr" = {
-        uid = 995;
+        uid = lib.mkForce 995;
         group = "media";
       };
      "readarr" = {
         group = "media";
-        uid = 996;
+        uid = lib.mkForce 997;
       };
      "bazarr" = {
         group = "media";
-        uid = 997;
+        uid = lib.mkForce 999;
       };
     };
   };
@@ -105,6 +106,7 @@
         tmpfiles.rules = [
             "Z /home/media/shows 771 sonarr media"
             "Z /home/media/movies 771 radarr media"
+            "Z /home/media/books 771 readarr media"
         ];
       };
       services = {
@@ -126,9 +128,8 @@
           };
         };
         prowlarr = {
-          enable = true;
-          # group = "media";
           openFirewall = true;
+          enable = true;
         };
         # flaresolverr = {
         #   enable = true;
@@ -137,23 +138,23 @@
         # };
         bazarr = {
           enable = true;
-          group = "media";
           openFirewall = true;
+          group = "media";
         };
         radarr = {
           enable = true;
-          group = "media";
           openFirewall = true;
+          group = "media";
          };
         sonarr = {
           enable = true;
-          group = "media";
           openFirewall = true;
+          group = "media";
         }; 
         readarr = {
           enable = true;
-          group = "media";
           openFirewall = true;
+          group = "media";
         }; 
       };
     };

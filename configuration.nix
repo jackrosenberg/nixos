@@ -31,7 +31,6 @@
       ./mods/nvf.nix
 
       ./dockerimgs/homarr/docker-compose.nix
-      ./dockerimgs/actual/docker-compose.nix
       ./dockerimgs/dawarich/docker-compose.nix
   ];
 
