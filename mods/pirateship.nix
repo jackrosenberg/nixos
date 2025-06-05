@@ -114,6 +114,8 @@
             "Z /home/media/shows 771 sonarr media"
             "Z /home/media/movies 771 radarr media"
             "Z /home/media/books 771 readarr media"
+            # folder for books since readarr sucks
+            "Z /home/media/downloads/books 777 transmission media"
         ];
       };
       services = {
