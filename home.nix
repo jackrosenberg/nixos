@@ -80,24 +80,41 @@
       enableCompletion = true;
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
-      initExtra= "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-      initExtraFirst = "source ~/.p10k.zsh";
-      shellAliases = {
-        v = "nvim";
-      	ne = "nvim /etc/nixos/configuration.nix";
-        ns = "sudo nixos-rebuild --cores 0 switch";
-        hs = "home-manager switch";
-	he = "nvim ~/nix-config/home.nix";
-        cl = "clear";
-      };
-      history.size = 10000;
-
+      
       oh-my-zsh = {
         enable = true;
-	# plugins = [ "git" "zsh-powerlevel10k" "meslo-lgs-nf"];
-        plugins = [ "git" ];
-        # theme = "powerlevel10k";
+        plugins = [ "git" "vi-mode" ];
       };
+      
+      # initExtraFirst = ''
+      # '';
+      
+      initExtra = ''
+        # Source powerlevel10k theme (after oh-my-zsh)
+        source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+        
+        # Vi mode configuration
+        export KEYTIMEOUT=1
+        VI_MODE_SET_CURSOR=true
+
+        # Load p10k configuration
+        [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+        # Add keybinds
+        bindkey -M viins 'jj' vi-cmd-mode
+        bindkey -M viins '^R' history-incremental-search-backward
+      '';
+      
+      shellAliases = {
+        v = "nvim";
+        ne = "nvim /etc/nixos/configuration.nix";
+        ns = "sudo nixos-rebuild --cores 0 switch";
+        hs = "home-manager switch";
+        he = "nvim ~/nix-config/home.nix";
+        cl = "clear";
+      };
+      
+      history.size = 10000;
     };
     git = {
       enable = true;

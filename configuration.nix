@@ -16,12 +16,13 @@
       ./mods/immich.nix
       ./mods/tailscale.nix
       ./mods/jelly.nix
-      ./mods/vpncontainer.nix 
+      ./mods/pirateship.nix 
       ./mods/audiobookshelf.nix 
       ./mods/cloudflared.nix
       ./mods/wastebin.nix
-      ./mods/healthchecks.nix
+      # ./mods/healthchecks.nix
       # ./mods/pangolin.nix
+      # ./mods/newt.nix
 
       ./mods/grafana.nix
       ./mods/prometheus.nix
@@ -89,6 +90,9 @@
         autoSuspend = false;
       };
     };
+    udev.extraRules = ''
+      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="0293", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl" 
+    '';
   };
   # Enable common container config files in /etc/containers
   virtualisation = {
@@ -168,15 +172,18 @@
       wireguard-tools
       nvtopPackages.full
       rocmPackages.rocm-smi
-
-      # fossorial-newt
-      # fossorial-gerbil
-      
+      vial
+      usbutils
     ];
   };
     programs = { 
       ssh.forwardX11 = true; # allow ssh x forwarding
-      zsh.enable = true;
+      zsh = {
+        enable = true;
+        # zplug = {
+        #   enable = true;
+        #   plugins = [
+      };
       neovim = {
         enable = true;
       };
