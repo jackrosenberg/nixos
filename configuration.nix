@@ -22,7 +22,7 @@
       ./mods/wastebin.nix
       # ./mods/healthchecks.nix
       # ./mods/pangolin.nix
-      ./mods/newt.nix
+      # ./mods/newt.nix
 
       ./mods/grafana.nix
       ./mods/prometheus.nix
@@ -174,6 +174,7 @@
       rocmPackages.rocm-smi
       vial
       usbutils
+
     ];
   };
     programs = { 

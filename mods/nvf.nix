@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   programs.nvf = {
@@ -46,6 +46,8 @@
           }
         ];
         
+        treesitter.fold = true;
+
         languages = {
           nix = {
             enable = true;

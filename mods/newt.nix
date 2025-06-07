@@ -9,6 +9,8 @@
   # };
   services.newt = {
     enable = true;
-    configFile = /tmp/newt/conf.json;# config.age.secrets.newtConf.path;
+    id = "m3t8hpho5ss6tfk";
+    endpoint = "https://pang.spectrumtijger.nl";
+    secretFile = /tmp/newt/conf;# config.age.secrets.newtConf.path;
   };
 }
