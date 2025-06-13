@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   programs.nvf = {
@@ -12,17 +12,51 @@
         };
         options = {
           shiftwidth = 2;
+          ignorecase = true;
+          smartcase = true;
+          foldmethod = "manual";
+          viewoptions = "folds,cursor";
+          foldenable = true;
+          foldlevelstart = 0;  # All folds closed when opening files
+          foldlevel = 0;       # Close all folds in current buffer
         };
-        autocomplete = {
-            nvim-cmp = { 
-                enable = true;
-                mappings = {
-                  confirm = "<CR>";
-                  next = "<Tab>";
-                  previous = "<S-Tab>";
-                  complete = "<C-Space>";
-                };
-            };
+        # shits FUCKED up bigtime 
+        # it's jumping around and stuff and making ghost edits
+        # autocmds = [
+        #   {
+        #     desc = "Save folds when exit";
+        #     event = [ "BufWinLeave" ];
+        #     pattern = [ "*" ];
+        #     callback = lib.generators.mkLuaInline ''
+        #       function()
+        #         if vim.bo.buftype == "" and vim.bo.modifiable and vim.fn.expand("%") ~= "" then
+        #           vim.cmd("loadview")
+        # end
+        #       end
+        #     '';
+        #   }
+        #   {
+        #     desc = "Load folds when enter";
+        #     event = [ "BufWinEnter" ]; 
+        #     pattern = [ "*" ];
+        #     callback = lib.generators.mkLuaInline ''
+        #       function()
+        #         if vim.bo.buftype == "" and vim.bo.modifiable and vim.fn.expand("%") ~= "" then
+        #           vim.cmd("loadview")
+        # end
+        #       end
+        #     '';
+        #     # command = "loadview"; #silent!  
+        #   }
+        # ];
+        autocomplete.nvim-cmp = { 
+          enable = true;
+          mappings = {
+            confirm = "<CR>";
+            next = "<Tab>";
+            previous = "<S-Tab>";
+            complete = "<C-Space>";
+          };
         };
         highlight = {
           NormalFloat = { bg = "#555555"; };
@@ -46,8 +80,6 @@
           }
         ];
         
-        treesitter.fold = true;
-
         languages = {
           nix = {
             enable = true;

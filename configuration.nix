@@ -90,10 +90,11 @@
         autoSuspend = false;
       };
     };
-    udev.extraRules = ''
-      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="0293", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl" 
-    '';
+    # keyboard shenenagains
+    udev.packages = [ pkgs.via ];
   };
+  # keyboard shenenagains
+  hardware.keyboard.qmk.enable = true;
   # Enable common container config files in /etc/containers
   virtualisation = {
     containers = { 
@@ -172,8 +173,9 @@
       wireguard-tools
       nvtopPackages.full
       rocmPackages.rocm-smi
-      vial
+      via
       usbutils
+      bat
 
     ];
   };
