@@ -18,6 +18,11 @@
       fsType = "ext4";
     };
 
+  fileSystems."/mnt/media" =
+    { device = "/dev/disk/by-uuid/ae16f82d-7f3c-4f5f-b906-d0d65e2e8523";
+      fsType = "ext4";
+    };
+
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/98C0-72EB";
       fsType = "vfat";
@@ -29,24 +34,20 @@
       fsType = "zfs";
     };
 
-  fileSystems."/mnt/nixpool/immich" =
-    { device = "nixpool/immich";
-      fsType = "zfs";
-    };
-
   fileSystems."/mnt/nixpool/services" =
     { device = "nixpool/services";
       fsType = "zfs";
     };
 
-  fileSystems."/mnt/media" =
-    { device = "/dev/disk/by-uuid/ae16f82d-7f3c-4f5f-b906-d0d65e2e8523";
-      fsType = "ext4";
-      options = [ # If you don't have this options attribute, it'll default to "defaults" 
-        # boot options for fstab. Search up fstab mount options you can use
-        "users" # Allows any user to mount and unmount
-        "nofail" # Prevent system from failing if this drive doesn't mount
-      ];
+  fileSystems."/mnt/nixpool/immich" =
+    { device = "nixpool/immich";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/containers/storage/overlay" =
+    { device = "/var/lib/containers/storage/overlay";
+      fsType = "none";
+      options = [ "bind" ];
     };
 
   swapDevices =
@@ -59,9 +60,16 @@
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp5s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.podman0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.podman1.useDHCP = lib.mkDefault true;
   # networking.interfaces.tailscale0.useDHCP = lib.mkDefault true;
   # networking.interfaces.tun0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.ve-vpn.useDHCP = lib.mkDefault true;
+  # networking.interfaces.ve-pirateship.useDHCP = lib.mkDefault true;
+  # networking.interfaces.veth0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.veth1.useDHCP = lib.mkDefault true;
+  # networking.interfaces.veth2.useDHCP = lib.mkDefault true;
+  # networking.interfaces.veth3.useDHCP = lib.mkDefault true;
+  # networking.interfaces.veth4.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

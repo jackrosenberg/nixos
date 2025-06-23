@@ -20,9 +20,9 @@
     nixosConfigurations = {
       pantheon = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
-        system = "x86_64-linux";
         modules = [
           ./configuration.nix
+          { nixpkgs.hostPlatform = "x86_64-linux"; } # thanks isabelroses
           agenix.nixosModules.default
           nur.modules.nixos.default
           nvf.nixosModules.default

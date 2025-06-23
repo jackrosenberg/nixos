@@ -132,7 +132,7 @@
             incomplete-dir = "/home/media/.incomplete";
             rpc-bind-address = "0.0.0.0";
             rpc-whitelist =  "127.0.0.1,192.168.100.10";
-            rpc-host-whitelist =  "*.jackr.eu";
+            rpc-host-whitelist =  "*.jackr.eu,*.spectrumtijger.nl";
             rpc-authentication-required = true;
           };
         };

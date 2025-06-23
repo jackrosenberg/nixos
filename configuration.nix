@@ -12,8 +12,8 @@
       ./mods/zfs.nix
       ./mods/backups.nix
 
-      ./mods/nextcloud.nix
-      ./mods/immich.nix
+      # ./mods/nextcloud.nix # REENABLE ME
+      # ./mods/immich.nix # REENABLE ME
       ./mods/tailscale.nix
       ./mods/jelly.nix
       ./mods/pirateship.nix 
@@ -21,8 +21,7 @@
       ./mods/cloudflared.nix
       ./mods/wastebin.nix
       # ./mods/healthchecks.nix
-      # ./mods/pangolin.nix
-      # ./mods/newt.nix
+      ./mods/newt.nix
 
       ./mods/grafana.nix
       ./mods/prometheus.nix
@@ -35,15 +34,6 @@
       ./dockerimgs/homarr/docker-compose.nix
       ./dockerimgs/dawarich/docker-compose.nix
   ];
-
-  # services.fossorial = {
-  #   enable = true;
-  #   baseDomain = "spectrumtijger.nl";
-  #   dashboardDomain = "pangolin.spectrumtijger.nl";
-  #   letsEncryptEmail = "letsencrypt@jackr.eu";
-  #   gerbilPort = 3004;
-  #   openFirewall = true;
-  # };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -136,6 +126,8 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  # enable cachix
+  nix.settings.trusted-users = [ "root" "jack" ];
 
   environment = {
     extraInit = ''
@@ -171,21 +163,21 @@
       dysk
       wastebin
       wireguard-tools
-      nvtopPackages.full
+      # nvtopPackages.full # breaks often on update
       rocmPackages.rocm-smi
       via
       usbutils
       bat
-
+      shh
+      signal-desktop
+      devenv
+      turbo
     ];
   };
     programs = { 
       ssh.forwardX11 = true; # allow ssh x forwarding
       zsh = {
         enable = true;
-        # zplug = {
-        #   enable = true;
-        #   plugins = [
       };
       neovim = {
         enable = true;
