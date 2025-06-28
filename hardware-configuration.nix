@@ -24,15 +24,50 @@
       options = [ "bind" ];
     };
 
-  fileSystems."/mnt" =
-    { device = "/dev/disk/by-uuid/92291989-678d-4ac5-8a73-f1ac95721c05";
-      fsType = "ext4";
+  fileSystems."/var/lib/containers/storage/overlay-containers/37df19e754152ab9e75d23cdd129175eeb55058011fe66ed99c33e586e284300/userdata/shm" =
+    { device = "shm";
+      fsType = "tmpfs";
+    };
+
+  fileSystems."/var/lib/containers/storage/overlay-containers/7812f1ee9eb49ca64b393c84b9ba63f8e1ea86c2357af87fab60811617a97e98/userdata/shm" =
+    { device = "shm";
+      fsType = "tmpfs";
+    };
+
+  fileSystems."/var/lib/containers/storage/overlay-containers/c510ed8b4bc14c593469e53d672b6d5aca8e8bb9510ed41f94073622d6437987/userdata/shm" =
+    { device = "shm";
+      fsType = "tmpfs";
+    };
+
+  fileSystems."/var/lib/containers/storage/overlay-containers/c67c6d060dcb6f4805ec2aa4301db0bc42c2e91bc55c6f1452b5344c1792f6ac/userdata/shm" =
+    { device = "shm";
+      fsType = "tmpfs";
+    };
+
+  fileSystems."/var/lib/containers/storage/overlay-containers/f99332d38639f9b6fd565319d30882576d3e529e9ed7d9645d9c719e512a2514/userdata/shm" =
+    { device = "shm";
+      fsType = "tmpfs";
+    };
+
+  fileSystems."/mnt/nixpool" =
+    { device = "nixpool";
+      fsType = "zfs";
+    };
+
+  fileSystems."/mnt/nixpool/immich" =
+    { device = "nixpool/immich";
+      fsType = "zfs";
     };
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/98C0-72EB";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
+    };
+
+  fileSystems."/mnt/media" =
+    { device = "/dev/disk/by-uuid/92291989-678d-4ac5-8a73-f1ac95721c05";
+      fsType = "ext4";
     };
 
   swapDevices =
@@ -45,16 +80,9 @@
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp5s0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.podman0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.podman1.useDHCP = lib.mkDefault true;
   # networking.interfaces.tailscale0.useDHCP = lib.mkDefault true;
   # networking.interfaces.tun0.useDHCP = lib.mkDefault true;
   # networking.interfaces.ve-pirateship.useDHCP = lib.mkDefault true;
-  # networking.interfaces.veth0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.veth1.useDHCP = lib.mkDefault true;
-  # networking.interfaces.veth2.useDHCP = lib.mkDefault true;
-  # networking.interfaces.veth3.useDHCP = lib.mkDefault true;
-  # networking.interfaces.veth4.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

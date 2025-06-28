@@ -12,27 +12,27 @@
       ./mods/zfs.nix
       ./mods/backups.nix
 
-      # ./mods/nextcloud.nix # REENABLE ME
-      # ./mods/immich.nix # REENABLE ME
-      # ./mods/tailscale.nix
-      # ./mods/jelly.nix
-      # ./mods/pirateship.nix 
-      # ./mods/audiobookshelf.nix 
-      # ./mods/cloudflared.nix
-      # ./mods/wastebin.nix
+      ./mods/nextcloud.nix # REENABLE ME
+      ./mods/immich.nix # REENABLE ME
+      ./mods/tailscale.nix
+      ./mods/jelly.nix
+      ./mods/pirateship.nix 
+      ./mods/audiobookshelf.nix 
+      ./mods/cloudflared.nix
+      ./mods/wastebin.nix
       # ./mods/healthchecks.nix
       # ./mods/newt.nix
 
-      # ./mods/grafana.nix
-      # ./mods/prometheus.nix
-      # ./mods/graphite.nix
-      # ./mods/loki.nix
-      # ./mods/alloy.nix
+      ./mods/grafana.nix
+      ./mods/prometheus.nix
+      ./mods/graphite.nix
+      ./mods/loki.nix
+      ./mods/alloy.nix
 
       ./mods/nvf.nix
 
-      # ./dockerimgs/homarr/docker-compose.nix
-      # ./dockerimgs/dawarich/docker-compose.nix
+      ./dockerimgs/homarr/docker-compose.nix
+      ./dockerimgs/dawarich/docker-compose.nix
   ];
 
   # Bootloader.
@@ -135,7 +135,10 @@
         export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/podman/podman.sock"
       fi
     '';
-    variables.EDITOR = "nvim";
+    variables = {
+      EDITOR = "nvim";
+      NIX_BUILD_CORES = 0;
+    };
     systemPackages = with pkgs; [
       neovim
       inputs.agenix.packages."${system}".default

@@ -23,10 +23,11 @@
     networkmanager.unmanaged = [ "interface-name:ve-*" ];
   };
   systemd = {
+    # TODO change permissions, cant be asked rn
     tmpfiles.rules = [
-      "Z /mnt/media/shows 771 sonarr media"
-      "Z /mnt/media/movies 771 radarr media"
-      "Z /mnt/media/books 771 readarr media"
+      "Z /mnt/media/shows 777 sonarr media"
+      "Z /mnt/media/movies 777 radarr media"
+      "Z /mnt/media/books 777 readarr media"
     ];
     # redo the chown as soon as the path changes
     paths."media".pathConfig = {
