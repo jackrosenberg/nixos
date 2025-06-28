@@ -112,6 +112,9 @@
         };
         # recursive chown of folders so bazarr can write subs
         tmpfiles.rules = [
+            "Z /home/media/downloads 770 transmission media"
+            "Z /home/media/.incomplete 770 transmission media"
+
             "Z /home/media/shows 771 sonarr media"
             "Z /home/media/movies 771 radarr media"
             "Z /home/media/books 771 readarr media"
