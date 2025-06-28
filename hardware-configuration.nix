@@ -18,36 +18,21 @@
       fsType = "ext4";
     };
 
-  fileSystems."/mnt/media" =
-    { device = "/dev/disk/by-uuid/ae16f82d-7f3c-4f5f-b906-d0d65e2e8523";
+  fileSystems."/var/lib/containers/storage/overlay" =
+    { device = "/var/lib/containers/storage/overlay";
+      fsType = "none";
+      options = [ "bind" ];
+    };
+
+  fileSystems."/mnt" =
+    { device = "/dev/disk/by-uuid/92291989-678d-4ac5-8a73-f1ac95721c05";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/98C0-72EB";
       fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
-
-  fileSystems."/mnt/nixpool" =
-    { device = "nixpool";
-      fsType = "zfs";
-    };
-
-  fileSystems."/mnt/nixpool/services" =
-    { device = "nixpool/services";
-      fsType = "zfs";
-    };
-
-  fileSystems."/mnt/nixpool/immich" =
-    { device = "nixpool/immich";
-      fsType = "zfs";
-    };
-
-  fileSystems."/var/lib/containers/storage/overlay" =
-    { device = "/var/lib/containers/storage/overlay";
-      fsType = "none";
-      options = [ "bind" ];
+      options = [ "fmask=0022" "dmask=0022" ];
     };
 
   swapDevices =

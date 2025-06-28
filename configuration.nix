@@ -14,25 +14,25 @@
 
       # ./mods/nextcloud.nix # REENABLE ME
       # ./mods/immich.nix # REENABLE ME
-      ./mods/tailscale.nix
-      ./mods/jelly.nix
-      ./mods/pirateship.nix 
-      ./mods/audiobookshelf.nix 
-      ./mods/cloudflared.nix
-      ./mods/wastebin.nix
+      # ./mods/tailscale.nix
+      # ./mods/jelly.nix
+      # ./mods/pirateship.nix 
+      # ./mods/audiobookshelf.nix 
+      # ./mods/cloudflared.nix
+      # ./mods/wastebin.nix
       # ./mods/healthchecks.nix
-      ./mods/newt.nix
+      # ./mods/newt.nix
 
-      ./mods/grafana.nix
-      ./mods/prometheus.nix
-      ./mods/graphite.nix
-      ./mods/loki.nix
-      ./mods/alloy.nix
+      # ./mods/grafana.nix
+      # ./mods/prometheus.nix
+      # ./mods/graphite.nix
+      # ./mods/loki.nix
+      # ./mods/alloy.nix
 
       ./mods/nvf.nix
 
-      ./dockerimgs/homarr/docker-compose.nix
-      ./dockerimgs/dawarich/docker-compose.nix
+      # ./dockerimgs/homarr/docker-compose.nix
+      # ./dockerimgs/dawarich/docker-compose.nix
   ];
 
   # Bootloader.
@@ -170,8 +170,9 @@
       bat
       shh
       signal-desktop
-      devenv
-      turbo
+      # devenv
+      parted
+      jq
     ];
   };
     programs = { 
