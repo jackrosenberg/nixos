@@ -80,8 +80,15 @@
           }
         ];
         
+        # todo: make this a map
         languages = {
           nix = {
+            enable = true;
+            format.enable = true;
+            lsp.enable = true;
+            treesitter.enable = true;
+          };
+          python = {
             enable = true;
             format.enable = true;
             lsp.enable = true;

@@ -12,22 +12,23 @@
       ./mods/zfs.nix
       ./mods/backups.nix
 
-      ./mods/nextcloud.nix # REENABLE ME
-      ./mods/immich.nix # REENABLE ME
+      ./mods/nextcloud.nix
+      ./mods/immich.nix
       ./mods/tailscale.nix
       ./mods/jelly.nix
       ./mods/pirateship.nix 
       ./mods/audiobookshelf.nix 
       ./mods/cloudflared.nix
       ./mods/wastebin.nix
-      # ./mods/healthchecks.nix
-      # ./mods/newt.nix
+      /home/jack/dev/nix/fossorial-init/nixos/modules/services/networking/newt.nix
+      ./mods/newt.nix
 
       ./mods/grafana.nix
       ./mods/prometheus.nix
       ./mods/graphite.nix
       ./mods/loki.nix
       ./mods/alloy.nix
+      ./mods/uptimekuma.nix
 
       ./mods/nvf.nix
 
@@ -69,6 +70,8 @@
 
   # this is sysctl if im not mistaken
   services = {
+    # usbstick auto mount
+    udisks2.enable = true;
     # Configure keymap in X11
     xserver = {
       # Enable the X11 windowing system.
@@ -176,6 +179,11 @@
       # devenv
       parted
       jq
+      prismlauncher
+      #### work
+      citrix_workspace
+      ####
+      nautilus
     ];
   };
     programs = { 

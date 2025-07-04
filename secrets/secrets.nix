@@ -5,8 +5,7 @@ in
   "rcloneConf.age".publicKeys = [ system1 ];
   "resticPDrivePass.age".publicKeys = [ system1 ];
   "transmissionCreds.age".publicKeys = [ system1 ];
-  "healthchecksEMailPw.age".publicKeys = [ system1 ];
-  "healthchecksHTTPKey.age".publicKeys = [ system1 ];
+  "healthchecksSettings.age".publicKeys = [ system1 ];
   "newtConf.age".publicKeys = [ system1 ];
 }
 

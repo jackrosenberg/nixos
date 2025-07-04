@@ -1,6 +1,6 @@
 { config, ...}:
 {
-  # # agenix
+  # agenix
   age = {
     secrets.newtConf.file = ../secrets/newtConf.age;
     identityPaths = [
