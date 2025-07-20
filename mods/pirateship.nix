@@ -27,22 +27,20 @@
     tmpfiles.rules = [
       "Z /mnt/media/shows 777 sonarr media"
       "Z /mnt/media/movies 777 radarr media"
-      "Z /mnt/media/books 777 readarr media"
+      "Z /mnt/media/books/{ebooks,audiobooks} 777 readarr media"
     ];
-    # redo the chown as soon as the path changes
-    paths."media".pathConfig = {
-       PathChanged = "/mnt/media";
-       Unit = "systemd-tmpfiles-resetup.service";
-    };
   };
-
   # remake users
   users = {
     groups.media = {
       gid = lib.mkForce 999;
-      members = ["jellyfin" "prowlarr" "radarr" "sonarr" "bazarr" "readarr" "audiobookshelf"];
+      members = ["jellyfin" "prowlarr" "radarr" "sonarr" "bazarr" "readarr" "audiobookshelf" "transmission"];
     };
     users = {
+     "transmission" = {
+        group = "media";
+        uid = lib.mkForce 70;
+      };
      "sonarr" = {
         group = "media";
         uid = lib.mkForce 274;
@@ -80,15 +78,15 @@
 
     config = { lib, pkgs, ... }: 
     {
-      environment.systemPackages = with pkgs; [
-        kitty
-        neovim
-        fastfetch
-      ];
-
-     environment.etc = { # grosshack
-        "resolv.conf".text = "nameserver 10.96.0.1\n";
+      environment = {
+        systemPackages = with pkgs; [
+          kitty
+          neovim
+          fastfetch
+        ];
+        etc."resolv.conf".text = "nameserver 10.96.0.1\n"; # grosshack
       };
+
 
       networking = {
         # Workaround for bug https://github.com/NixOS/nixpkgs/issues/162686
@@ -114,17 +112,20 @@
         tmpfiles.rules = [
             "Z /home/media/downloads 770 transmission media"
             "Z /home/media/.incomplete 770 transmission media"
-
+            # folder for books since readarr sucks
+            # does not work, need to make manually
+            # mkdir -p /home/media/downloads/books/{ebooks,audiobooks}
+            # chown -R transmission:media /home/media/downloads/books/
+            # "Z /home/media/downloads/books 770 transmission media"
             "Z /home/media/shows 771 sonarr media"
             "Z /home/media/movies 771 radarr media"
-            "Z /home/media/books 771 readarr media"
-            # folder for books since readarr sucks
-            "Z /home/media/downloads/books 777 transmission media"
+            "Z /home/media/books 777 readarr media"
         ];
       };
       services = {
         transmission = {
           enable = true;
+          group = "media";
           openFirewall = true;
           openRPCPort = true;
           package = pkgs.transmission_4;

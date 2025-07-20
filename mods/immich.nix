@@ -9,6 +9,7 @@
     accelerationDevices = null;
     # loc in zpool
     mediaLocation = "/mnt/nixpool/immich";
+    environment.THUMB_LOCATION = "/var/lib/immich/thumbs";
   };
   users.users.immich.extraGroups = [ "video" "render" ];
 }

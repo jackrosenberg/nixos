@@ -20,7 +20,6 @@
       ./mods/audiobookshelf.nix 
       ./mods/cloudflared.nix
       ./mods/wastebin.nix
-      /home/jack/dev/nix/fossorial-init/nixos/modules/services/networking/newt.nix
       ./mods/newt.nix
 
       ./mods/grafana.nix
@@ -35,7 +34,10 @@
       ./dockerimgs/homarr/docker-compose.nix
       ./dockerimgs/dawarich/docker-compose.nix
   ];
-
+  # REMOVE ME WHEN DONE
+  nixpkgs.config.permittedInsecurePackages = [
+                "libxml2-2.13.8"
+  ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -112,7 +114,7 @@
 
   nix = {
     package = pkgs.nix;
-    settings.experimental-features = ["nix-command" "flakes"];
+    settings.experimental-features = ["nix-command" "flakes" "pipe-operators"];
   };
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
@@ -176,14 +178,19 @@
       bat
       shh
       signal-desktop
-      # devenv
       parted
       jq
-      prismlauncher
       #### work
       citrix_workspace
       ####
       nautilus
+      nixpkgs-review
+      gh
+      ## dev
+      nodejs_20
+      go
+      sqlite
+      ## 
     ];
   };
     programs = { 
