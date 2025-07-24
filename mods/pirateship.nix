@@ -4,7 +4,7 @@ let
     lib.concatMapAttrs (name: values:
       builtins.listToAttrs (map (value:
         lib.nameValuePair "${loc}/${value}" {
-          d = {
+          Z = {
             user = name;
             group = "media";
             mode = "0770";
@@ -36,7 +36,14 @@ in {
   };
   # make the paths required in the host for media
   systemd.tmpfiles.settings."10-media-paths" =
-    genPaths "/mnt/media" commonPaths;
+    (genPaths "/mnt/media" commonPaths) // 
+    {
+      "/mnt/media".d = {
+        user = "root";
+        group = "media";
+        mode = "0770";
+      };
+    };
   # remake users
   users = {
     groups.media = {

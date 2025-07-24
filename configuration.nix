@@ -159,6 +159,7 @@
       btop
       neofetch
       kitty
+      lshw
       zsh
       zsh-powerlevel10k
       docker-compose
