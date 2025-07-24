@@ -1,6 +1,5 @@
-{...}:
-{
-services.loki = {
+{ ... }: {
+  services.loki = {
     enable = true;
     # https://github.com/grafana/loki/blob/main/cmd/loki/loki-local-config.yaml
     configuration = {
@@ -45,11 +44,11 @@ services.loki = {
         enabled = true;
         metric_aggregation.loki_address = "localhost:9003";
       };
-  
+
       # ruler.alertmanager_url = "http://localhost:"
       frontend.encoding = "protobuf";
 
       # querier.engine.enable_multi_variant_queries = true;
     };
-};
+  };
 }

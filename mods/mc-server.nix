@@ -1,10 +1,10 @@
-{ pkgs, ...}:
-{
+{ pkgs, ... }: {
   services.minecraft-server = {
     enable = true;
     eula = true;
     package = pkgs.minecraftServers.vanilla-1-20;
-    openFirewall = true; # Opens the port the server is running on (by default 25565 but in this case 43000)
+    openFirewall =
+      true; # Opens the port the server is running on (by default 25565 but in this case 43000)
     declarative = true;
     serverProperties = {
       server-port = 25565;

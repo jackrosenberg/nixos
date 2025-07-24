@@ -1,7 +1,6 @@
-{ config, lib, pkgs, ... }:
-{
-    services.tailscale = { 
-      enable = true;
-      useRoutingFeatures = "server";
-    };
+{ config, lib, pkgs, ... }: {
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "server";
+  };
 }

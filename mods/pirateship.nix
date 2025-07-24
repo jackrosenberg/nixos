@@ -1,92 +1,89 @@
 { pkgs, lib, ... }:
-{
+let
+  genPaths = loc:
+    lib.concatMapAttrs (name: values:
+      builtins.listToAttrs (map (value:
+        lib.nameValuePair "${loc}/${value}" {
+          d = {
+            user = name;
+            group = "media";
+            mode = "0770";
+          };
+        }) values));
+
+  commonPaths = {
+    "sonarr" = [ "shows" ];
+    "radarr" = [ "movies" ];
+    "readarr" = [ "books/ebooks" "books/audiobooks" ];
+  };
+in {
   environment.etc.openvpn.source = "${pkgs.update-resolv-conf}/libexec/openvpn";
 
-  services = {
-    openvpn.servers = {
-      torrentvpn = {
-        config = ''
-          config /etc/nixos/openvpn/nl-01.protonvpn.udp.ovpn
-          auth-user-pass /etc/nixos/openvpn/auth-user-pass
-        ''; 
-        # updateResolvConf = true; needs to be off otherwise tailscale fucks up
-      };
-    };
-  };
+  # setup service on host to run VPN
+  # cant be via wg, since that fucks with tailscale
+  services.openvpn.servers.torrentvpn.config = ''
+    config /etc/nixos/openvpn/nl-01.protonvpn.udp.ovpn
+    auth-user-pass /etc/nixos/openvpn/auth-user-pass
+  '';
 
   networking = {
     nat = {
       enable = true;
-      internalInterfaces = ["ve-+"];
+      internalInterfaces = [ "ve-+" ];
       externalInterface = "tun0";
     };
     networkmanager.unmanaged = [ "interface-name:ve-*" ];
   };
-  systemd = {
-    # TODO change permissions, cant be asked rn
-    tmpfiles.rules = [
-      "Z /mnt/media/shows 770 sonarr media"
-      "Z /mnt/media/movies 770 radarr media"
-      "Z /mnt/media/books/{ebooks,audiobooks} 770 readarr media"
-    ];
-  };
+  # make the paths required in the host for media
+  systemd.tmpfiles.settings."10-media-paths" =
+    genPaths "/mnt/media" commonPaths;
   # remake users
   users = {
     groups.media = {
       gid = lib.mkForce 999;
-      members = ["jellyfin" "prowlarr" "radarr" "sonarr" "bazarr" "readarr" "audiobookshelf" "transmission"];
+      members = [
+        "jellyfin"
+        "prowlarr"
+        "radarr"
+        "sonarr"
+        "bazarr"
+        "readarr"
+        "audiobookshelf"
+        "transmission"
+      ];
     };
-    users = {
-     "transmission" = {
-        group = "media";
-        uid = lib.mkForce 70;
-      };
-     "sonarr" = {
-        group = "media";
-        uid = lib.mkForce 274;
-      };
-      "radarr" = {
-        group = "media";
-        uid = lib.mkForce 275;
-      };
-      "prowlarr" = {
-        uid = lib.mkForce 995;
-        group = "media";
-      };
-     "readarr" = {
-        group = "media";
-        uid = lib.mkForce 997;
-      };
-     "bazarr" = {
-        group = "media";
-        uid = lib.mkForce 999;
-      };
+    users = builtins.mapAttrs (name: value: {
+      group = "media";
+      uid = lib.mkForce value;
+    }) {
+      "transmission" = 70;
+      "sonarr" = 274;
+      "radarr" = 275;
+      "prowlarr" = 995;
+      "readarr" = 997;
+      "bazarr" = 999;
     };
   };
 
   containers.pirateship = {
     autoStart = true;
-  
-    privateNetwork = true; # needed for vpn 
+    privateNetwork = true; # needed for vpn
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.11";
-    
+
     bindMounts."/home/media" = { # path in container
       hostPath = "/mnt/media"; # path in host
-      isReadOnly = false;
+      isReadOnly = false; # allow container to write to outside container here
     };
 
-    config = { lib, pkgs, ... }: 
-    {
+    config = { lib, pkgs, ... }: {
       environment = {
-        systemPackages = with pkgs; [
-          kitty
-          neovim
-          fastfetch
-        ];
-        etc."resolv.conf".text = "nameserver 10.96.0.1\n"; # grosshack
+        systemPackages = with pkgs; [ kitty neovim fastfetch ];
+        # only allow access to proton's nameservers so no DNSleaks
+        etc."resolv.conf".text = ''
+          nameserver 10.96.0.1
+        '';
       };
-
 
       networking = {
         # Workaround for bug https://github.com/NixOS/nixpkgs/issues/162686
@@ -98,9 +95,9 @@
         };
       };
 
-      # add users to correct group
-      users.groups.media.members = ["prowlarr" "radarr" "sonarr" "bazarr" "readarr" "transmission"];
-
+      # add users to correct group in container
+      users.groups.media.members =
+        [ "prowlarr" "radarr" "sonarr" "bazarr" "readarr" "transmission" ];
       systemd = {
         # stupid ass fix for transmission
         services.transmission.serviceConfig = {
@@ -108,18 +105,9 @@
           RootDirectory = lib.mkForce "";
           BindReadOnlyPaths = lib.mkForce [ builtins.storeDir "/etc" ];
         };
-        # recursive chown of folders so bazarr can write subs
-        tmpfiles.rules = [
-            "Z /home/media/{downloads,.incomplete} 770 transmission media"
-            # folder for books since readarr sucks
-            # does not work, need to make manually
-            # mkdir -p /home/media/downloads/books/{ebooks,audiobooks}
-            # chown -R transmission:media /home/media/downloads/books/
-            # "Z /home/media/downloads/books 770 transmission media"
-            "Z /home/media/shows 770 sonarr media"
-            "Z /home/media/movies 770 radarr media"
-            "Z /home/media/books 770 readarr media"
-        ];
+        # remake paths in container as transmission & co expect
+        tmpfiles.settings."10-media-paths" = genPaths "/home/media"
+          (commonPaths // { "transmission" = [ "downloads" ".incomplete" ]; });
       };
       services = {
         transmission = {
@@ -135,8 +123,8 @@
             download-dir = "/home/media/downloads";
             incomplete-dir = "/home/media/.incomplete";
             rpc-bind-address = "0.0.0.0";
-            rpc-whitelist =  "127.0.0.1,192.168.100.10";
-            rpc-host-whitelist =  "*.jackr.eu,*.spectrumtijger.nl";
+            rpc-whitelist = "127.0.0.1,192.168.100.10";
+            rpc-host-whitelist = "*.jackr.eu,*.spectrumtijger.nl";
             rpc-authentication-required = true;
           };
         };
@@ -157,17 +145,17 @@
           enable = true;
           openFirewall = true;
           group = "media";
-         };
+        };
         sonarr = {
           enable = true;
           openFirewall = true;
           group = "media";
-        }; 
+        };
         readarr = {
           enable = true;
           openFirewall = true;
           group = "media";
-        }; 
+        };
       };
     };
   };

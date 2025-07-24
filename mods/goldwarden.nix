@@ -1,6 +1,1 @@
-{ ... }:
-{
-  programs.goldwarden = {
-    enable = true;
-  };
-}
+{ ... }: { programs.goldwarden = { enable = true; }; }

@@ -165,9 +165,6 @@
       dive # look into docker image layers
       podman-tui # status of containers in the terminal
       podman-compose # start group of containers for dev
-      jellyfin
-      jellyfin-web
-      jellyfin-ffmpeg
       smartmontools
       tree
       morph
@@ -187,7 +184,10 @@
       citrix_workspace
       ####
       nautilus
+      ## nixos utils
       nixpkgs-review
+      nixfmt-classic
+      ##
       gh
       ## dev
       nodejs_20

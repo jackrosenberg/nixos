@@ -1,5 +1,4 @@
-{ pkgs, config, lib, ...}:
-{
+{ pkgs, config, lib, ... }: {
   # https://francis.begyn.be/blog/nixos-restic-backups
 
   # this is the game plan: generate the file and store it encrypted with age 
@@ -11,17 +10,12 @@
   # init repo with: 
   # restic -v -r rclone:PDrive:/backups init
 
-  environment.systemPackages = with pkgs; [
-   rclone
-   restic
-  ];
+  environment.systemPackages = with pkgs; [ rclone restic ];
   # agenix
   age = {
     secrets.resticPDrivePass.file = ../secrets/resticPDrivePass.age;
     secrets.rcloneConf.file = ../secrets/rcloneConf.age;
-    identityPaths = [
-      "/etc/age/id_ed25519"
-    ];
+    identityPaths = [ "/etc/age/id_ed25519" ];
   };
 
   services.restic.backups = {
@@ -35,20 +29,24 @@
           client_salted_key_pass= 
         # add ip rule
         IP=$(${lib.getExe pkgs.dig} +short mail.proton.me | head -1)
-        
+
         # Add route
-        ${lib.getExe' pkgs.iproute2 "ip"} route add $IP via 192.168.2.1 dev enp5s0
+        ${
+          lib.getExe' pkgs.iproute2 "ip"
+        } route add $IP via 192.168.2.1 dev enp5s0
 
         # run a fast command to re-gen credentials
         ${lib.getExe pkgs.rclone} lsd PDrive:
 
         # Del route
-        ${lib.getExe' pkgs.iproute2 "ip"} route del $IP via 192.168.2.1 dev enp5s0
+        ${
+          lib.getExe' pkgs.iproute2 "ip"
+        } route del $IP via 192.168.2.1 dev enp5s0
       '';
       rcloneConfigFile = config.age.secrets.rcloneConf.path;
       # needed for if backup failed
       rcloneOptions.protondrive-replace-existing-draft = true;
-      progressFps = 0.01666; # print one update per min
+      progressFps = 1.666e-2; # print one update per min
       paths = [ # what to backup
         "/mnt/nixpool/immich/library/"
       ];

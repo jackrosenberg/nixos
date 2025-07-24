@@ -1,11 +1,19 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }: 
+let
+  common = {
+    enable = true;
+    openFirewall = true;
+  };
+in
 {
-    services.jellyfin = {
-      enable = true;
-      openFirewall = true;
-    };
-    services.jellyseerr = {
-      enable = true;
-      openFirewall = true;
-    };
+  environment.systemPackages = with pkgs; [
+    jellyfin
+    jellyfin-web
+    jellyfin-ffmpeg
+  ];
+
+  services = {
+    jellyfin = common // {group = "media";};
+    jellyseerr = common;
+  };
 }

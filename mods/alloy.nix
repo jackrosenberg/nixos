@@ -1,15 +1,14 @@
-{...}:
-{
+{ ... }: {
   environment.etc."configs/alloy".text = ''
     discovery.relabel "journal" {
     	targets = []
-    
+
     	rule {
     		source_labels = ["__journal__systemd_unit"]
     		target_label  = "unit"
     	}
     }
-    
+
     loki.source.journal "journal" {
     	max_age       = "12h0m0s"
     	relabel_rules = discovery.relabel.journal.rules
@@ -19,7 +18,7 @@
     		job  = "systemd-journal",
     	}
     }
-    
+
     loki.write "default" {
     	endpoint {
     		url = "http://127.0.0.1:9003/loki/api/v1/push"
@@ -28,7 +27,7 @@
     }
   '';
   services.alloy = {
-      enable = true;
-      configPath = "/etc/configs/alloy";
+    enable = true;
+    configPath = "/etc/configs/alloy";
   };
 }

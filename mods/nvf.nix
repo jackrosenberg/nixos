@@ -4,7 +4,7 @@
   programs.nvf = {
     enable = true;
     settings = {
-      vim = { 
+      vim = {
         theme = {
           enable = true;
           name = "dracula";
@@ -17,8 +17,8 @@
           foldmethod = "manual";
           viewoptions = "folds,cursor";
           foldenable = true;
-          foldlevelstart = 0;  # All folds closed when opening files
-          foldlevel = 0;       # Close all folds in current buffer
+          foldlevelstart = 0; # All folds closed when opening files
+          foldlevel = 0; # Close all folds in current buffer
         };
         # shits FUCKED up bigtime 
         # it's jumping around and stuff and making ghost edits
@@ -49,7 +49,7 @@
         #     # command = "loadview"; #silent!  
         #   }
         # ];
-        autocomplete.nvim-cmp = { 
+        autocomplete.nvim-cmp = {
           enable = true;
           mappings = {
             confirm = "<CR>";
@@ -79,7 +79,7 @@
             action = "m`o<Esc>``";
           }
         ];
-        
+
         # todo: make this a map
         languages = {
           nix = {
@@ -97,8 +97,11 @@
         };
         lazy.plugins = {
           "neo-tree.nvim" = {
-            package  = pkgs.vimPlugins.neo-tree-nvim;
-             event = [{event = "User"; pattern = "LazyFile";}];
+            package = pkgs.vimPlugins.neo-tree-nvim;
+            event = [{
+              event = "User";
+              pattern = "LazyFile";
+            }];
           };
         };
       };
