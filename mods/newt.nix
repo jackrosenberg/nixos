@@ -9,7 +9,7 @@
   };
   services.newt = {
     enable = true;
-    endpoint = "https://pangolin.spectrumtijger.nl";
+    endpoint = "https://pang.spectrumtijger.nl";
     environmentFile = config.age.secrets.newtConf.path; #/tmp/newt/conf;# 
   };
 }

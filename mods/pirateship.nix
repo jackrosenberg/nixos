@@ -25,9 +25,9 @@
   systemd = {
     # TODO change permissions, cant be asked rn
     tmpfiles.rules = [
-      "Z /mnt/media/shows 777 sonarr media"
-      "Z /mnt/media/movies 777 radarr media"
-      "Z /mnt/media/books/{ebooks,audiobooks} 777 readarr media"
+      "Z /mnt/media/shows 770 sonarr media"
+      "Z /mnt/media/movies 770 radarr media"
+      "Z /mnt/media/books/{ebooks,audiobooks} 770 readarr media"
     ];
   };
   # remake users
@@ -110,16 +110,15 @@
         };
         # recursive chown of folders so bazarr can write subs
         tmpfiles.rules = [
-            "Z /home/media/downloads 770 transmission media"
-            "Z /home/media/.incomplete 770 transmission media"
+            "Z /home/media/{downloads,.incomplete} 770 transmission media"
             # folder for books since readarr sucks
             # does not work, need to make manually
             # mkdir -p /home/media/downloads/books/{ebooks,audiobooks}
             # chown -R transmission:media /home/media/downloads/books/
             # "Z /home/media/downloads/books 770 transmission media"
-            "Z /home/media/shows 771 sonarr media"
-            "Z /home/media/movies 771 radarr media"
-            "Z /home/media/books 777 readarr media"
+            "Z /home/media/shows 770 sonarr media"
+            "Z /home/media/movies 770 radarr media"
+            "Z /home/media/books 770 readarr media"
         ];
       };
       services = {

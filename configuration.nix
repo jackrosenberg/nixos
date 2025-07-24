@@ -36,7 +36,7 @@
   ];
   # REMOVE ME WHEN DONE
   nixpkgs.config.permittedInsecurePackages = [
-                "libxml2-2.13.8"
+    "libxml2-2.13.8"
   ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -114,7 +114,11 @@
 
   nix = {
     package = pkgs.nix;
-    settings.experimental-features = ["nix-command" "flakes" "pipe-operators"];
+    settings = {
+      experimental-features = ["nix-command" "flakes" "pipe-operators"];
+      # enable cachix
+      trusted-users = [ "root" "jack" ];
+    };
   };
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
@@ -131,8 +135,6 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  # enable cachix
-  nix.settings.trusted-users = [ "root" "jack" ];
 
   environment = {
     extraInit = ''
@@ -153,6 +155,7 @@
       xclip
       tmux
       wget
+      toybox
       btop
       neofetch
       kitty
