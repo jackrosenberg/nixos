@@ -20,7 +20,7 @@
           foldlevelstart = 0; # All folds closed when opening files
           foldlevel = 0; # Close all folds in current buffer
         };
-        # shits FUCKED up bigtime 
+        # shits FUCKED up bigtime
         # it's jumping around and stuff and making ghost edits
         # autocmds = [
         #   {
@@ -37,7 +37,7 @@
         #   }
         #   {
         #     desc = "Load folds when enter";
-        #     event = [ "BufWinEnter" ]; 
+        #     event = [ "BufWinEnter" ];
         #     pattern = [ "*" ];
         #     callback = lib.generators.mkLuaInline ''
         #       function()
@@ -46,7 +46,7 @@
         # end
         #       end
         #     '';
-        #     # command = "loadview"; #silent!  
+        #     # command = "loadview"; #silent!
         #   }
         # ];
         autocomplete.nvim-cmp = {
@@ -59,8 +59,12 @@
           };
         };
         highlight = {
-          NormalFloat = { bg = "#555555"; };
-          FloatBorder = { fg = "#00FFFF"; };
+          NormalFloat = {
+            bg = "#555555";
+          };
+          FloatBorder = {
+            fg = "#00FFFF";
+          };
         };
         keymaps = [
           {
@@ -100,10 +104,12 @@
         lazy.plugins = {
           "neo-tree.nvim" = {
             package = pkgs.vimPlugins.neo-tree-nvim;
-            event = [{
-              event = "User";
-              pattern = "LazyFile";
-            }];
+            event = [
+              {
+                event = "User";
+                pattern = "LazyFile";
+              }
+            ];
           };
         };
       };
@@ -112,7 +118,7 @@
 
 }
 #
-# --TODO: add lang agnostic comment command for cmd /  
+# --TODO: add lang agnostic comment command for cmd /
 # -- language agnostic fun command on <F2>
 #
 # vim.opt.signcolumn = 'yes'

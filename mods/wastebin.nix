@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   services.wastebin = {
     enable = true;
     # stupid setting has a default of 1KB, this is 10MB

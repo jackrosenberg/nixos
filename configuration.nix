@@ -187,7 +187,7 @@
       nautilus
       ## nixos utils
       nixpkgs-review
-      nixfmt-classic
+      nixfmt-tree
       ##
       gh
       ## dev

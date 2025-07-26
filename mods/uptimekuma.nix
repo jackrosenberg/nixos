@@ -1,1 +1,4 @@
-{ ... }: { services.uptime-kuma.enable = true; }
+{ ... }:
+{
+  services.uptime-kuma.enable = true;
+}

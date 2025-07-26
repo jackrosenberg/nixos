@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   services.immich = {
@@ -12,5 +17,8 @@
     environment.THUMB_LOCATION = "/var/lib/immich/thumbs";
   };
   hardware.graphics.enable = true;
-  users.users.immich.extraGroups = [ "video" "render" ];
+  users.users.immich.extraGroups = [
+    "video"
+    "render"
+  ];
 }

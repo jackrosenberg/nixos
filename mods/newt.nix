@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
   # agenix
   age = {
     secrets.newtConf.file = ../secrets/newtConf.age;

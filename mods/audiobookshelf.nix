@@ -1,2 +1,6 @@
-{ ... }: { services.audiobookshelf = { enable = true; }; }
-
+{ ... }:
+{
+  services.audiobookshelf = {
+    enable = true;
+  };
+}

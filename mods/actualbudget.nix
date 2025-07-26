@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   imports = [ ./../pkgs/actualbudget.nix ];
 
   ####################

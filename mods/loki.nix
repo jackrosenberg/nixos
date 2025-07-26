@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   services.loki = {
     enable = true;
     # https://github.com/grafana/loki/blob/main/cmd/loki/loki-local-config.yaml
@@ -28,16 +29,18 @@
       limits_config.metric_aggregation_enabled = true;
 
       schema_config = {
-        configs = [{
-          from = "2025-04-08";
-          store = "tsdb";
-          object_store = "filesystem";
-          schema = "v13";
-          index = {
-            prefix = "index_";
-            period = "24h";
-          };
-        }];
+        configs = [
+          {
+            from = "2025-04-08";
+            store = "tsdb";
+            object_store = "filesystem";
+            schema = "v13";
+            index = {
+              prefix = "index_";
+              period = "24h";
+            };
+          }
+        ];
       };
 
       pattern_ingester = {

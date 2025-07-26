@@ -1,4 +1,5 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   services.pangolin = {
     enable = true;
     # package = pkgs.fosrl-pangolin.overrideAttrs (_: {
@@ -9,7 +10,9 @@
     # });
     settings = {
       # domains.default = {
-      domains.domain1 = { prefer_wildcard_cert = true; };
+      domains.domain1 = {
+        prefer_wildcard_cert = true;
+      };
     };
     dnsProvider = "mijnhost";
     baseDomain = "spectrumtijger.nl";
@@ -19,4 +22,3 @@
     traefikEnvironmentFile = "/etc/nixos/secrets/traefik.env";
   };
 }
-

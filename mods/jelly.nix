@@ -1,4 +1,4 @@
-{ pkgs, ... }: 
+{ pkgs, ... }:
 let
   common = {
     enable = true;
@@ -13,7 +13,9 @@ in
   ];
 
   services = {
-    jellyfin = common // {group = "media";};
+    jellyfin = common // {
+      group = "media";
+    };
     jellyseerr = common;
   };
 }

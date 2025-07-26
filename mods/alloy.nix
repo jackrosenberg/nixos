@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   environment.etc."configs/alloy".text = ''
     discovery.relabel "journal" {
     	targets = []
