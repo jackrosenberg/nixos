@@ -56,7 +56,6 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "nl_NL.UTF-8";
     LC_IDENTIFICATION = "nl_NL.UTF-8";
@@ -73,17 +72,9 @@
   services = {
     # usbstick auto mount
     udisks2.enable = true;
-    # Configure keymap in X11
-    xserver = {
-      # Enable the X11 windowing system.
-      enable = true;
-      # Enable the GNOME Desktop Environment.
-      displayManager.gdm = {
-        enable = true;
-        #fuck u autosus
-        autoSuspend = false;
-      };
-    };
+    # kinda important, otherwise no displayManager
+    displayManager.gdm.wayland.enable = true;
+    xserver.enable = true;
     # keyboard shenenagains
     udev.packages = [ pkgs.via ];
   };
@@ -91,9 +82,7 @@
   hardware.keyboard.qmk.enable = true;
   # Enable common container config files in /etc/containers
   virtualisation = {
-    containers = { 
-      enable = true;
-    };
+    containers.enable = true;
     podman = {
       enable = true;
       dockerCompat = true;
@@ -110,6 +99,8 @@
     hybrid-sleep.enable = false;
   };
 
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 
   nix = {
     package = pkgs.nix;
@@ -119,6 +110,7 @@
       trusted-users = [ "root" "jack" ];
     };
   };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
     defaultUserShell = pkgs.zsh;
@@ -131,9 +123,6 @@
       ];
     };
   };
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   environment = {
     extraInit = ''
@@ -196,14 +185,10 @@
       ## 
     ];
   };
-    programs = { 
-      ssh.forwardX11 = true; # allow ssh x forwarding
-      zsh = {
-        enable = true;
-      };
-      neovim = {
-        enable = true;
-      };
+  programs = { 
+    # sets some env vars like $EDITOR
+    zsh.enable = true;
+    neovim.enable = true;
   };
   system.stateVersion = "25.05"; # Did you read the comment?
 }
