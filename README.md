@@ -11,7 +11,7 @@ Ok, basic idea:
 - zpool: (zfs)
     - /mnt/nixpool : raidz1 3x 2TB HDD (total: ~3.6 TB, protected for 1 disk failure)
 - media storage: (ext4)
-    - /mnt/media: 1x 4TB HDD
+    - /mnt/media: 1x 12TB HDD (refurbished)
 ### Backups:
 - Restic + rclone + ProtonDrive
  
