@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   environment.etc."nextcloud-admin-pass".text = "PWD";
   services.nextcloud = {
@@ -12,6 +12,7 @@
     settings = {
       trusted_domains = [
         "*.jackr.eu"
+        "*.spectrumtijger.nl"
         "10.89.0.1"
       ];
     };

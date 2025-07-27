@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ ... }:
 {
   # ZFS
   boot.supportedFilesystems = [ "zfs" ];

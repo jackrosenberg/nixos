@@ -24,7 +24,6 @@
 
       ./mods/grafana.nix
       ./mods/prometheus.nix
-      ./mods/graphite.nix
       ./mods/loki.nix
       ./mods/alloy.nix
       ./mods/uptimekuma.nix

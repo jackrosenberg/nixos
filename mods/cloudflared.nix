@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ ... }:
 {
   # up the mem so that the elliptical curve works
   boot.kernel.sysctl = {
