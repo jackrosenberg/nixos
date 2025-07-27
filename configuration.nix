@@ -72,9 +72,6 @@
   services = {
     # usbstick auto mount
     udisks2.enable = true;
-    # kinda important, otherwise no displayManager
-    displayManager.gdm.wayland.enable = true;
-    xserver.enable = true;
     # keyboard shenenagains
     udev.packages = [ pkgs.via ];
   };
@@ -88,15 +85,6 @@
       dockerCompat = true;
       defaultNetwork.settings.dns_enabled = true;
     };
-  };
-
-  # If no user is logged in, the machine will power down after 20 minutes.
-  # Disable the GNOME3/GDM auto-suspend feature that cannot be disabled in GUI!
-  systemd.targets = { 
-    sleep.enable = false;
-    suspend.enable = false;
-    hibernate.enable = false;
-    hybrid-sleep.enable = false;
   };
 
   # Allow unfree packages
