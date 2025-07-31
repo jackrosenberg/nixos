@@ -51,16 +51,15 @@
         [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
         # Add keybinds
-        bindkey -M viins 'jj' vi-cmd-mode
+        bindkey -M viins 'jh' vi-cmd-mode
         bindkey -M viins '^R' history-incremental-search-backward
       '';
       
       shellAliases = {
         v = "nvim";
         ne = "nvim /etc/nixos/configuration.nix";
-        ns = "sudo nixos-rebuild --cores 0 switch";
+        ns = "sudo nixos-rebuild switch";
         hs = "home-manager switch";
-        he = "nvim ~/nix-config/home.nix";
         cl = "clear";
       };
       

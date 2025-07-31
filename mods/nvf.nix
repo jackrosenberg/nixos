@@ -68,7 +68,7 @@
         };
         keymaps = [
           {
-            key = "jj";
+            key = "jh";
             mode = "i";
             action = "<esc>";
           }
