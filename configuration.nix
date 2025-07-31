@@ -27,13 +27,14 @@
       ./mods/loki.nix
       ./mods/alloy.nix
       ./mods/uptimekuma.nix
+      # ./mods/lasuite.nix
 
       ./mods/nvf.nix
 
       ./dockerimgs/homarr/docker-compose.nix
       ./dockerimgs/dawarich/docker-compose.nix
   ];
-  # REMOVE ME WHEN DONE
+  # # REMOVE ME WHEN DONE
   nixpkgs.config.permittedInsecurePackages = [
     "libxml2-2.13.8"
   ];
@@ -70,6 +71,16 @@
 
   # this is sysctl if im not mistaken
   services = {
+    displayManager.gdm = {
+      enable = true;
+      #fuck u autosus
+      autoSuspend = false;
+    };
+    xserver = {
+      # Enable the X11 windowing system.
+      enable = true;
+      # Enable the GNOME Desktop Environment.
+    };
     # usbstick auto mount
     udisks2.enable = true;
     # keyboard shenenagains
@@ -91,11 +102,14 @@
   nixpkgs.config.allowUnfree = true;
 
   nix = {
-    package = pkgs.nix;
     settings = {
       experimental-features = ["nix-command" "flakes" "pipe-operators"];
       # enable cachix
       trusted-users = [ "root" "jack" ];
+    };
+    # garbage collection
+    gc = {
+      automatic = true;
     };
   };
 
@@ -105,8 +119,7 @@
     users.jack = {
       isNormalUser = true;
       description = "jack";
-      extraGroups = [ "
-      networkmanager" "wheel" "nix-users" ];
+      extraGroups = [ " networkmanager" "wheel" "nix-users" ];
       packages = with pkgs; [
       ];
     };

@@ -30,8 +30,8 @@
         #     callback = lib.generators.mkLuaInline ''
         #       function()
         #         if vim.bo.buftype == "" and vim.bo.modifiable and vim.fn.expand("%") ~= "" then
-        #           vim.cmd("loadview")
-        # end
+        #           vim.cmd("mkview")
+        #         end
         #       end
         #     '';
         #   }
@@ -43,7 +43,7 @@
         #       function()
         #         if vim.bo.buftype == "" and vim.bo.modifiable and vim.fn.expand("%") ~= "" then
         #           vim.cmd("loadview")
-        # end
+        #         end
         #       end
         #     '';
         #     # command = "loadview"; #silent!

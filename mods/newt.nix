@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   # agenix
   age = {
@@ -7,7 +7,12 @@
   };
   services.newt = {
     enable = true;
-    endpoint = "https://pang.spectrumtijger.nl";
+    package = pkgs.newt-go.overrideAttrs (f: p: {
+      version = "1.4.0";
+      src.hash = "sha256-t1MqcrbYa5vojMOyn+iyExsUDQ1FQYlmZBFqyOkotyw=";
+      vendorHash = "sha256-V8sq7XD/HJFKjhggrDWPdEEq3hjz0IHzpybQXA8Z/pg=";
+    });
+    endpoint = "https://pangolin.spectrumtijger.nl";
     environmentFile = config.age.secrets.newtConf.path; # /tmp/newt/conf;#
   };
 }

@@ -7,5 +7,8 @@ in
   "transmissionCreds.age".publicKeys = [ system1 ];
   "healthchecksSettings.age".publicKeys = [ system1 ];
   "newtConf.age".publicKeys = [ system1 ];
+  "lasuite.age".publicKeys = [ system1 ];
+  "garageRpcSecret.age".publicKeys = [ system1 ];
+  "garageAdminToken.age".publicKeys = [ system1 ];
 }
 
