@@ -11,6 +11,7 @@
       ./mods/hyprland.nix
       ./mods/zfs.nix
       ./mods/backups.nix
+      # ./mods/kanidm.nix
 
       ./mods/nextcloud.nix
       ./mods/immich.nix
