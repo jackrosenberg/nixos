@@ -37,6 +37,7 @@
   # # REMOVE ME WHEN DONE
   nixpkgs.config.permittedInsecurePackages = [
     "libxml2-2.13.8"
+    "libsoup-2.74.3"
   ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
