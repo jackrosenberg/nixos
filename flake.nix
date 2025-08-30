@@ -27,10 +27,14 @@
           nur.modules.nixos.default
           nvf.nixosModules.default
           home-manager.nixosModules.home-manager
+          # dont understand this syntax....
+          # now i do, and i need to remove it
           {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.jack = import ./home.nix;
+            home-manager = { 
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.jack = import ./home.nix;
+            };
           }
         ];
       };

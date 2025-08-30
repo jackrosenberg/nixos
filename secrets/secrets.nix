@@ -10,5 +10,6 @@ in
   "lasuite.age".publicKeys = [ system1 ];
   "garageRpcSecret.age".publicKeys = [ system1 ];
   "garageAdminToken.age".publicKeys = [ system1 ];
+  "gitlab.age".publicKeys = [ system1 ];
 }
 

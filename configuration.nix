@@ -32,7 +32,7 @@
 
       ./mods/nvf.nix
 
-      ./dockerimgs/homarr/docker-compose.nix
+      # ./dockerimgs/homarr/docker-compose.nix
       ./dockerimgs/dawarich/docker-compose.nix
   ];
   # # REMOVE ME WHEN DONE
@@ -147,6 +147,7 @@
       tmux
       wget
       toybox
+      dust
       btop
       neofetch
       kitty

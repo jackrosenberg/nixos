@@ -152,7 +152,11 @@ in
               "Downloads/books/ebooks"
               "Downloads/books/audiobooks"
             ];
-          };
+          } // 
+          # periodically empty these files so that they dont clog /
+            {
+              "/var/lib/transmission/Downloads".D.age = "1D";
+            };
           # stupid ass fix for transmission
           services.transmission.serviceConfig = {
             ## following 3 lines are needed to make transmission work in a container
