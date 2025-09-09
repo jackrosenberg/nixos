@@ -4,6 +4,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./mods/nvf.nix
     ];
 
   # Bootloader.
@@ -35,42 +36,76 @@
     LC_TELEPHONE = "nl_NL.UTF-8";
     LC_TIME = "nl_NL.UTF-8";
   };
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
+  # make paths for the folders
+  systemd.tmpfiles.settings."10-jack-nixos-folders" = {
+    "/etc/nixos/secrets".d = {
+      user = "jack";
+      mode = "0700";
+    };
+    "/etc/nixos/mods".d = {
+      user = "jack";
+      mode = "0700";
+    };
   };
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
+  services = {
+    # Enable the GNOME Desktop Environment.
+    xserver = { 
+      # Enable the X11 windowing system.
+      enable = true;
+      displayManager.gdm.enable = true;
+      desktopManager.gnome.enable = true;
+      # Configure keymap in X11 
+      xkb = {
+        layout = "us";
+        variant = "";
+      };
+    };
 
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
+    # Enable CUPS to print documents.
+    printing.enable = true;
+    # Enable sound with pipewire.
+    pulseaudio.enable = false;
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
+  };
+
+  programs = {
+    zsh = {
+      enable = true;
+    };
+  };
+
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.jack = {
-    isNormalUser = true;
-    description = "jack";
-    extraGroups = [ "networkmanager" "wheel" ];
+  users = {
+    # defaultUserShell = pkgs.zsh; # TODO homemanager
+    users.jack = {
+      shell = pkgs.zsh;
+      isNormalUser = true;
+      description = "jack";
+      extraGroups = [ "networkmanager" "wheel" "nix-users" ];
+    };
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nix = {
+    settings = { 
+      experimental-features = ["nix-command" "flakes" "pipe-operators"];
+      # enable cachix
+      trusted-users = [ "root" "jack" ];
+    };
+    # garbage collection
+    gc = {
+      automatic = true;
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     neovim
@@ -80,6 +115,7 @@
     unityhub
     file
     kitty
+    ripgrep
   ];
 
   system.stateVersion = "25.05"; # Did you read the comment?
