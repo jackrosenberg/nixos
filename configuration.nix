@@ -49,6 +49,12 @@
   };
 
   services = {
+    openvpn.servers.ovpn = {
+      config =  ''
+        config /etc/nixos/secrets/vpn.udp.ovpn
+      '';
+      updateResolvConf = true;
+    };
     # Enable the GNOME Desktop Environment.
     xserver = { 
       # Enable the X11 windowing system.
