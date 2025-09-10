@@ -75,9 +75,8 @@
   };
 
   programs = {
-    zsh = {
-      enable = true;
-    };
+    zsh.enable = true;
+    neovim.enable = true;
   };
 
   security.rtkit.enable = true;
