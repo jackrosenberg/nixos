@@ -5,6 +5,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./mods/nvf.nix
+      ./mods/fprintd.nix
     ];
 
   # Bootloader.
