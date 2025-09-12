@@ -57,6 +57,7 @@
       updateResolvConf = true;
     };
     # Enable the GNOME Desktop Environment.
+    # desktopManager.gnome.enable = true;
     xserver = { 
       # Enable the X11 windowing system.
       enable = true;
