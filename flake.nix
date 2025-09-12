@@ -25,12 +25,8 @@
           agenix.nixosModules.default
           nur.modules.nixos.default
           nvf.nixosModules.default
+          # bomboclat, i now understand
           home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.jack = import ./home.nix;
-          }
         ];
       };
     };
