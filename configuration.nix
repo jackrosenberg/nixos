@@ -1,15 +1,15 @@
 { pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./mods/nvf.nix
-      ./mods/fprintd.nix
-      ./mods/shell.nix
-      ./mods/home.nix # fuck you homemanager
-      ./mods/hyprland.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./mods/nvf.nix
+    ./mods/shell.nix
+    ./mods/home.nix # fuck you homemanager
+    ./mods/hyprland.nix
+    ./mods/tailscale.nix
+  ];
 
   # Bootloader.
   boot = {
@@ -17,7 +17,7 @@
     loader.efi.canTouchEfiVariables = true;
     kernelPackages = pkgs.linuxPackages_latest; # Use latest kernel, DO NOT USE WITH ZFS
   };
-  
+
   networking = {
     hostName = "hermes"; # TODO FIXME
     networkmanager.enable = true; # Enable networking
@@ -27,7 +27,7 @@
   time.timeZone = "Europe/Amsterdam";
 
   # Select internationalisation properties.
-  i18n = { 
+  i18n = {
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {
       LC_ADDRESS = "nl_NL.UTF-8";
