@@ -63,9 +63,9 @@
     # };
     displayManager.gdm.enable = true;
     # desktopManager.gnome.enable = true;
-    xserver = { 
+    xserver = {
       enable = true; # Enable the X11 windowing system.
-      # Configure keymap in X11 
+      # Configure keymap in X11
       xkb = {
         layout = "us";
         variant = "";
@@ -91,16 +91,30 @@
     shell = pkgs.zsh;
     isNormalUser = true;
     description = "jack";
-    extraGroups = [ "networkmanager" "wheel" "nix-users" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "nix-users"
+    ];
   };
 
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    permittedInsecurePackages = [ "libsoup-2.74.3" ];
+    allowUnfree = true;
+  };
   nix = {
-    settings = { 
-      experimental-features = ["nix-command" "flakes" "pipe-operators"];
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+        "pipe-operators"
+      ];
       # enable cachix
-      trusted-users = [ "root" "jack" ];
+      trusted-users = [
+        "root"
+        "jack"
+      ];
     };
     # garbage collection
     gc.automatic = true;
@@ -108,17 +122,24 @@
 
   environment.systemPackages = with pkgs; [
     neovim
-    floorp
+    btop
+    mullvad-browser
+    # floorp-bin
     jujutsu
     git
     unityhub
     file
     kitty
     # rusty utils
+    fastfetch
     ripgrep
     uutils-coreutils
     dysk
     dust
+    # nix-tools
+    nixfmt-rfc-style
+    # work
+    # citrix_workspace # stupid, vulnerable
   ];
 
   system.stateVersion = "25.05"; # Did you read the comment?

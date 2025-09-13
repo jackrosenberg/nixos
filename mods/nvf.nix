@@ -20,35 +20,6 @@
           foldlevelstart = 0; # All folds closed when opening files
           foldlevel = 0; # Close all folds in current buffer
         };
-        # shits FUCKED up bigtime
-        # it's jumping around and stuff and making ghost edits
-        # autocmds = [
-        #   {
-        #     desc = "Save folds when exit";
-        #     event = [ "BufWinLeave" ];
-        #     pattern = [ "*" ];
-        #     callback = lib.generators.mkLuaInline ''
-        #       function()
-        #         if vim.bo.buftype == "" and vim.bo.modifiable and vim.fn.expand("%") ~= "" then
-        #           vim.cmd("mkview")
-        #         end
-        #       end
-        #     '';
-        #   }
-        #   {
-        #     desc = "Load folds when enter";
-        #     event = [ "BufWinEnter" ];
-        #     pattern = [ "*" ];
-        #     callback = lib.generators.mkLuaInline ''
-        #       function()
-        #         if vim.bo.buftype == "" and vim.bo.modifiable and vim.fn.expand("%") ~= "" then
-        #           vim.cmd("loadview")
-        #         end
-        #       end
-        #     '';
-        #     # command = "loadview"; #silent!
-        #   }
-        # ];
         autocomplete.nvim-cmp = {
           enable = true;
           mappings = {
@@ -104,6 +75,15 @@
         lazy.plugins = {
           "neo-tree.nvim" = {
             package = pkgs.vimPlugins.neo-tree-nvim;
+            event = [
+              {
+                event = "User";
+                pattern = "LazyFile";
+              }
+            ];
+          };
+          "omnisharp-extended-lsp.nvim" = {
+            package = pkgs.vimPlugins.omnisharp-extended-lsp-nvim;
             event = [
               {
                 event = "User";

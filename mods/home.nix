@@ -2,12 +2,12 @@
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home-manager = { 
+  home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
     users.jack = {
       home = {
-        username = "jack"; 
+        username = "jack";
         homeDirectory = "/home/jack";
         stateVersion = "25.05"; # Please read the comment before changing.
       };
