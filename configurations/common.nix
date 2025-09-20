@@ -5,7 +5,6 @@
     [
       ../mods/shell.nix
       ../mods/hyprland.nix
-      ../mods/zfs.nix
       ../mods/home.nix # fuck you homemanager
       ../mods/tailscale.nix
       ../mods/nvf.nix 
@@ -145,20 +144,13 @@
       signal-desktop
       parted
       jq
-      #### work
-      citrix_workspace
-      ####
       nautilus
-      ## nixos utils
       nixpkgs-review
       nixfmt-tree
-      ##
       gh
-      ## dev
       nodejs_20
       go
       sqlite
-      ## 
     ];
   };
   programs = { 
