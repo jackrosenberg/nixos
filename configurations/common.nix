@@ -1,57 +1,44 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { pkgs, inputs, ... }:
 
 {
-  imports = [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-
-      ./mods/hyprland.nix
-      ./mods/zfs.nix
-      ./mods/backups.nix
-      # ./mods/kanidm.nix
-
-      ./mods/nextcloud.nix
-      ./mods/immich.nix
-      ./mods/tailscale.nix
-      ./mods/jelly.nix
-      ./mods/pirateship.nix 
-      ./mods/audiobookshelf.nix 
-      ./mods/cloudflared.nix
-      ./mods/wastebin.nix
-      ./mods/newt.nix
-
-      ./mods/grafana.nix
-      ./mods/prometheus.nix
-      ./mods/loki.nix
-      ./mods/alloy.nix
-      ./mods/uptimekuma.nix
-      # ./mods/lasuite.nix
-
-      ./mods/nvf.nix
-
-      # ./dockerimgs/homarr/docker-compose.nix
-      ./dockerimgs/dawarich/docker-compose.nix
-  ];
+  imports = 
+    [
+      ../hardware-configuration.nix
+      ../mods/shell.nix
+      ../mods/hyprland.nix
+      ../mods/zfs.nix
+      ../mods/home.nix # fuck you homemanager
+      ../mods/tailscale.nix
+      ../mods/nvf.nix 
+    ];
   # # REMOVE ME WHEN DONE
   nixpkgs.config.permittedInsecurePackages = [
     "libxml2-2.13.8"
     "libsoup-2.74.3"
   ];
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
+  boot = {
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+  };
+  # make paths for the folders
+  systemd.tmpfiles.settings."10-jack-nixos-folders" = {
+    "/etc/nixos/secrets".d = {
+      user = "jack";
+      mode = "0700";
+    };
+    "/etc/nixos/mods".d = {
+      user = "jack";
+      mode = "0700";
+    };
+    "/etc/nixos/configurations".d = {
+      user = "jack";
+      mode = "0700";
+    };
+  };
   networking = { 
-    hostName = "pantheon"; # Define your hostname.
-    # Enable networking
     networkmanager.enable = true;
-    # Open ports in the firewall.
     firewall.allowedTCPPorts = [ 80 443 ];
-    # firewall.allowedUDPPorts = [ 51820 ];
-    # firewall.enable = false;
   };
 
   # Set your time zone.
@@ -71,25 +58,21 @@
     LC_TIME = "nl_NL.UTF-8";
   };
 
-  # this is sysctl if im not mistaken
   services = {
     displayManager.gdm = {
       enable = true;
-      #fuck u autosus
-      autoSuspend = false;
+      autoSuspend = false; #fuck u autosus
     };
-    xserver = {
-      # Enable the X11 windowing system.
+    printing.enable = true;
+    pulseaudio.enable = false;
+    pipewire = {
       enable = true;
-      # Enable the GNOME Desktop Environment.
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
     };
-    # usbstick auto mount
-    udisks2.enable = true;
-    # keyboard shenenagains
-    udev.packages = [ pkgs.via ];
+    xserver.enable = true;
   };
-  # keyboard shenenagains
-  hardware.keyboard.qmk.enable = true;
   # Enable common container config files in /etc/containers
   virtualisation = {
     containers.enable = true;
@@ -102,41 +85,30 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
   nix = {
     settings = {
       experimental-features = ["nix-command" "flakes" "pipe-operators"];
-      # enable cachix
-      trusted-users = [ "root" "jack" ];
+      trusted-users = [ "root" "jack" ]; # enable cachix
     };
     # garbage collection
-    gc = {
-      automatic = true;
-    };
+    gc.automatic = true;
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users = {
-    defaultUserShell = pkgs.zsh;
-    users.jack = {
-      isNormalUser = true;
-      description = "jack";
-      extraGroups = [ " networkmanager" "wheel" "nix-users" ];
-      packages = with pkgs; [
-      ];
-    };
+  users.users.jack = {
+    shell = pkgs.zsh;
+    isNormalUser = true;
+    description = "jack";
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "nix-users"
+    ];
   };
+  security.rtkit.enable = true;
 
   environment = {
-    extraInit = ''
-      if [ -z "$DOCKER_HOST" -a -n "$XDG_RUNTIME_DIR" ]; then
-        export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/podman/podman.sock"
-      fi
-    '';
-    variables = {
-      EDITOR = "nvim";
-      NIX_BUILD_CORES = 0;
-    };
+    variables.NIX_BUILD_CORES = 0;
     systemPackages = with pkgs; [
       neovim
       inputs.agenix.packages."${system}".default

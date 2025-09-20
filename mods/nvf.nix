@@ -1,5 +1,4 @@
-{ pkgs, lib, ... }:
-
+{ pkgs, ... }:
 {
   programs.nvf = {
     enable = true;
@@ -20,35 +19,6 @@
           foldlevelstart = 0; # All folds closed when opening files
           foldlevel = 0; # Close all folds in current buffer
         };
-        # shits FUCKED up bigtime
-        # it's jumping around and stuff and making ghost edits
-        # autocmds = [
-        #   {
-        #     desc = "Save folds when exit";
-        #     event = [ "BufWinLeave" ];
-        #     pattern = [ "*" ];
-        #     callback = lib.generators.mkLuaInline ''
-        #       function()
-        #         if vim.bo.buftype == "" and vim.bo.modifiable and vim.fn.expand("%") ~= "" then
-        #           vim.cmd("mkview")
-        #         end
-        #       end
-        #     '';
-        #   }
-        #   {
-        #     desc = "Load folds when enter";
-        #     event = [ "BufWinEnter" ];
-        #     pattern = [ "*" ];
-        #     callback = lib.generators.mkLuaInline ''
-        #       function()
-        #         if vim.bo.buftype == "" and vim.bo.modifiable and vim.fn.expand("%") ~= "" then
-        #           vim.cmd("loadview")
-        #         end
-        #       end
-        #     '';
-        #     # command = "loadview"; #silent!
-        #   }
-        # ];
         autocomplete.nvim-cmp = {
           enable = true;
           mappings = {
@@ -59,12 +29,8 @@
           };
         };
         highlight = {
-          NormalFloat = {
-            bg = "#555555";
-          };
-          FloatBorder = {
-            fg = "#00FFFF";
-          };
+          NormalFloat.bg = "#555555";
+          FloatBorder.fg = "#00FFFF";
         };
         keymaps = [
           {
@@ -111,26 +77,17 @@
               }
             ];
           };
+          "omnisharp-extended-lsp.nvim" = {
+            package = pkgs.vimPlugins.omnisharp-extended-lsp-nvim;
+            event = [
+              {
+                event = "User";
+                pattern = "LazyFile";
+              }
+            ];
+          };
         };
       };
     };
   };
-
 }
-#
-# --TODO: add lang agnostic comment command for cmd /
-# -- language agnostic fun command on <F2>
-#
-# vim.opt.signcolumn = 'yes'
-# vim.opt.ignorecase = true
-
-# Heads
-# heads
-# vim.opt.smartcase = true
-# vim.opt.smarttab = true
-# vim.opt.expandtab = true
-#
-#
-# pcall(vim.cmd, 'colorscheme dracula')
-# vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#555555" }) -- Background of floating windows
-# vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#00FFFF" }) -- Border color for floating windows
