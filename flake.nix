@@ -33,6 +33,7 @@
           modules = [
            ./configurations/common.nix # thanks Katalin
            ./configurations/${name}.nix
+           ./configurations/hw-${name}.nix
            { nixpkgs.hostPlatform = "x86_64-linux"; } # thanks isabelroses
            agenix.nixosModules.default
            nur.modules.nixos.default

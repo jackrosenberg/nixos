@@ -3,7 +3,6 @@
 {
   imports = 
     [
-      ../hardware-configuration.nix
       ../mods/shell.nix
       ../mods/hyprland.nix
       ../mods/zfs.nix

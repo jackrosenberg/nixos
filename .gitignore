@@ -2,5 +2,4 @@
 openvpn/*
 dockerimgs/homarr/appdata/
 # ignore machine specific stuff
-hardware-configuration.nix
 flake.lock
