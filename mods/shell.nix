@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   home-manager.users.jack.programs = {
     zsh = {
@@ -34,7 +34,7 @@
 
       shellAliases = {
         v = "nvim";
-        ne = "nvim /etc/nixos/configuration.nix";
+        ne = "nvim /etc/nixos/configurations/${config.networking.hostName}.nix";
         ns = "sudo nixos-rebuild switch";
         cl = "clear";
         jarvis = "jj";

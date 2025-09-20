@@ -119,6 +119,7 @@
       tmux
       wget
       toybox
+      floorp-bin
       dust
       btop
       neofetch
