@@ -150,6 +150,7 @@
       nautilus
       nixpkgs-review
       nixfmt-tree
+      nixf-diagnose
       gh
       nodejs_20
       go
