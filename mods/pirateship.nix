@@ -155,7 +155,7 @@ in
           } // 
           # periodically empty these files so that they dont clog /
             {
-              "/var/lib/transmission/Downloads".D.age = "1D";
+              "/var/lib/transmission/Downloads".D.age = "1m";
             };
           # stupid ass fix for transmission
           services.transmission.serviceConfig = {

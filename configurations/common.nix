@@ -74,11 +74,6 @@
   # Enable common container config files in /etc/containers
   virtualisation = {
     containers.enable = true;
-    podman = {
-      enable = true;
-      dockerCompat = true;
-      defaultNetwork.settings.dns_enabled = true;
-    };
   };
 
   # Allow unfree packages
@@ -129,8 +124,6 @@
       zsh-powerlevel10k
       docker-compose
       dive # look into docker image layers
-      podman-tui # status of containers in the terminal
-      podman-compose # start group of containers for dev
       smartmontools
       tree
       morph

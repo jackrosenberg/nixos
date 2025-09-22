@@ -3,10 +3,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     agenix.url = "github:ryantm/agenix";
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -25,21 +21,23 @@
       nvf,
       ...
     }:
+    let 
+      ifExists = p: nixpkgs.lib.optional (builtins.pathExists p) p;
+    in
    {
     # TODO!!!!
     # kharon
-    nixosConfigurations = nixpkgs.lib.genAttrs ["pantheon" "hermes"]
+    nixosConfigurations = nixpkgs.lib.genAttrs ["pantheon" "hermes" "kharon"]
     (name: nixpkgs.lib.nixosSystem {
           modules = [
-           ./configurations/common.nix # thanks Katalin
-           ./configurations/${name}.nix
-           ./configurations/hw-${name}.nix
-           { nixpkgs.hostPlatform = "x86_64-linux"; } # thanks isabelroses
-           agenix.nixosModules.default
-           nur.modules.nixos.default
-           nvf.nixosModules.default
-           home-manager.nixosModules.home-manager
-           {networking.hostName = name;}
+            ./configurations/common.nix # thanks Katalin
+            ./configurations/${name}.nix ] ++ 
+            (ifExists ./configurations/hw-${name}.nix) ++ [
+            { nixpkgs.hostPlatform = "x86_64-linux"; } # thanks isabelroses
+            agenix.nixosModules.default
+            nvf.nixosModules.default
+            home-manager.nixosModules.home-manager
+            {networking.hostName = name;}
           ];
           specialArgs = { inherit inputs self; };
         });
