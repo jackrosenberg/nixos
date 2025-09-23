@@ -103,7 +103,9 @@
       "nix-users"
     ];
   };
-  security.rtkit.enable = true;
+  security = {
+    rtkit.enable = true;
+  };
 
   environment = {
     variables.NIX_BUILD_CORES = 0;
@@ -133,6 +135,7 @@
       tree
       morph
       dysk
+      ripgrep
       wastebin
       wireguard-tools
       # nvtopPackages.full # breaks often on update

@@ -55,9 +55,7 @@
           nix = {
             enable = true;
             format.enable = true;
-            lsp = {
-              enable = true;
-            };
+            lsp.enable = true;
             treesitter.enable = true;
           };
           python = {
@@ -66,27 +64,26 @@
             lsp.enable = true;
             treesitter.enable = true;
           };
-        };
-        lazy.plugins = {
-          "neo-tree.nvim" = {
-            package = pkgs.vimPlugins.neo-tree-nvim;
-            event = [
-              {
-                event = "User";
-                pattern = "LazyFile";
-              }
-            ];
-          };
-          "omnisharp-extended-lsp.nvim" = {
-            package = pkgs.vimPlugins.omnisharp-extended-lsp-nvim;
-            event = [
-              {
-                event = "User";
-                pattern = "LazyFile";
-              }
-            ];
+          csharp = {
+            enable = true;
+            lsp = {
+              enable = true;
+              server = "omnisharp";
+            };
+            treesitter.enable = true;
           };
         };
+        # lazy.plugins = {
+        #   "omnisharp-extended-lsp.nvim" = {
+        #     package = pkgs.vimPlugins.omnisharp-extended-lsp-nvim;
+        #     event = [
+        #       {
+        #         event = "User";
+        #         pattern = "LazyFile";
+        #       }
+        #     ];
+        #   };
+        # };
       };
     };
   };
