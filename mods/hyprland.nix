@@ -7,7 +7,10 @@
 # let
 # in
 {
-  imports = [ ./hyprlock.nix ];
+  imports = [ 
+    ./hyprlock.nix
+    ./waybar.nix
+  ];
   environment.systemPackages = with pkgs; [
     hyprlock
     nwg-look
@@ -15,6 +18,7 @@
     slurp
     wl-clipboard-rs
     libnotify
+    brightnessctl
   ];
   # jazz this hoe up, this is 8GB total, so watch out
   fonts.packages = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
@@ -38,55 +42,7 @@
   };
 
   home-manager.users.jack = {
-    programs = {
-      rofi.enable = true;
-      waybar = {
-        enable = true;
-        settings.main = {
-          modules-left = [
-            "cpu"
-            "memory"
-          ];
-          modules-center = [ "clock" ];
-          modules-right = [
-            "battery"
-            "volume"
-            "network"
-          ];
-          layer = "top";
-          position = "top";
-          cpu = {
-            format = "cpu {usage}%";
-            interval = 2;
-            states.critical = 90;
-          };
-          memory = {
-            format = "mem {percentage}%";
-            interval = 2;
-            states.critical = 75;
-          };
-          clock = {
-            format = "{:%H:%M - %a, %d %b}";
-            tooltip = false;
-          };
-          network = {
-            interval = 1000;
-            format-wifi = "{icon}";
-            format-ethernet = "{ipaddr}/{cidr} ";
-            tooltip-format = "{essid}\n{ifname} via {gwaddr}\n{ipaddr}/{cidr}";
-            format-linked = "{ifname} (No IP) ";
-            format-disconnected = "󰤭";
-            format-icons = [
-              "󰤯"
-              "󰤟"
-              "󰤢"
-              "󰤥"
-              "󰤨"
-            ];
-          };
-        };
-      };
-    };
+    programs.rofi.enable = true;
     # notifications
     services.swaync = {
       enable = true;
@@ -101,6 +57,7 @@
           misc = {
             disable_hyprland_logo = true;
             force_default_wallpaper = 1;
+            middle_click_paste = false;
           };
           ecosystem = {
             no_update_news = true;
@@ -160,11 +117,14 @@
             ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-"
             ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+"
             ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+            ", XF86MonBrightnessDown, exec, brightnessctl set 5%-"
+            ", XF86MonBrightnessUp, exec, brightnessctl set 5%+"
           ];
           gestures.gesture = "3, horizontal, workspace";
+          xwayland.force_zero_scaling = true;
           # place any monitor above default
           monitor = [
-            ", preferred, auto, auto"
+            ", preferred, auto, 2"
             ", preferred, auto-up, auto"
           ];
         };
