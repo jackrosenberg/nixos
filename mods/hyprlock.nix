@@ -4,10 +4,10 @@
     hyprlock
   ];
   # fingerprint
-  services.fprintd.enable = true;
-  security.pam.services.hyprlock = {
-    fprintAuth = true;
-  };
+  # services.fprintd.enable = true;
+  # security.pam.services.hyprlock = {
+  #   fprintAuth = true;
+  # };
 
   home-manager.users.jack = {
     programs.hyprlock = {
