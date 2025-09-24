@@ -38,6 +38,7 @@
         ns = "sudo nixos-rebuild switch";
         cl = "clear";
         jarvis = "jj";
+        # "jj gf" = "jj git fetch --all-remotes";
       };
 
       history.size = 10000;
