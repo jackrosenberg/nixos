@@ -99,6 +99,7 @@
             "SUPER, TAB, workspace, e+1" # cycle
             "SUPER, mouse_up, workspace, e+1" # cycle
             "SUPER, mouse_down, workspace, e-1" # cycle
+            "SUPER, P, exec, grim -g \"$(slurp)\" - | clipcopy"
           ]
             # soemtimes, my genius, it scares me
           ++ lib.mapCartesianProduct({ n,cmd }: "SUPER ${lib.optionalString (cmd != "workspace") "SHIFT"}, ${toString n}, ${cmd}, ${toString n}") {
