@@ -8,6 +8,7 @@
     unityhub
     vscode.fhs # barf
     dotnetCorePackages.sdk_9_0-bin
+    meld
   ];
   services.fprintd.enable = true;
 }
