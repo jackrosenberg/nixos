@@ -1,14 +1,13 @@
 { pkgs, inputs, ... }:
 
 {
-  imports = 
-    [
-      ../mods/shell.nix
-      ../mods/hyprland.nix
-      ../mods/home.nix # fuck you homemanager
-      ../mods/tailscale.nix
-      ../mods/nvf.nix 
-    ];
+  imports = [
+    ../mods/shell.nix
+    ../mods/hyprland.nix
+    ../mods/home.nix # fuck you homemanager
+    ../mods/tailscale.nix
+    ../mods/nvf.nix
+  ];
   # # REMOVE ME WHEN DONE
   nixpkgs.config.permittedInsecurePackages = [
     "libxml2-2.13.8"
@@ -34,9 +33,12 @@
       mode = "0700";
     };
   };
-  networking = { 
+  networking = {
     networkmanager.enable = true;
-    firewall.allowedTCPPorts = [ 80 443 ];
+    firewall.allowedTCPPorts = [
+      80
+      443
+    ];
   };
 
   # Set your time zone.
@@ -59,7 +61,7 @@
   services = {
     displayManager.gdm = {
       enable = true;
-      autoSuspend = false; #fuck u autosus
+      autoSuspend = false; # fuck u autosus
     };
     printing.enable = true;
     pulseaudio.enable = false;
@@ -80,8 +82,15 @@
   nixpkgs.config.allowUnfree = true;
   nix = {
     settings = {
-      experimental-features = ["nix-command" "flakes" "pipe-operators"];
-      trusted-users = [ "root" "jack" ]; # enable cachix
+      experimental-features = [
+        "nix-command"
+        "flakes"
+        "pipe-operators"
+      ];
+      trusted-users = [
+        "root"
+        "jack"
+      ]; # enable cachix
     };
     # garbage collection
     gc.automatic = true;
@@ -150,7 +159,7 @@
       sqlite
     ];
   };
-  programs = { 
+  programs = {
     # sets some env vars like $EDITOR
     zsh.enable = true;
     neovim.enable = true;

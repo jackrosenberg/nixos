@@ -144,16 +144,18 @@ in
         ];
         systemd = {
           # make paths in container as transmission & co expect
-          tmpfiles.settings."10-media-cont-paths" = genPaths "/var/lib/transmission" {
-            "transmission" = [
-              ".incomplete"
-              "Downloads/tv-sonarr"
-              "Downloads/radarr"
-              "Downloads/books/ebooks"
-              "Downloads/books/audiobooks"
-            ];
-          } // 
-          # periodically empty these files so that they dont clog /
+          tmpfiles.settings."10-media-cont-paths" =
+            genPaths "/var/lib/transmission" {
+              "transmission" = [
+                ".incomplete"
+                "Downloads/tv-sonarr"
+                "Downloads/radarr"
+                "Downloads/books/ebooks"
+                "Downloads/books/audiobooks"
+              ];
+            }
+            //
+            # periodically empty these files so that they dont clog /
             {
               "/var/lib/transmission/Downloads".D.age = "1m";
             };

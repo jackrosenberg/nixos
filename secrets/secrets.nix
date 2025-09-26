@@ -12,4 +12,3 @@ in
   "garageAdminToken.age".publicKeys = [ system1 ];
   "gitlab.age".publicKeys = [ system1 ];
 }
-

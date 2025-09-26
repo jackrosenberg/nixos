@@ -7,7 +7,7 @@
 # let
 # in
 {
-  imports = [ 
+  imports = [
     ./hyprlock.nix
     ./waybar.nix
   ];
@@ -49,7 +49,7 @@
     };
     # make pointer normal
     home.file.".icons/default".source = "${pkgs.hackneyed}/share/icons/";
-    wayland.windowManager = { 
+    wayland.windowManager = {
       hyprland = {
         enable = true;
         settings = {
@@ -101,14 +101,20 @@
             "SUPER, mouse_down, workspace, e-1" # cycle
             "SUPER, P, exec, grim -g \"$(slurp)\" - | clipcopy"
           ]
-            # soemtimes, my genius, it scares me
-          ++ lib.mapCartesianProduct({ n,cmd }: "SUPER ${lib.optionalString (cmd != "workspace") "SHIFT"}, ${toString n}, ${cmd}, ${toString n}") {
-            n = lib.range 1 5;
-            cmd = [
-              "workspace"
-              "movetoworkspacesilent"
-            ];
-          };
+          # soemtimes, my genius, it scares me
+          ++
+            lib.mapCartesianProduct
+              (
+                { n, cmd }:
+                "SUPER ${lib.optionalString (cmd != "workspace") "SHIFT"}, ${toString n}, ${cmd}, ${toString n}"
+              )
+              {
+                n = lib.range 1 5;
+                cmd = [
+                  "workspace"
+                  "movetoworkspacesilent"
+                ];
+              };
           binds.drag_threshold = 10; # only treat as drag after 10px
           bindm = [
             "SUPER, mouse:272, movewindow"

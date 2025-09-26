@@ -31,21 +31,31 @@
       };
       battery = {
         states = {
-            warning = 30;
-            critical = 15;
+          warning = 30;
+          critical = 15;
         };
         format = "{icon} {capacity}%";
         format-full = "{icon} {capacity}%";
         format-charging = "󰂄 {capacity}%";
         format-alt = "{time} {icon}";
-        format-icons = ["󰁺" "󰁺" "󰁽" "󰂀" "󰁹"];
+        format-icons = [
+          "󰁺"
+          "󰁺"
+          "󰁽"
+          "󰂀"
+          "󰁹"
+        ];
       };
       "wireplumber#sink" = {
-       format = "{volume}% {icon}";
-       format-muted = "󰝟";
-       format-icons = ["" "" ""];
-       on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-       scroll-step = 5;
+        format = "{volume}% {icon}";
+        format-muted = "󰝟";
+        format-icons = [
+          ""
+          ""
+          ""
+        ];
+        on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+        scroll-step = 5;
       };
       network = {
         interval = 1000;
@@ -54,7 +64,13 @@
         tooltip-format = "{essid}\n{ifname} via {gwaddr}\n{ipaddr}/{cidr}";
         format-linked = "{ifname} (No IP) ";
         format-disconnected = "󰤭";
-        format-icons = [ "󰤯" "󰤟" "󰤢" "󰤥" "󰤨" ];
+        format-icons = [
+          "󰤯"
+          "󰤟"
+          "󰤢"
+          "󰤥"
+          "󰤨"
+        ];
       };
     };
   };

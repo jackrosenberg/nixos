@@ -1,5 +1,10 @@
-{ pkgs, lib, config,...}:
-let 
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+let
 
 in
 {
@@ -13,15 +18,14 @@ in
   virtualisation.docker.enable = true;
   services.gitlab-runner = {
     enable = true;
-    services= {
+    services = {
       # runner for building in docker via host's nix-daemon
       # nix store will be readable in runner, might be insecure
-      nix = with lib;{
+      nix = with lib; {
         # File should contain at least these two variables:
         # `CI_SERVER_URL`
         # `REGISTRATION_TOKEN`
         registrationConfigFile = config.age.secrets.gitlab.path; # 2
-
 
         dockerImage = "alpine";
         dockerVolumes = [
@@ -43,7 +47,17 @@ in
           . ${pkgs.nix}/etc/profile.d/nix-daemon.sh
           ${pkgs.nix}/bin/nix-channel --add https://nixos.org/channels/nixos-20.09 nixpkgs # 3
           ${pkgs.nix}/bin/nix-channel --update nixpkgs
-          ${pkgs.nix}/bin/nix-env -i ${concatStringsSep " " (with pkgs; [ nix cacert git openssh ])}
+          ${pkgs.nix}/bin/nix-env -i ${
+            concatStringsSep " " (
+              with pkgs;
+              [
+                nix
+                cacert
+                git
+                openssh
+              ]
+            )
+          }
         '';
         environmentVariables = {
           ENV = "/etc/profile";
