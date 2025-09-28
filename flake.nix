@@ -23,18 +23,19 @@
     }:
     let
       ifExists = p: nixpkgs.lib.optional (builtins.pathExists p) p;
+      lib = nixpkgs.lib;
     in
     {
       # TODO!!!!
       # kharon
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-tree;
-      nixosConfigurations = nixpkgs.lib.genAttrs [ "pantheon" "hermes" "kharon" ] (
+      nixosConfigurations = lib.genAttrs [ "pantheon" "hermes" "kharon" ] (
         name:
-        nixpkgs.lib.nixosSystem {
+        lib.nixosSystem {
           modules = [
-            ./configurations/common.nix # thanks Katalin
             ./configurations/${name}.nix
           ]
+          ++ lib.optional (name != "kharon") ./configurations/common.nix # thanks Katalin
           ++ (ifExists ./configurations/hw-${name}.nix)
           ++ [
             { nixpkgs.hostPlatform = "x86_64-linux"; } # thanks isabelroses

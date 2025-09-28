@@ -3,6 +3,7 @@
 {
   imports = [
     ../mods/shell.nix
+    ../mods/ssh.nix
     ../mods/hyprland.nix
     ../mods/home.nix # fuck you homemanager
     ../mods/tailscale.nix

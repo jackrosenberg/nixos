@@ -5,6 +5,7 @@
     (modulesPath + "/virtualisation/digital-ocean-config.nix")
   ];
 
+  # todo, modularize
   services.pangolin = {
     enable = true;
     settings = {
@@ -23,7 +24,9 @@
     openFirewall = true;
     environmentFile = "/etc/nixos/secrets/pangolin.env";
   };
-  services.traefik.environmentFiles = [ "/etc/nixos/secrets/traefik.env" ];
+  services = {
+    traefik.environmentFiles = [ "/etc/nixos/secrets/traefik.env" ];
+  };
 
   environment.systemPackages = with pkgs; [
     fastfetch
@@ -36,9 +39,4 @@
     fosrl-pangolin
     tree
   ];
-
-  # deployment = {  # --target-host root@24.144.76.230
-  #   targetHost = "24.144.76.230";
-  #   targetUser = "root";
-  # };
 }
