@@ -57,12 +57,27 @@ in
     };
     networkmanager.unmanaged = [ "interface-name:ve-*" ];
   };
-  # make the paths required in the host for media
-  systemd.tmpfiles.settings."10-media-paths" = (genPaths "/mnt/media" commonPaths) // {
-    "/mnt/media".d = {
-      user = "root";
-      group = "media";
-      mode = "0770";
+  systemd = { 
+    services = {
+      # periodically empty these files so that they dont clog /
+      rm-downloads = {
+        # god i pray nobody ever uses this
+        # we need to use * so we need to use sh
+        serviceConfig.ExecStart = "${lib.getExe' pkgs.bash "sh"} -c '${lib.getExe' pkgs.coreutils "rm"} -rfv /var/lib/nixos-containers/pirateship/var/lib/transmission/Downloads/{tv-sonarr,radarr,books/ebooks,books/audiobooks}/*'";
+        startAt = "hourly";
+      };
+      fix-perms = {
+        serviceConfig.ExecStart = "${lib.getExe' pkgs.coreutils "chmod"} -R 770 /mnt/media";
+        startAt = "hourly";
+      };
+    };
+    # make the paths required in the host for media
+    tmpfiles.settings."10-media-paths" = (genPaths "/mnt/media" commonPaths) // {
+      "/mnt/media".d = {
+        user = "root";
+        group = "media";
+        mode = "0770";
+      };
     };
   };
   # remake users
@@ -153,11 +168,6 @@ in
                 "Downloads/books/ebooks"
                 "Downloads/books/audiobooks"
               ];
-            }
-            //
-            # periodically empty these files so that they dont clog /
-            {
-              "/var/lib/transmission/Downloads".D.age = "1m";
             };
           # stupid ass fix for transmission
           services.transmission.serviceConfig = {
@@ -176,7 +186,7 @@ in
             UMask = lib.mkForce 007;
             # since otherwise the downloadDirPermissions does nothing
             StateDirectoryMode = 770;
-          };
+           };
         };
         system.activationScripts.transmission-daemon = lib.mkForce "";
         services = {
