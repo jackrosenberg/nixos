@@ -32,7 +32,7 @@
       endpoint = "https://pangolin.spectrumtijger.nl";
     };
     # this could be a map
-    proxy-resources = {
+    blueprint = {
       proxy-resources = {
         jellyfin = {
           name = "Jellyfin";
