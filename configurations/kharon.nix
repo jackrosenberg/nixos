@@ -20,14 +20,16 @@
         enable_integration_api = true;
       };
     };
+    
     dnsProvider = "mijnhost";
     baseDomain = "spectrumtijger.nl";
     letsEncryptEmail = "pangolin@jackr.eu";
     openFirewall = true;
     environmentFile = "/etc/nixos/secrets/pangolin.env";
   };
-  services = {
-    traefik.environmentFiles = [ "/etc/nixos/secrets/traefik.env" ];
+  services.traefik = {
+    # plugins = with pkgs; [gerbil geoblock];
+    environmentFiles = [ "/etc/nixos/secrets/traefik.env" ]; 
   };
 
   environment.systemPackages = with pkgs; [
@@ -41,4 +43,5 @@
     fosrl-pangolin
     tree
   ];
+  system.stateVersion = "25.11";
 }
