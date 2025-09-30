@@ -4,7 +4,6 @@
   imports = [
     ../mods/backups.nix
     ../mods/zfs.nix
-    # ../mods/ssh.nix
     # ../mods/kanidm.nix
     ../mods/nextcloud.nix
     ../mods/immich.nix

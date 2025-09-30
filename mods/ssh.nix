@@ -1,14 +1,14 @@
-{  ... }:
+{ config, ... }:
 {
-  # this file changes the defaults for sshing, adding fail2ban, endlessh (fuck the bots)
+  # this file changes the defaults for sshing, endlessh (fuck the bots)
   # and hopefully makes stuff more secure in general
   services = {
     endlessh = {
-      enable = true;
+      enable = config.networking.hostName == "kharon";
       port = 22;
       openFirewall = true;
     };
-    fail2ban.enable = true;
+    # fail2ban.enable = true; # doesnt play nice with newt
     openssh = {
       enable = true;
       ports = [ 67 ]; # six sevennn
@@ -19,6 +19,7 @@
     };
   };
   # for client
+  # todo make this a beautiful map
   programs.ssh = {
     extraConfig = "
       Host kharon
