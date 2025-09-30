@@ -3,6 +3,8 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   imports = [
     (modulesPath + "/virtualisation/digital-ocean-config.nix")
+    ../mods/ssh.nix
+    # ../mods/shell.nix ../mods/home.nix
   ];
 
   # todo, modularize

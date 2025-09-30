@@ -12,18 +12,17 @@
   };
 
   outputs =
-    inputs@{
+    {
       self,
       nixpkgs,
       agenix,
-      nur,
       home-manager,
       nvf,
       ...
     }:
     let
       ifExists = p: nixpkgs.lib.optional (builtins.pathExists p) p;
-      lib = nixpkgs.lib;
+      inherit (nixpkgs) lib; # thanks sigmasquadron
     in
     {
       # TODO!!!!
@@ -44,7 +43,10 @@
             home-manager.nixosModules.home-manager
             { networking.hostName = name; }
           ];
-          specialArgs = { inherit inputs self; };
+          specialArgs = { 
+            inherit self;
+            inherit (self) inputs;
+          };
         }
       );
     };
