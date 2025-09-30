@@ -60,12 +60,12 @@ in
   systemd = { 
     services = {
       # periodically empty these files so that they dont clog /
-      rm-downloads = {
-        # god i pray nobody ever uses this
-        # we need to use * so we need to use sh
-        serviceConfig.ExecStart = "${lib.getExe' pkgs.bash "sh"} -c '${lib.getExe' pkgs.coreutils "rm"} -rfv /var/lib/nixos-containers/pirateship/var/lib/transmission/Downloads/{tv-sonarr,radarr,books/ebooks,books/audiobooks}/*'";
-        startAt = "hourly";
-      };
+      # rm-downloads = {
+      #   # god i pray nobody ever uses this
+      #   # we need to use * so we need to use sh
+      #   serviceConfig.ExecStart = "${lib.getExe' pkgs.bash "sh"} -c '${lib.getExe' pkgs.coreutils "rm"} -rfv /var/lib/nixos-containers/pirateship/var/lib/transmission/Downloads/{tv-sonarr,radarr,books/ebooks,books/audiobooks}/*'";
+      #   startAt = "hourly";
+      # };
       fix-perms = {
         serviceConfig.ExecStart = "${lib.getExe' pkgs.coreutils "chmod"} -R 770 /mnt/media";
         startAt = "hourly";

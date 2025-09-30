@@ -3,7 +3,7 @@
 {
   imports = [
     ../mods/shell.nix
-    ../mods/ssh.nix
+    # ../mods/ssh.nix
     ../mods/hyprland.nix
     ../mods/home.nix # fuck you homemanager
     ../mods/tailscale.nix
@@ -119,6 +119,7 @@
       inputs.agenix.packages."${system}".default
       jujutsu
       unzip
+      zip
       rofi
       xclip
       tmux

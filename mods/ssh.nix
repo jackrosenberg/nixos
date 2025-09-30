@@ -1,4 +1,4 @@
-{...}:
+{  ... }:
 {
   # this file changes the defaults for sshing, adding fail2ban, endlessh (fuck the bots)
   # and hopefully makes stuff more secure in general
@@ -17,5 +17,15 @@
         KbdInteractiveAuthentication = false;
       };
     };
+  };
+  # for client
+  programs.ssh = {
+    extraConfig = "
+      Host kharon
+        Hostname 24.144.76.230
+        Port 67
+        User root
+        IdentityFile ~/.ssh/id_ed25519_do
+    ";
   };
 }
