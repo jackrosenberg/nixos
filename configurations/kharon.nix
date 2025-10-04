@@ -28,7 +28,25 @@
     environmentFile = "/etc/nixos/secrets/pangolin.env";
   };
   services.traefik = {
-    # plugins = with pkgs; [gerbil geoblock];
+    plugins = with pkgs; [ fosrl-badger geoblock ];
+    # extra config needed for geoblock
+    # staticConfigOptions.entryPoints.websecure.http.middlewares = "my-GeoBlock";
+    dynamicConfigOptions = {
+      http.middlewares.my-GeoBlock.plugin.geoblock = {
+        silentStartUp = false;
+        allowLocalRequests = true;
+        logLocalRequests = false;
+        logAllowedRequests = false;
+        logApiRequests = false;
+        api = "https://get.geojs.io/v1/ip/country/{ip}";
+        apiTimeoutMs = 500;
+        cacheSize = 25;
+        forceMonthlyUpdate = true;
+        allowUnknownCountries = false;
+        unknownCountryApiResponse = "nil";
+        countries = [ "NL" ];
+      };
+    };
     environmentFiles = [ "/etc/nixos/secrets/traefik.env" ]; 
   };
 
