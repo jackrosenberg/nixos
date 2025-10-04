@@ -140,6 +140,7 @@
       morph
       dysk
       ripgrep
+      fastfetch
       wastebin
       wireguard-tools
       # nvtopPackages.full # breaks often on update
