@@ -57,7 +57,7 @@ in
     };
     networkmanager.unmanaged = [ "interface-name:ve-*" ];
   };
-  systemd = { 
+  systemd = {
     services = {
       # periodically empty these files so that they dont clog /
       # rm-downloads = {
@@ -159,16 +159,15 @@ in
         ];
         systemd = {
           # make paths in container as transmission & co expect
-          tmpfiles.settings."10-media-cont-paths" =
-            genPaths "/var/lib/transmission" {
-              "transmission" = [
-                ".incomplete"
-                "Downloads/tv-sonarr"
-                "Downloads/radarr"
-                "Downloads/books/ebooks"
-                "Downloads/books/audiobooks"
-              ];
-            };
+          tmpfiles.settings."10-media-cont-paths" = genPaths "/var/lib/transmission" {
+            "transmission" = [
+              ".incomplete"
+              "Downloads/tv-sonarr"
+              "Downloads/radarr"
+              "Downloads/books/ebooks"
+              "Downloads/books/audiobooks"
+            ];
+          };
           # stupid ass fix for transmission
           services.transmission.serviceConfig = {
             ## following 3 lines are needed to make transmission work in a container
@@ -186,7 +185,7 @@ in
             UMask = lib.mkForce 007;
             # since otherwise the downloadDirPermissions does nothing
             StateDirectoryMode = 770;
-           };
+          };
         };
         system.activationScripts.transmission-daemon = lib.mkForce "";
         services = {

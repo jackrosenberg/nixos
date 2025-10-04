@@ -20,7 +20,7 @@
         enable_integration_api = true;
       };
     };
-    
+
     dnsProvider = "mijnhost";
     baseDomain = "spectrumtijger.nl";
     letsEncryptEmail = "pangolin@jackr.eu";
@@ -28,7 +28,10 @@
     environmentFile = "/etc/nixos/secrets/pangolin.env";
   };
   services.traefik = {
-    plugins = with pkgs; [ fosrl-badger geoblock ];
+    plugins = with pkgs; [
+      fosrl-badger
+      geoblock
+    ];
     # extra config needed for geoblock
     # staticConfigOptions.entryPoints.websecure.http.middlewares = "my-GeoBlock";
     dynamicConfigOptions = {
@@ -47,7 +50,7 @@
         countries = [ "NL" ];
       };
     };
-    environmentFiles = [ "/etc/nixos/secrets/traefik.env" ]; 
+    environmentFiles = [ "/etc/nixos/secrets/traefik.env" ];
   };
 
   environment.systemPackages = with pkgs; [

@@ -1,4 +1,10 @@
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  inputs,
+  lib,
+  config,
+  ...
+}:
 
 {
   imports = [
@@ -34,6 +40,26 @@
       mode = "0700";
     };
   };
+
+  system.activationScripts.diff = { # thanks hexa
+    supportsDryActivation = true;
+    text = ''
+      PATH=${
+        lib.makeBinPath (
+          with pkgs;
+          [
+            nvd
+            config.nix.package
+          ]
+        )
+      }:$PATH
+      if [[ -e /run/current-system ]]; then
+        # ${lib.getExe config.nix.package}--extra-experimental-features nix-command store diff-closures /run/current-system "$systemConfig"
+        nvd diff $(ls -dv /nix/var/nix/profiles/system-*-link | tail -2)
+      fi
+  '';
+  };
+
   networking = {
     networkmanager.enable = true;
     firewall.allowedTCPPorts = [

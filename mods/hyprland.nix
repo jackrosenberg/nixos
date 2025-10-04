@@ -131,7 +131,7 @@
           xwayland.force_zero_scaling = true;
           # place any monitor above default
           monitor = [
-            ", preferred, auto, 2"
+            "eDP-1, preferred, auto, 1.6"
             ", preferred, auto-up, auto"
           ];
         };

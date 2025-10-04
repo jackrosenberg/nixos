@@ -35,15 +35,15 @@ rec {
             agenix.nixosModules.default
             nvf.nixosModules.default
             home-manager.nixosModules.home-manager
-            { 
+            {
               nixpkgs.hostPlatform = "x86_64-linux"; # thanks isabelroses
-              networking.hostName = name; 
+              networking.hostName = name;
             }
           ]
           ++ (ifExists ./configurations/hw-${name}.nix)
           ++ lib.optional (name != "kharon") ./configurations/common.nix # thanks Katalin
           ;
-          specialArgs = { 
+          specialArgs = {
             inherit self;
             inherit (self) inputs;
           };
