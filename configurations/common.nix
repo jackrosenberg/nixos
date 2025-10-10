@@ -186,6 +186,8 @@
       nodejs_20
       go
       sqlite
+      rustup
+      gcc
     ];
   };
   programs = {
