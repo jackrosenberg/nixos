@@ -18,11 +18,14 @@
     ../mods/loki.nix
     ../mods/alloy.nix
     ../mods/uptimekuma.nix
+    ../mods/gitlabrunner.nix
     # ../dockerimgs/dawarich/docker-compose.nix # todo, replace with builtin imgs/service
+    # /home/jack/dev/nix/nixpkgs/nixos/modules/services/networking/sozu.nix
   ];
   environment = {
     systemPackages = with pkgs; [
       citrix_workspace
     ];
   };
+  # services.sozu.enable = true;
 }
