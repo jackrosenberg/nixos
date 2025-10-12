@@ -4,6 +4,8 @@
     enable = true;
     settings = {
       vim = {
+        # disbles flake inputs error message
+        lsp.servers.nixd.settings.nil.nix.autoArchive = false;
         theme = {
           enable = true;
           name = "dracula";
@@ -68,22 +70,17 @@
             enable = true;
             lsp = {
               enable = true;
-              server = "omnisharp";
+              servers = "omnisharp";
             };
             treesitter.enable = true;
           };
+          rust = {
+            enable = true;
+            lsp.enable = true;
+            format.enable = true;
+            treesitter.enable = true;
+          };
         };
-        # lazy.plugins = {
-        #   "omnisharp-extended-lsp.nvim" = {
-        #     package = pkgs.vimPlugins.omnisharp-extended-lsp-nvim;
-        #     event = [
-        #       {
-        #         event = "User";
-        #         pattern = "LazyFile";
-        #       }
-        #     ];
-        #   };
-        # };
       };
     };
   };

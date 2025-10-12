@@ -27,5 +27,5 @@
       citrix_workspace
     ];
   };
-  # services.sozu.enable = true;
+  programs.steam.enable = true;
 }
