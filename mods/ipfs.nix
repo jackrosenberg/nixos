@@ -1,0 +1,4 @@
+{...}: 
+{
+  services.kubo.enable = true;
+}

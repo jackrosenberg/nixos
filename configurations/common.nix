@@ -14,6 +14,7 @@
     ../mods/hyprland.nix
     ../mods/home.nix # fuck you homemanager
     ../mods/tailscale.nix
+    ../mods/ipfs.nix
     # ../mods/nvf.nix
   ];
   # # REMOVE ME WHEN DONE

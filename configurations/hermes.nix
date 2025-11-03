@@ -9,7 +9,7 @@
     vscode.fhs # barf
     dotnetCorePackages.sdk_9_0-bin
     meld
-    # citrix_workspace
+    citrix_workspace
     # haskellPackages.cabal-install
     # haskell.compiler.native-bignum.ghcHEAD
     # haskellPackages.base_4_21_0_0
