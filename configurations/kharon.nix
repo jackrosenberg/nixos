@@ -28,6 +28,7 @@
     environmentFile = "/etc/nixos/secrets/pangolin.env";
   };
   services.traefik = {
+    # # geoblock
     # dynamicConfigOptions = {
     #   http.middlewares.my-GeoBlock.plugin.geoblock = {
     #     silentStartUp = false;
@@ -46,6 +47,8 @@
     # };
     environmentFiles = [ "/etc/nixos/secrets/traefik.env" ]; 
   };
+  # IPFS testing
+  services.kubo.enable = true;
 
   environment.systemPackages = with pkgs; [
     fastfetch
@@ -55,8 +58,9 @@
     sqlite
     jq
     shh
-    fosrl-pangolin
     tree
+    toybox
+    # traefik-log-dashboard
   ];
   system.stateVersion = "25.11";
 }

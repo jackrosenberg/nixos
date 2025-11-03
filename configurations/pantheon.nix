@@ -19,13 +19,13 @@
     ../mods/alloy.nix
     ../mods/uptimekuma.nix
     ../mods/gitlabrunner.nix
-    # ../dockerimgs/dawarich/docker-compose.nix # todo, replace with builtin imgs/service
-    # /home/jack/dev/nix/nixpkgs/nixos/modules/services/networking/sozu.nix
+    ../mods/dawarich.nix
   ];
   environment = {
     systemPackages = with pkgs; [
-      citrix_workspace
+      # citrix_workspace
     ];
   };
-  programs.steam.enable = true;
+  
+  nixpkgs.config.allowBroken = true;
 }

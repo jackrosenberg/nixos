@@ -1,3 +1,4 @@
+
 {
   pkgs,
   inputs,
@@ -13,7 +14,7 @@
     ../mods/hyprland.nix
     ../mods/home.nix # fuck you homemanager
     ../mods/tailscale.nix
-    ../mods/nvf.nix
+    # ../mods/nvf.nix
   ];
   # # REMOVE ME WHEN DONE
   nixpkgs.config.permittedInsecurePackages = [
@@ -190,6 +191,9 @@
       gcc
       dig
       netcat
+      nmap
+      netcat
+      dbeaver-bin
     ];
   };
   programs = {

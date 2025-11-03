@@ -5,7 +5,7 @@
     settings = {
       vim = {
         # disbles flake inputs error message
-        lsp.servers.nixd.settings.nil.nix.autoArchive = false;
+        lsp.servers.nixd.settings.nil.nix.autoArchive = true;
         theme = {
           enable = true;
           name = "dracula";
@@ -49,6 +49,12 @@
             key = "<M-CR>";
             mode = "n";
             action = "m`o<Esc>``";
+          }
+          # error diagnostic open
+          {
+            key = "<M-S-k>";
+            mode = "n";
+            action = ":lua vim.diagnostic.open_float()<CR>";
           }
         ];
 
