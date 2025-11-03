@@ -188,6 +188,8 @@
       sqlite
       rustup
       gcc
+      dig
+      netcat
     ];
   };
   programs = {

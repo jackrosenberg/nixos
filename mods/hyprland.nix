@@ -100,6 +100,7 @@
             "SUPER, mouse_up, workspace, e+1" # cycle
             "SUPER, mouse_down, workspace, e-1" # cycle
             "SUPER, P, exec, grim -g \"$(slurp)\" - | clipcopy"
+            "SUPER, F, fullscreen"
           ]
           # soemtimes, my genius, it scares me
           ++

@@ -15,4 +15,5 @@
     # haskellPackages.base_4_21_0_0
   ];
   services.fprintd.enable = true;
+  programs.steam.enable = true;
 }
