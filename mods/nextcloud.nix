@@ -1,4 +1,6 @@
 { pkgs, ... }:
+let port = 8081;
+in
 {
   environment.etc."nextcloud-admin-pass".text = "PWD";
   services.nextcloud = {
@@ -17,12 +19,12 @@
       ];
     };
   };
-  networking.firewall.allowedTCPPorts = [ 8080 ];
+  networking.firewall.allowedTCPPorts = [ port ];
 
   services.nginx.virtualHosts."nextcloud" = {
     listen = [
       {
-        port = 8080;
+        inherit port;
         addr = "0.0.0.0";
       }
     ];

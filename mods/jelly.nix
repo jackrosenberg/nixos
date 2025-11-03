@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, config, ... }:
 let
   common = {
     enable = true;
@@ -12,10 +12,14 @@ in
     jellyfin-ffmpeg
   ];
 
+  users = {
+    users.jellyfin = {};
+    groups.media.members = [ "jellyfin" ];
+  };
   services = {
     jellyfin = common // {
       group = "media";
     };
-    jellyseerr = common;
+    jellyseerr = lib.mkIf (config.networking.hostName == "pantheon") common;
   };
 }

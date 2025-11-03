@@ -5,6 +5,8 @@
     (modulesPath + "/virtualisation/digital-ocean-config.nix")
     ../mods/ssh.nix
     # ../mods/shell.nix ../mods/home.nix
+    ../mods/jelly.nix
+    ../mods/ipfs.nix
   ];
 
   # todo, modularize
@@ -47,8 +49,6 @@
     # };
     environmentFiles = [ "/etc/nixos/secrets/traefik.env" ]; 
   };
-  # IPFS testing
-  services.kubo.enable = true;
 
   environment.systemPackages = with pkgs; [
     fastfetch
