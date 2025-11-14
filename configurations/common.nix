@@ -196,6 +196,7 @@
       netcat
       dbeaver-bin
       python314
+      pavucontrol
     ];
   };
   programs = {

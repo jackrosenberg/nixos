@@ -21,12 +21,18 @@
   # for client
   # todo make this a beautiful map
   programs.ssh = {
-    extraConfig = "
+    extraConfig = ''
       Host kharon
         Hostname 24.144.76.230
         Port 67
         User root
         IdentityFile ~/.ssh/id_ed25519_do
-    ";
+      # Host pantheon
+      #   Hostname 
+      #   Port 67
+      #   User root
+      #   IdentityFile ~/.ssh/id_ed25519
+    '';
+
   };
 }

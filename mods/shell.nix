@@ -1,6 +1,10 @@
 { pkgs, config, ... }:
 {
   home-manager.users.jack.programs = {
+    jujutsu.settings = { 
+      # snapshot.max-new-file-size = "5MiB";
+      ui.default-command = "log";
+    };
     zsh = {
       enable = true;
       enableCompletion = true;
