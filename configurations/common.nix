@@ -15,7 +15,7 @@
     ../mods/home.nix # fuck you homemanager
     ../mods/tailscale.nix
     ../mods/ipfs.nix
-    # ../mods/nvf.nix
+    ../mods/nvf.nix
   ];
   # # REMOVE ME WHEN DONE
   nixpkgs.config.permittedInsecurePackages = [
@@ -195,6 +195,7 @@
       nmap
       netcat
       dbeaver-bin
+      python314
     ];
   };
   programs = {

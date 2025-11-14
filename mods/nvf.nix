@@ -86,6 +86,19 @@
             format.enable = true;
             treesitter.enable = true;
           };
+          bash = {
+            enable = true;
+            lsp.enable = true;
+            format.enable = true;
+            treesitter.enable = true;
+          };
+          haskell = {
+            enable = true;
+            lsp.enable = true;
+            # format.enable = true;
+            treesitter.enable = true;
+          };
+
         };
       };
     };

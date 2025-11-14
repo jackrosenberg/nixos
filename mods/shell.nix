@@ -60,6 +60,7 @@
   # set default, shouldn't be needed, but i've been burnt b4
   environment.variables = {
     TERMINAL = "kitty";
+    TERM = "kitty";
     EDITOR = "nvim";
     POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD = "true";
   };
