@@ -18,6 +18,11 @@
       };
     };
   };
+  # todo, make declarative file
+  # users.users."jack".openssh.authorizedKeys.keyFiles = [
+  #   /home/jack/.ssh/id_ed25519.pub
+  # ];
+
   # for client
   # todo make this a beautiful map
   programs.ssh = {

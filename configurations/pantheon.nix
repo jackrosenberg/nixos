@@ -5,7 +5,7 @@
     ../mods/backups.nix
     ../mods/zfs.nix
     # ../mods/kanidm.nix
-    ../mods/nextcloud.nix
+    # ../mods/nextcloud.nix # stupid downgrading is not enabled
     ../mods/immich.nix
     ../mods/jelly.nix
     ../mods/pirateship.nix
@@ -19,7 +19,7 @@
     ../mods/alloy.nix
     ../mods/uptimekuma.nix
     ../mods/gitlabrunner.nix
-    ../mods/dawarich.nix
+    # ../mods/dawarich.nix ## reenable once dawarich hits unstable
   ];
   environment = {
     systemPackages = with pkgs; [
