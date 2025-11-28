@@ -199,6 +199,7 @@
       dbeaver-bin
       python314
       pavucontrol
+      jdk
     ];
   };
   programs = {

@@ -21,7 +21,6 @@
     espflash
     espup
     # probe-rs
-    jdk
   ];
   # nixpkgs.config.allowBroken = true;
   services.fprintd.enable = true;
