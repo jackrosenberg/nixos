@@ -1,4 +1,4 @@
-{ config, ...}: 
+{ config, ... }:
 {
   services.kubo = {
     enable = true;

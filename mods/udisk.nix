@@ -1,16 +1,16 @@
-{ pkgs, ...}:
+{ pkgs, ... }:
 {
   services.udisks2.enable = true;
 
- home-manager.users.jack.services.udiskie = {
+  home-manager.users.jack.services.udiskie = {
     enable = true;
     settings = {
-        # workaround for
-        # https://github.com/nix-community/home-manager/issues/632
-        program_options = {
-            # replace with your favorite file manager
-            file_manager = "${pkgs.nemo-with-extensions}/bin/nemo";
-        };
+      # workaround for
+      # https://github.com/nix-community/home-manager/issues/632
+      program_options = {
+        # replace with your favorite file manager
+        file_manager = "${pkgs.nemo-with-extensions}/bin/nemo";
+      };
     };
-};
+  };
 }

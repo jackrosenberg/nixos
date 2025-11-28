@@ -1,5 +1,6 @@
 { pkgs, ... }:
-let port = 8081;
+let
+  port = 8081;
 in
 {
   environment.etc."nextcloud-admin-pass".text = "PWD";

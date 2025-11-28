@@ -47,7 +47,7 @@
     #     countries = [ "NL" "DE" ];
     #   };
     # };
-    environmentFiles = [ "/etc/nixos/secrets/traefik.env" ]; 
+    environmentFiles = [ "/etc/nixos/secrets/traefik.env" ];
   };
 
   environment.systemPackages = with pkgs; [

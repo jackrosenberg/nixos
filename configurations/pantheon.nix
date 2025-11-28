@@ -26,6 +26,6 @@
       # citrix_workspace
     ];
   };
-  
+
   nixpkgs.config.allowBroken = true;
 }

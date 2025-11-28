@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   common = {
     enable = true;
@@ -13,7 +18,7 @@ in
   ];
 
   users = {
-    users.jellyfin = {};
+    users.jellyfin = { };
     groups.media.members = [ "jellyfin" ];
   };
   services = {

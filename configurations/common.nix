@@ -1,4 +1,3 @@
-
 {
   pkgs,
   inputs,
@@ -16,6 +15,7 @@
     ../mods/tailscale.nix
     ../mods/ipfs.nix
     ../mods/nvf.nix
+    ../mods/yubikey.nix
   ];
   # # REMOVE ME WHEN DONE
   nixpkgs.config.permittedInsecurePackages = [
@@ -43,7 +43,8 @@
     };
   };
 
-  system.activationScripts.diff = { # thanks hexa
+  system.activationScripts.diff = {
+    # thanks hexa
     supportsDryActivation = true;
     text = ''
       PATH=${
@@ -59,7 +60,7 @@
         # ${lib.getExe config.nix.package}--extra-experimental-features nix-command store diff-closures /run/current-system "$systemConfig"
         nvd diff $(ls -dv /nix/var/nix/profiles/system-*-link | tail -2)
       fi
-  '';
+    '';
   };
 
   networking = {
