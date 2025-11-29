@@ -10,6 +10,10 @@ rec {
     };
     hyprland.url = "github:hyprwm/Hyprland";
     nvf.url = "github:notashelf/nvf/v0.8";
+    disko = { 
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -19,6 +23,7 @@ rec {
       agenix,
       home-manager,
       nvf,
+      disko,
       ...
     }:
     let
@@ -42,6 +47,14 @@ rec {
           ]
           ++ (ifExists ./configurations/hw-${name}.nix)
           ++ lib.optional (name != "kharon") ./configurations/common.nix # thanks Katalin
+          # todo refac
+          ++ lib.optionals (name == "hermes") [
+                disko.nixosModules.disko
+                ./mods/disko-config.nix
+                {
+                  disko.devices.disk.main.device = "nvme0n1";
+                }
+            ]
           ;
           specialArgs = {
             inherit self;
