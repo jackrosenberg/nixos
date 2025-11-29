@@ -25,7 +25,7 @@
         interactive = true;
         cue = true;
         origin = "pam://yubi";
-        };
+      };
     };
   };
 }
