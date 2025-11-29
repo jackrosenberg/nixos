@@ -2,7 +2,6 @@
 {
   imports = [
     ../mods/bluetooth.nix
-    ../mods/udisk.nix
   ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
   environment.systemPackages = with pkgs; [

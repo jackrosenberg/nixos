@@ -10,13 +10,13 @@
   imports = [
     ../mods/security.nix
     ../mods/shell.nix
-    ../mods/shell.nix
     ../mods/ssh.nix
     ../mods/hyprland.nix
     ../mods/home.nix # fuck you homemanager
     ../mods/tailscale.nix
     ../mods/ipfs.nix
     ../mods/nvf.nix
+    ../mods/udisk.nix
     ../mods/yubikey.nix
   ];
   # # REMOVE ME WHEN DONE
