@@ -1,10 +1,10 @@
-# Jack's Nixos
+# Server
 Ok, basic idea:
   Fast, reliable, (mostly) declarative server that can provide as close to a guarantee to 100% uptime as I can get.
   Modular, understandable, and abstract.
   Redundancies for important data such as photos, backups, etc
     - ZFS RAIDZ1
-    - Kopia + rclone + ProtonDrive
+    - Restic + rclone + ProtonDrive
 
 ## Storage
 - root: nvme ssd 1TB (ext4)
@@ -14,18 +14,20 @@ Ok, basic idea:
     - /mnt/media: 1x 12TB HDD (refurbished)
 ### Backups:
 - Restic + rclone + ProtonDrive
- 
-## Services
-### Immich
-### Jellyfin + Jellyseerr
-### Nextcloud
 
-## Containers
-### Vpn
-#### OpenVpn
-#### Prowlarr Sonarr + Radarr
-#### Transmission
+# Laptop
+## disko + ZFS on root and on for ephemerial root partition 
+1 partition for boot partition (unencrypted, vfat)
+1 partition for rest (zfs)
+  - 1 dataset /persist (encrypted)
+  - 1 dataset /nix (unencrypted)
 
+lanzaboote 
 
-  
+yubikey + TPM unlock?
 
+sources/resources:
+https://ryanseipp.com/posts/nixos-encrypted-root/
+https://notthebe.ee/blog/nixos-ephemeral-zfs-root/
+https://grahamc.com/blog/erase-your-darlings/
+https://yomaq.github.io/posts/zfs-encryption-backups-and-convenience/
