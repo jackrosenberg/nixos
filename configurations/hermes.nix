@@ -4,7 +4,6 @@
     ../mods/bluetooth.nix
     ../mods/foxfit.nix
   ];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
   environment.systemPackages = with pkgs; [
     meld
     # citrix_workspace
