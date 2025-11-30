@@ -12,7 +12,7 @@
         content = {
           type = "gpt";
           partitions = {
-            boot = {
+            boot = { # WHAT DOES THIS DO???
               size = "1M";
               type = "EF02"; # for grub MBR
             };
@@ -26,12 +26,11 @@
                 mountOptions = [ "umask=0077" ];
               };
             };
-            root = {
+            zfs = {
               size = "100%";
               content = {
-                type = "filesystem";
-                format = "ext4";
-                mountpoint = "/";
+                type = "zfs";
+                pool = "zroot";
               };
             };
           };

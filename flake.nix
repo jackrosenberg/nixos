@@ -51,9 +51,6 @@ rec {
           ++ lib.optionals (name == "hermes") [
                 disko.nixosModules.disko
                 ./mods/disko-config.nix
-                {
-                  disko.devices.disk.main.device = "nvme0n1";
-                }
             ]
           ;
           specialArgs = {
