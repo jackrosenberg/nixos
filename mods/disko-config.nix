@@ -54,7 +54,10 @@
             options = {
               encryption = "aes-256-gcm";
               mountpoint = "legacy";
+              keyformat = "passphrase";
+              keylocation = "prompt";
               "com.sun:auto-snapshot" = "false";
+              atime = "off";
             };
             postCreateHook = "zfs snapshot zroot/root@empty";
           };
@@ -64,8 +67,8 @@
             mountpoint = "/persist";
             options = {
               "com.sun:auto-snapshot" = "true";
-              encryption = "aes-256-gcm";
               mountpoint = "/persist";
+              atime = "off";
             };
           };
           # for /nix/{store,var} Needs to persist as well
@@ -74,11 +77,11 @@
             options.mountpoint = "/nix";
             mountpoint = "/nix";
             options = {
-              encryption = "aes-256-gcm";
-              atime = "off";
               "com.sun:auto-snapshot" = "false";
+              atime = "off";
             };
-            postCreateHook = "zfs snapshot zroot/nix@empty";
+            # causes break
+            # postCreateHook = "zfs snapshot zroot/nix@empty";
           };
         };
       };
