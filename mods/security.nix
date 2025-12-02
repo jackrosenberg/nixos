@@ -1,16 +1,22 @@
-{...}:
+{ pkgs, lib, ...}:
 {
   # firmwareupdate
   services.fwupd.enable = true;
-  # hehe gimp suit ram
-  # https://wiki.nixos.org/wiki/Swap`
-  # zramSwap = { # thanks sigmasquadron
-  #   algorithm = "zstd";
-  #   enable = true;
-  #   memoryMax = 8589934592;
-  #   memoryPercent = 50;
-  #   priority = 32;
-  # };
-  # also encrypt it with key in ram
-  # this way becomes unreadable if ram is dead
+  environment.systemPackages = with pkgs; [
+    flashrom
+    sbctl
+  ];
+
+  # Lanzaboote currently replaces the systemd-boot module.
+  # This setting is usually set to true in configuration.nix
+  # generated at installation time. So we force it to false
+  # for now.
+  boot = {
+    loader.systemd-boot.enable = lib.mkForce false;
+
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
+  };
 }

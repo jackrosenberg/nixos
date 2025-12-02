@@ -14,6 +14,10 @@ rec {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.3";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -24,6 +28,7 @@ rec {
       home-manager,
       nvf,
       disko,
+      lanzaboote,
       ...
     }:
     let
@@ -50,6 +55,7 @@ rec {
           # todo refac
           ++ lib.optionals (name == "hermes") [
                 disko.nixosModules.disko
+                lanzaboote.nixosModules.lanzaboote
                 ./mods/disko-config.nix
             ]
           ;

@@ -32,7 +32,6 @@
         [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
         # Add keybinds
-        bindkey -M viins 'jh' vi-cmd-mode
         bindkey -M viins '^R' history-incremental-search-backward
       '';
 
