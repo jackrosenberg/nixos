@@ -16,18 +16,26 @@ Ok, basic idea:
 - Restic + rclone + ProtonDrive
 
 # Laptop
-## disko + ZFS on root and on for ephemerial root partition 
+## disko for declarative disk partitioning
 1 partition for boot partition (unencrypted, vfat)
+
 1 partition for rest (zfs)
   - 1 dataset /persist (encrypted)
-  - 1 dataset /nix (unencrypted)
+  - 1 dataset /nix (encrypted)
+  - 1 dataset / (encrypted)
 
-lanzaboote 
+this allows `/` to be rolled back to the empty snapshot on reboot, making root ephemerial. 
+
+## lanzaboote
+Secureboot for more security :)
 
 yubikey + TPM unlock?
 
 sources/resources:
 https://ryanseipp.com/posts/nixos-encrypted-root/
+
 https://notthebe.ee/blog/nixos-ephemeral-zfs-root/
+
 https://grahamc.com/blog/erase-your-darlings/
+
 https://yomaq.github.io/posts/zfs-encryption-backups-and-convenience/
