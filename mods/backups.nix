@@ -16,6 +16,12 @@
   # init repo with:
   # restic -v -r rclone:PDrive:/backups init
 
+  ## RESTORE WITH 
+  # restic -r rclone:PDrive:backups restore latest --target /tmp/fotos
+  ## note, PDrive, pw, username must be specified in the rclone conf
+  ## TODO, symlink the conf at runtime for all machines
+  ## conf is currently stored in /etc/nixos/secrets/rcloneConf.age
+
   environment.systemPackages = with pkgs; [
     rclone
     restic

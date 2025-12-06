@@ -14,7 +14,6 @@
     ../mods/hyprland.nix
     ../mods/home.nix # fuck you homemanager
     ../mods/tailscale.nix
-    ../mods/ipfs.nix
     ../mods/nvf.nix
     ../mods/udisk.nix
     ../mods/yubikey.nix
@@ -202,6 +201,8 @@
       python314
       pavucontrol
       jdk
+      restic
+      rclone
     ];
   };
   programs = {
