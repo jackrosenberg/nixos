@@ -20,7 +20,10 @@
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = [ "nofail" "umask=0077"];
+                mountOptions = [
+                  "nofail"
+                  "umask=0077"
+                ];
               };
             };
             zfs = {
@@ -89,22 +92,25 @@
   };
   # zfs zpool config
   # extra zfs config to make it work
-   networking.hostId = "01330c81"; #head -c4 /dev/urandom | od -A none -t x4
-   boot = {
-     # Newest kernels might not be supported by ZFS
-     kernelParams = [
-       "nohibernate"
-       "zfs.zfs_arc_max=17179869184"
-     ];
-     supportedFilesystems = [ "vfat" "zfs" ];
-     zfs = {
-       devNodes = "/dev/disk/by-id/";
-       forceImportAll = true;
-       requestEncryptionCredentials = true;
-     };
-   };
-   services.zfs = {
-     autoScrub.enable = true;
-     trim.enable = true;
-   };
+  networking.hostId = "01330c81"; # head -c4 /dev/urandom | od -A none -t x4
+  boot = {
+    # Newest kernels might not be supported by ZFS
+    kernelParams = [
+      "nohibernate"
+      "zfs.zfs_arc_max=2147483648"
+    ];
+    supportedFilesystems = [
+      "vfat"
+      "zfs"
+    ];
+    zfs = {
+      devNodes = "/dev/disk/by-id/";
+      forceImportAll = true;
+      requestEncryptionCredentials = true;
+    };
+  };
+  services.zfs = {
+    autoScrub.enable = true;
+    trim.enable = true;
+  };
 }

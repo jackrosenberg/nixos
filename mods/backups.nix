@@ -16,7 +16,7 @@
   # init repo with:
   # restic -v -r rclone:PDrive:/backups init
 
-  ## RESTORE WITH 
+  ## RESTORE WITH
   # restic -r rclone:PDrive:backups restore latest --target /tmp/fotos
   ## note, PDrive, pw, username must be specified in the rclone conf
   ## TODO, symlink the conf at runtime for all machines

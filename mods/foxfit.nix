@@ -1,6 +1,6 @@
-{ pkgs, ...}:
+{ pkgs, ... }:
 {
-  environment.systemPackages = with pkgs; [ 
+  environment.systemPackages = with pkgs; [
     unityhub
     vscode.fhs # barf
     dotnetCorePackages.sdk_9_0-bin

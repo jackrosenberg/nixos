@@ -10,7 +10,7 @@ rec {
     };
     hyprland.url = "github:hyprwm/Hyprland";
     nvf.url = "github:notashelf/nvf/v0.8";
-    disko = { 
+    disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -54,11 +54,10 @@ rec {
           ++ lib.optional (name != "kharon") ./configurations/common.nix # thanks Katalin
           # todo refac
           ++ lib.optionals (name == "hermes") [
-                disko.nixosModules.disko
-                lanzaboote.nixosModules.lanzaboote
-                ./mods/disko-config.nix
-            ]
-          ;
+            disko.nixosModules.disko
+            lanzaboote.nixosModules.lanzaboote
+            ./mods/disko-config.nix
+          ];
           specialArgs = {
             inherit self;
             inherit (self) inputs;
