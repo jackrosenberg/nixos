@@ -21,12 +21,12 @@
         jack:Cr8jwIoVbx7D8eiDyjN0OT882w+a+DPbjlK8f8Jk+OtPGKwEJnWh2mVU0sz3A1Fi218txMqAGMJXXUKTMOh99A==,vxP9UtvrH5W/F7QlqbvHmtUdu1jnxac2cYz6dK3VKE1XRj/m313FkaONZu0thAfG+Ri+dRZahUu/RNXiyVA4hw==,es256
       '';
       settings = {
-        # text prompt me hoe
         userpresence = 0;
         # prompt b4 checking if yubikey
-        interactive = true;
         # cue = true;
         # debug = true;
+        # dont text prompt me hoe
+        # interactive = true;
         origin = "pam://yubi";
       };
     };
