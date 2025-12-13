@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 ### general idea:
 ### torrent in container to .incomplete -> downloads
 ### individual services take torrent and move it to
@@ -40,13 +40,21 @@ let
   };
 in
 {
-  environment.etc.openvpn.source = "${pkgs.update-resolv-conf}/libexec/openvpn";
+  # agenix
+  age = {
+    secrets."vpn.ovpn".file = ../secrets/vpn.ovpn.age;
+    secrets.vpn-auth-user-pass.file = ../secrets/vpn-auth-user-pass.age;
+    identityPaths = [ "/etc/age/id_ed25519" ];
+  };
+
 
   # setup service on host to run VPN
   # cant be via wg, since that fucks with tailscale
+  # https://protonvpn.com/support/linux-openvpn/
+  environment.etc.openvpn.source = "${pkgs.update-resolv-conf}/libexec/openvpn";
   services.openvpn.servers.torrentvpn.config = ''
-    config /etc/nixos/openvpn/nl-01.protonvpn.udp.ovpn
-    auth-user-pass /etc/nixos/openvpn/auth-user-pass
+    config ${config.age.secrets."vpn.ovpn".path}
+    auth-user-pass ${config.age.secrets.vpn-auth-user-pass.path}
   '';
 
   networking = {
@@ -59,13 +67,6 @@ in
   };
   systemd = {
     services = {
-      # periodically empty these files so that they dont clog /
-      # rm-downloads = {
-      #   # god i pray nobody ever uses this
-      #   # we need to use * so we need to use sh
-      #   serviceConfig.ExecStart = "${lib.getExe' pkgs.bash "sh"} -c '${lib.getExe' pkgs.coreutils "rm"} -rfv /var/lib/nixos-containers/pirateship/var/lib/transmission/Downloads/{tv-sonarr,radarr,books/ebooks,books/audiobooks}/*'";
-      #   startAt = "hourly";
-      # };
       fix-perms = {
         serviceConfig.ExecStart = "${lib.getExe' pkgs.coreutils "chmod"} -R 770 /mnt/media";
         startAt = "hourly";

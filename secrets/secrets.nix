@@ -11,4 +11,6 @@ in
   "garageRpcSecret.age".publicKeys = [ system1 ];
   "garageAdminToken.age".publicKeys = [ system1 ];
   "gitlab.age".publicKeys = [ system1 ];
+  "vpn.ovpn.age".publicKeys = [ system1 ];
+  "vpn-auth-user-pass.age".publicKeys = [ system1 ];
 }

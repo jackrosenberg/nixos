@@ -8,7 +8,7 @@
 
 {
   imports = [
-    ../mods/security.nix
+    # ../mods/security.nix # one day yes
     ../mods/shell.nix
     ../mods/ssh.nix
     ../mods/hyprland.nix
