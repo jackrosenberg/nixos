@@ -6,7 +6,7 @@
     ../mods/ssh.nix
     # ../mods/shell.nix ../mods/home.nix
     ../mods/jelly.nix
-    ../mods/ipfs.nix
+    # ../mods/ipfs.nix
   ];
 
   # todo, modularize

@@ -21,10 +21,12 @@
     ../mods/gitlabrunner.nix
     # ../mods/dawarich.nix ## reenable once dawarich hits unstable
   ];
-  # environment = {
-  #   systemPackages = with pkgs; [
-  #   ];
-  # };
+  environment = {
+    systemPackages = with pkgs; [
+      # citrix_workspace
+    ];
+  };
 
-  nixpkgs.config.allowBroken = true;
+  # nixpkgs.config.allowBroken = true;
+  nixpkgs.config.allowUnfree = true;
 }
