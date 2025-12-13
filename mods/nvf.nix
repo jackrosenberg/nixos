@@ -76,7 +76,7 @@
             enable = true;
             lsp = {
               enable = true;
-              servers = "omnisharp";
+              servers = [ "omnisharp" ];
             };
             treesitter.enable = true;
           };

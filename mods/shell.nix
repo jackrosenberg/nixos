@@ -52,8 +52,6 @@
       settings = {
         user.name = "jack";
         user.email = "github@jackr.eu";
-      };
-      extraConfig = {
         init.defaultBranch = "main";
         safe.directory = "/etc/nixos";
         core.whitespace = "cr-at-eol";
