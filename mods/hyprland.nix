@@ -120,6 +120,11 @@
           bindm = [
             "SUPER, mouse:272, movewindow"
           ];
+          # shut screen lock
+          bindl = [
+            ",switch:on:Lid Switch, exec, hyprctl dispatch dpms off && hyprctl dispatch exec hyprlock"
+            ",switch:off:Lid Switch, exec, hyprctl dispatch dpms on"
+          ];
           # TODO NOTIFY SEND
           binde = [
             ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-"
