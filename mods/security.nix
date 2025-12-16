@@ -23,6 +23,12 @@
     loader.systemd-boot.enable = lib.mkForce false;
 
     lanzaboote = {
+      autoGenerateKeys.enable = true;
+      # https://nix-community.github.io/lanzaboote/how-to-guides/automatically-enroll-keys.html
+      autoEnrollKeys = {
+        enable = true;
+        autoReboot = true;
+      };
       enable = true;
       pkiBundle = "/var/lib/sbctl";
     };
