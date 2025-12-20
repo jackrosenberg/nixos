@@ -83,8 +83,6 @@
               "com.sun:auto-snapshot" = "false";
               atime = "off";
             };
-            # causes break
-            # postCreateHook = "zfs snapshot zroot/nix@empty";
           };
         };
       };

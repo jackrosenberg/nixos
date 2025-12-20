@@ -13,4 +13,5 @@ in
   "gitlab.age".publicKeys = [ system1 ];
   "vpn.ovpn.age".publicKeys = [ system1 ];
   "vpn-auth-user-pass.age".publicKeys = [ system1 ];
+  "dexsecret.age".publicKeys = [ system1 ];
 }

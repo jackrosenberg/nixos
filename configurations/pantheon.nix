@@ -6,7 +6,7 @@
     ../mods/zfs.nix
     # ../mods/kanidm.nix
     # ../mods/nextcloud.nix # stupid downgrading is not enabled
-    ../mods/wiki.nix
+    # ../mods/wiki.nix
     ../mods/immich.nix
     ../mods/jelly.nix
     ../mods/pirateship.nix
