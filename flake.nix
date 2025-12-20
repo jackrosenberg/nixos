@@ -50,14 +50,15 @@ rec {
               networking.hostName = name;
             }
           ]
-          ++ (ifExists ./configurations/hw-${name}.nix)
-          ++ lib.optional (name != "kharon") ./configurations/common.nix # thanks Katalin
-          # todo refac
-          ++ lib.optionals (name == "hermes") [
+          ++ lib.optionals (name != "kharon") [ 
+            ./configurations/common.nix # thanks Katalin
             disko.nixosModules.disko
             lanzaboote.nixosModules.lanzaboote
-            ./mods/disko-config.nix
-          ];
+            ./configurations/disko-config.nix
+          ]
+          # import additional hw/disko configurations
+          ++ (ifExists ./configurations/hw-${name}.nix)
+          ++ (ifExists ./configurations/disko-${name}.nix);
           specialArgs = {
             inherit self;
             inherit (self) inputs;
