@@ -15,11 +15,15 @@ in
     jellyfin
     jellyfin-web
     jellyfin-ffmpeg
+    nvtopPackages.amd
   ];
 
   users = {
-    users.jellyfin = { };
     groups.media.members = [ "jellyfin" ];
+    users.jellyfin.extraGroups = [
+    "video"
+    "render"
+  ];
   };
   services = {
     jellyfin = common // {
