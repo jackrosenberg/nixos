@@ -50,7 +50,7 @@ in
   disko.devices = {
     disk = {
       bigboy = {
-        device = "/dev/sda";
+        device = "ST12000NM0127";
         type = "disk";
         content = {
           type = "gpt";
@@ -67,9 +67,9 @@ in
       # generates a set of sets {raidz1_sdb = {...}; raidz1_sdc ... };
     // lib.mergeAttrsList (
       map genVDev [
-        "/dev/sdb"
-        "/dev/sdc"
-        "/dev/sdd"
+        "ST4000VN006-3CW1"
+        "SAMSUNG HD204UI"
+        "SAMSUNG HD204UI_2"
       ]
     );
     zpool = {
