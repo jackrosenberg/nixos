@@ -1,4 +1,4 @@
-{ lib, ...}:
+{ lib, ... }:
 # this is the extra config for pantheon's disks
 let
   genZPool = name: {
@@ -26,31 +26,31 @@ let
       };
     };
   };
-  genVDev = device: { 
+  genVDev = device: {
     "raidz1_${device}" = {
-        device = "${device}";
-        type = "disk";
-        content = {
-          type = "gpt";
-          partitions = {
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "zaux";
-              };
+      device = "${device}";
+      type = "zfs_fs";
+      content = {
+        type = "gpt";
+        partitions = {
+          zfs = {
+            size = "100%";
+            content = {
+              type = "zfs";
+              pool = "zaux";
             };
           };
         };
       };
-   };
-in 
+    };
+  };
+in
 {
   disko.devices = {
     disk = {
       bigboy = {
         device = "/dev/sda";
-        type = "disk";
+        type = "zfs_fs";
         content = {
           type = "gpt";
           partitions = {
@@ -64,29 +64,39 @@ in
           };
         };
       };
-    } // 
-    lib.mergeAttrsList (map genVDev ["/dev/sdb" "/dev/sdc" "/dev/sdd"]);
+    }
+    // lib.mergeAttrsList (
+      map genVDev [
+        "/dev/sdb"
+        "/dev/sdc"
+        "/dev/sdd"
+      ]
+    );
     zpool = {
-      zaux = (genZPool "aux") // { datasets."aux/media" = {
-        type = "zfs_fs";
-        mountpoint = "/mnt/media";
-        options = {
-          "com.sun:auto-snapshot" = "true";
-          # mountpoint = "/mnt/media"; //check if needed
-          atime = "off";
-        };
-      }; };
-      ztert = (genZPool "tert") // { datasets."tert/media" = {
-        "aux/photos" = {
+      zaux = (genZPool "aux") // {
+        datasets."aux/media" = {
           type = "zfs_fs";
-          mountpoint = "/mnt/photos";
+          mountpoint = "/mnt/media";
           options = {
             "com.sun:auto-snapshot" = "true";
-            # mountpoint = "/mnt/photos"; //check if needed
+            # mountpoint = "/mnt/media"; //check if needed
             atime = "off";
           };
         };
-      }; };
+      };
+      ztert = (genZPool "tert") // {
+        datasets."tert/media" = {
+          "aux/photos" = {
+            type = "zfs_fs";
+            mountpoint = "/mnt/photos";
+            options = {
+              "com.sun:auto-snapshot" = "true";
+              # mountpoint = "/mnt/photos"; //check if needed
+              atime = "off";
+            };
+          };
+        };
+      };
     };
   };
   # zfs zpool config

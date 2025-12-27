@@ -21,9 +21,9 @@ in
   users = {
     groups.media.members = [ "jellyfin" ];
     users.jellyfin.extraGroups = [
-    "video"
-    "render"
-  ];
+      "video"
+      "render"
+    ];
   };
   services = {
     jellyfin = common // {

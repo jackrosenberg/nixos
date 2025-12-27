@@ -50,7 +50,7 @@ rec {
               networking.hostName = name;
             }
           ]
-          ++ lib.optionals (name != "kharon") [ 
+          ++ lib.optionals (name != "kharon") [
             ./configurations/common.nix # thanks Katalin
             disko.nixosModules.disko
             lanzaboote.nixosModules.lanzaboote

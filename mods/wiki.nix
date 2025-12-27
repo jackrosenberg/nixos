@@ -1,5 +1,6 @@
-{ config, pkgs, ...}:
-let port = 3013;
+{ config, pkgs, ... }:
+let
+  port = 3013;
 in
 {
   # networking.extraHosts = ''
@@ -15,7 +16,7 @@ in
   #   identityPaths = [ "/etc/age/id_ed25519" ];
   # };
   #
-  # services = { 
+  # services = {
   #   outline = {
   #     enable = true;
   #     inherit port;

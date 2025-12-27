@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 ### general idea:
 ### torrent in container to .incomplete -> downloads
 ### individual services take torrent and move it to
@@ -46,7 +51,6 @@ in
     secrets.vpn-auth-user-pass.file = ../secrets/vpn-auth-user-pass.age;
     identityPaths = [ "/etc/age/id_ed25519" ];
   };
-
 
   # setup service on host to run VPN
   # cant be via wg, since that fucks with tailscale
