@@ -26,12 +26,12 @@ let
       };
     };
   };
-  ## takes a device name, "/dev/sdX"
+  ## takes a device name, "/dev/by-id"
   ## generates a vdev for the device, that's part 
   ## of the root "zroot" pool
-  genVDev = device: {                                                      
-    "raidz1_${device}" = {
-      device = "${device}";
+  genVDev = deviceId: {                                                      
+    "raidz1_${deviceId}" = {
+      device = "/dev/disk/by-id/${deviceId}";
       type = "disk";
       content = {
         type = "gpt";
@@ -48,9 +48,9 @@ let
 in
 {
   disko.devices = {
-    disk = {
+    disk = lib.recursiveUpdate { # stupid fucking '//'
       bigboy = {
-        device = "/dev/sda";
+        device = "/dev/disk/by-id/ata-ST12000NM0127_ZJV5FQF4";
         type = "disk";
         content = {
           type = "gpt";
@@ -65,21 +65,21 @@ in
       };
     }
       # generates a set of sets {raidz1_sdb = {...}; raidz1_sdc ... };
-    // lib.mergeAttrsList (
+    (lib.mergeAttrsList (
       map genVDev [
-        "/dev/sdb"
-        "/dev/sdc"
-        "/dev/sdd"
+        "ata-ST4000VN006-3CW104_WW65RSXB"
+        "ata-SAMSUNG_HD204UI_S2H7J1CB220832"
+        "ata-SAMSUNG_HD204UI_S2H7J9EB304927"
       ]
-    );
+    ));
     zpool = {
-      zaux = (genZPool "aux") // {
+      zaux = lib.recursiveUpdate (genZPool "aux") {
         datasets."root/photos" = {
           type = "zfs_fs";
           mountpoint = "/mnt/photos";
         };
       };
-      ztert = (genZPool "tert") // {
+      ztert = lib.recursiveUpdate (genZPool "tert") {
         datasets."root/media" = {
           type = "zfs_fs";
           mountpoint = "/mnt/media";
