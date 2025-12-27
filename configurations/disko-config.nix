@@ -108,7 +108,10 @@
     };
   };
   services.zfs = {
-    autoScrub.enable = true;
+    autoScrub = {
+      enable = true;
+      interval = "*-*-1,15 02:30";
+    };
     trim.enable = true;
   };
 }

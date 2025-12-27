@@ -1,6 +1,8 @@
 { lib, ... }:
 # this is the extra config for pantheon's disks
 let
+  ## input: name
+  ## output: encrypted zpool containing a dataset root 
   genZPool = name: {
     type = "zpool";
     rootFsOptions = {
@@ -11,10 +13,8 @@ let
     options.ashift = "12";
     # datasets config
     datasets = {
-      # the root of the auxiliary pool, encrypted
-      ${name} = {
+      root = {
         type = "zfs_fs";
-        mountpoint = "/mnt";
         options = {
           encryption = "aes-256-gcm";
           mountpoint = "legacy";
@@ -26,19 +26,20 @@ let
       };
     };
   };
-  genVDev = device: {
+  ## takes a device name, "/dev/sdX"
+  ## generates a vdev for the device, that's part 
+  ## of the root "zroot" pool
+  genVDev = device: {                                                      
     "raidz1_${device}" = {
       device = "${device}";
-      type = "zfs_fs";
+      type = "disk";
       content = {
         type = "gpt";
-        partitions = {
-          zfs = {
-            size = "100%";
-            content = {
-              type = "zfs";
-              pool = "zaux";
-            };
+        partitions.zfs = {
+          size = "100%";
+          content = {
+            type = "zfs";
+            pool = "zaux";
           };
         };
       };
@@ -50,21 +51,20 @@ in
     disk = {
       bigboy = {
         device = "/dev/sda";
-        type = "zfs_fs";
+        type = "disk";
         content = {
           type = "gpt";
-          partitions = {
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "ztert";
-              };
+          partitions.zfs = {
+            size = "100%";
+            content = {
+              type = "zfs";
+              pool = "ztert";
             };
           };
         };
       };
     }
+      # generates a set of sets {raidz1_sdb = {...}; raidz1_sdc ... };
     // lib.mergeAttrsList (
       map genVDev [
         "/dev/sdb"
@@ -74,52 +74,19 @@ in
     );
     zpool = {
       zaux = (genZPool "aux") // {
-        datasets."aux/media" = {
+        datasets."root/photos" = {
           type = "zfs_fs";
-          mountpoint = "/mnt/media";
-          options = {
-            "com.sun:auto-snapshot" = "true";
-            # mountpoint = "/mnt/media"; //check if needed
-            atime = "off";
-          };
+          mountpoint = "/mnt/photos";
         };
       };
       ztert = (genZPool "tert") // {
-        datasets."tert/media" = {
-          "aux/photos" = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/photos";
-            options = {
-              "com.sun:auto-snapshot" = "true";
-              # mountpoint = "/mnt/photos"; //check if needed
-              atime = "off";
-            };
-          };
+        datasets."root/media" = {
+          type = "zfs_fs";
+          mountpoint = "/mnt/media";
         };
       };
     };
   };
-  # zfs zpool config
-  # extra zfs config to make it work
-  networking.hostId = "3530dc36"; # head -c4 /dev/urandom | od -A none -t x4
-  boot = {
-    # Newest kernels might not be supported by ZFS
-    kernelParams = [
-      "nohibernate"
-      "zfs.zfs_arc_max=2147483648" # TODO READ UP ON OPTIMUM
-    ];
-    supportedFilesystems = [
-      "vfat"
-      "zfs"
-    ];
-    zfs = {
-      devNodes = "/dev/disk/by-id/";
-      forceImportAll = true;
-      requestEncryptionCredentials = true;
-    };
-  };
-  services.zfs = {
-    autoScrub.enable = true;
-    trim.enable = true;
-  };
+  # override default id
+  networking.hostId = lib.mkForce "ad62be05"; # head -c4 /dev/urandom | od -A none -t x4
 }
