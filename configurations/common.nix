@@ -28,22 +28,23 @@
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
   };
-  # make paths for the folders
-  systemd.tmpfiles.settings."10-jack-nixos-folders" = {
-    "/etc/nixos/secrets".d = {
-      user = "jack";
-      mode = "0700";
-    };
-    "/etc/nixos/mods".d = {
-      user = "jack";
-      mode = "0700";
-    };
-    "/etc/nixos/configurations".d = {
-      user = "jack";
-      mode = "0700";
-    };
-  };
-
+  # TODO, DO THIS WITH FETCHZIP from github
+  # # make paths for the folders
+  # systemd.tmpfiles.settings."10-jack-nixos-folders" = {
+  #   "/etc/nixos/secrets".d = {
+  #     user = "jack";
+  #     mode = "0700";
+  #   };
+  #   "/etc/nixos/mods".d = {
+  #     user = "jack";
+  #     mode = "0700";
+  #   };
+  #   "/etc/nixos/configurations".d = {
+  #     user = "jack";
+  #     mode = "0700";
+  #   };
+  # };
+  #
   system.activationScripts.diff = {
     # thanks hexa
     supportsDryActivation = true;
