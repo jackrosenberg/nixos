@@ -3,7 +3,6 @@
   imports = [
     ../mods/bluetooth.nix
     ../mods/foxfit.nix
-    ../mods/security.nix
   ];
   environment.systemPackages = with pkgs; [
     meld
