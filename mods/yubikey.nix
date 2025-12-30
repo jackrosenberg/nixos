@@ -2,7 +2,14 @@
 {
   # https://wiki.nixos.org/wiki/Yubikey
   # https://joinemm.dev/blog/yubikey-nixos-guide
-  services.udev.packages = [ pkgs.yubikey-personalization ];
+  services = {
+    udev.packages = with pkgs; [ yubikey-personalization ];
+    pcscd.enable = true;
+  };
+  environment.systemPackages =  with pkgs; [ 
+    yubikey-manager
+    age-plugin-yubikey
+  ];
 
   programs.gnupg.agent = {
     enable = true;
@@ -14,6 +21,7 @@
       login.u2fAuth = true;
       sudo.u2fAuth = true;
       hyprlock.u2fAuth = true;
+      # for the CCID mode (smart card)
     };
     u2f = {
       enable = true;
