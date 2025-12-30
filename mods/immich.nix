@@ -19,7 +19,7 @@
     host = "0.0.0.0";
     accelerationDevices = null;
     # loc in zpool
-    mediaLocation = "/mnt/nixpool/immich";
+    mediaLocation = "/mnt/photos/";
     environment.THUMB_LOCATION = "/var/lib/immich/thumbs";
   };
   hardware.graphics.enable = true;
