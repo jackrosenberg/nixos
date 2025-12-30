@@ -1,6 +1,14 @@
 { lib, ... }:
 # this is the extra config for pantheon's disks
 let
+    raidz1Members = [
+      "ata-ST4000VN006-3CW104_WW65RSXB"
+      "ata-SAMSUNG_HD204UI_S2H7J1CB220832"
+      "ata-SAMSUNG_HD204UI_S2H7J9EB304927"
+    ];
+   last3 = str:
+    let len = builtins.stringLength str; in builtins.substring (len -3) len str;
+   
   ## input: name
   ## output: encrypted zpool containing a dataset root 
   genZPool = name: {
@@ -29,8 +37,10 @@ let
   ## takes a device name, "/dev/by-id"
   ## generates a vdev for the device, that's part 
   ## of the root "zroot" pool
-  genVDev = deviceId: {                                                      
-    "raidz1_${deviceId}" = {
+  genVDev = deviceId:
+    {                                                      
+    # needs a shorter name?
+    "raidz1_${last3 deviceId}" = {
       device = "/dev/disk/by-id/${deviceId}";
       type = "disk";
       content = {
@@ -64,16 +74,23 @@ in
         };
       };
     }
-      # generates a set of sets {raidz1_sdb = {...}; raidz1_sdc ... };
+      # generates a set of sets {raidz1_ata-ST12000NM0127_ZJV5FQF4 = {...}; raidz1_... ... };
     (lib.mergeAttrsList (
-      map genVDev [
-        "ata-ST4000VN006-3CW104_WW65RSXB"
-        "ata-SAMSUNG_HD204UI_S2H7J1CB220832"
-        "ata-SAMSUNG_HD204UI_S2H7J9EB304927"
-      ]
+      map genVDev raidz1Members
     ));
     zpool = {
       zaux = lib.recursiveUpdate (genZPool "aux") {
+        # actually mark the damn thing raidz1
+        mode.topology = {
+          type = "topology";
+          vdev = [
+            { 
+              mode = "raidz1";
+              # members = map (id: "/dev/disk/by-id/${id}") raidz1Members; https://github.com/nix-community/disko/issues/913
+              members = map (id: "raidz1_${last3 id}") raidz1Members;
+            }
+          ];
+        };
         datasets."root/photos" = {
           type = "zfs_fs";
           mountpoint = "/mnt/photos";
