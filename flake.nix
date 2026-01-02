@@ -43,7 +43,7 @@ rec {
       ifExists = p: lib.optional (builtins.pathExists p) p;
       systems = {
         pantheon = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILPdyrnxYVvwgr874QrS9nrXrqpK299d4isNCmUkOqwq";
-        hermes = "todo";
+        hermes = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDIMO9+9IsmigiZMJuibxsqnK2/GxFCgAwESQb/XA0Yc";
         # kharon = null;
       };
     in
