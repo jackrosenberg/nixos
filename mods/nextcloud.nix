@@ -1,15 +1,15 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 let
   port = 8081;
 in
 {
-  environment.etc."nextcloud-admin-pass".text = "PWD";
+  age.secrets.todo.rekeyedFile = ../secrets/todo.age;
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud31;
+    package = pkgs.nextcloud32;
     hostName = "nextcloud";
     config = {
-      adminpassFile = "/etc/nextcloud-admin-pass";
+      adminpassFile = config.age.secrets.todo.path;
       dbtype = "sqlite";
     };
     settings = {

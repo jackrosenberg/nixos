@@ -149,7 +149,7 @@
     variables.NIX_BUILD_CORES = 0;
     systemPackages = with pkgs; [
       neovim
-      inputs.agenix.packages."${system}".default
+      # inputs.agenix.packages."${system}".default
       jujutsu
       unzip
       zip

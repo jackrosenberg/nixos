@@ -1,10 +1,7 @@
 { config, pkgs, ... }:
 {
   # agenix
-  age = {
-    secrets.newtConf.file = ../secrets/newtConf.age;
-    identityPaths = [ "/etc/age/id_ed25519" ];
-  };
+  age.secrets.newtConf.rekeyFile = ../secrets/newtConf.age;
   services.newt = {
     enable = true;
     settings = {

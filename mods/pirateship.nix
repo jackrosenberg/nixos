@@ -47,9 +47,9 @@ in
 {
   # agenix
   age = {
-    secrets."vpn.ovpn".file = ../secrets/vpn.ovpn.age;
-    secrets.vpn-auth-user-pass.file = ../secrets/vpn-auth-user-pass.age;
-    identityPaths = [ "/etc/age/id_ed25519" ];
+    secrets."vpn.ovpn".rekeyFile = ../secrets/ovpn.age;
+    secrets.vpn_user_auth.rekeyFile  = ../secrets/vpn_user_auth.age;
+    secrets.transmisson_creds.rekeyFile  = ../secrets/transmisson_creds.age;
   };
 
   # setup service on host to run VPN
@@ -58,7 +58,7 @@ in
   environment.etc.openvpn.source = "${pkgs.update-resolv-conf}/libexec/openvpn";
   services.openvpn.servers.torrentvpn.config = ''
     config ${config.age.secrets."vpn.ovpn".path}
-    auth-user-pass ${config.age.secrets.vpn-auth-user-pass.path}
+    auth-user-pass ${config.age.secrets.vpn_user_auth.path}
   '';
 
   networking = {
@@ -122,10 +122,14 @@ in
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.11";
 
-    bindMounts."/home/media" = {
-      # path in container
-      hostPath = "/mnt/media"; # path in host
-      isReadOnly = false; # allow container to write to outside container here
+    bindMounts = {
+      # secret for transmisson
+      "${config.age.secrets.transmisson_creds.path}".isReadOnly = true;
+      "/home/media" = {
+        # path in container
+        hostPath = "/mnt/media"; # path in host
+        isReadOnly = false; # allow container to write to outside container here
+      };
     };
 
     config =
@@ -173,6 +177,12 @@ in
               "Downloads/books/audiobooks"
             ];
           };
+          ######## TODO ##########
+          ## redo so that overflows dont happen
+          ## make sure everything goes into 
+          ## /mnt/media/.### transmission 
+          ########################
+
           # stupid ass fix for transmission
           services.transmission.serviceConfig = {
             ## following 3 lines are needed to make transmission work in a container
@@ -192,14 +202,17 @@ in
             StateDirectoryMode = 770;
           };
         };
-        system.activationScripts.transmission-daemon = lib.mkForce "";
+        system = {
+          # dont know y i have this
+          activationScripts.transmission-daemon = lib.mkForce "";
+          stateVersion = "25.11";
+        };
         services = {
           transmission = common // {
             group = "media";
             openRPCPort = true;
             package = pkgs.transmission_4;
-            # grosshack, needs to be made manually :(
-            credentialsFile = "/var/lib/secrets/trans.json";
+            credentialsFile = config.age.secrets.transmisson_creds.path;
             extraFlags = [ "--log-level=error" ];
             # allow media to rwx
             downloadDirPermissions = "770";
