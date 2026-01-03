@@ -29,23 +29,13 @@
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
   };
-  # TODO, DO THIS WITH FETCHZIP from github
   # # make paths for the folders
-  # systemd.tmpfiles.settings."10-jack-nixos-folders" = {
-  #   "/etc/nixos/secrets".d = {
-  #     user = "jack";
-  #     mode = "0700";
-  #   };
-  #   "/etc/nixos/mods".d = {
-  #     user = "jack";
-  #     mode = "0700";
-  #   };
-  #   "/etc/nixos/configurations".d = {
-  #     user = "jack";
-  #     mode = "0700";
-  #   };
-  # };
-  #
+  etc.environment."/etc/nixos/tmp".source = (pkgs.fetchGit {
+    url = "ssh://git@github.com/jackrosenberg/nixos.git";
+    ref = "master"; # maybe automatically pulls in default branch
+    leaveDotGit = true;
+  });
+
   system.activationScripts.diff = {
     # thanks hexa
     supportsDryActivation = true;
@@ -202,6 +192,7 @@
       haskellPackages.haskell-language-server
       haskell.compiler.native-bignum.ghc98
       citrix_workspace
+      nix-output-monitor
     ];
   };
   programs = {
