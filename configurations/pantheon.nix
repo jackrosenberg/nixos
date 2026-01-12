@@ -19,13 +19,16 @@
     # ../mods/loki.nix
     ../mods/alloy.nix
     ../mods/uptimekuma.nix
-    # ../mods/gitlabrunner.nix
+    ../mods/gitlabrunner.nix
     # ../mods/dawarich.nix ## reenable once dawarich hits unstable
   ];
 
   environment = {
     systemPackages = with pkgs; [
       # citrix_workspace
+      blender
+      unrar
+
     ];
   };
 }

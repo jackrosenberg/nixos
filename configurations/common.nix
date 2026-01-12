@@ -205,6 +205,10 @@
       jdk
       restic
       rclone
+      haskellPackages.cabal-install
+      haskellPackages.haskell-language-server
+      haskell.compiler.native-bignum.ghc98
+      citrix_workspace
     ];
   };
   programs = {

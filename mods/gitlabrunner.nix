@@ -4,15 +4,9 @@
   config,
   ...
 }:
-let
-
-in
 {
   # agenix
-  age = {
-    secrets.gitlab.file = ../secrets/gitlab.age;
-    identityPaths = [ "/etc/age/id_ed25519" ];
-  };
+  age.secrets.gitlab.rekeyFile = ../secrets/gitlab.age;
 
   boot.kernel.sysctl."net.ipv4.ip_forward" = true; # 1
   virtualisation.docker.enable = true;
