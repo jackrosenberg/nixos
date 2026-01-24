@@ -28,15 +28,10 @@
   programs.ssh = {
     extraConfig = ''
       Host kharon
-        Hostname 24.144.76.230
-        Port 67
+        Hostname 24.144.79.217
+        # Port 67
         User root
-        IdentityFile ~/.ssh/id_ed25519_do
-      # Host pantheon
-      #   Hostname 
-      #   Port 67
-      #   User root
-      #   IdentityFile ~/.ssh/id_ed25519
+        IdentityFile ~/.ssh/id_ed25519
     '';
 
   };

@@ -4,51 +4,43 @@
   imports = [
     (modulesPath + "/virtualisation/digital-ocean-config.nix")
     ../mods/ssh.nix
+    ../mods/secrets.nix
     # ../mods/shell.nix ../mods/home.nix
     ../mods/jelly.nix
+    ../mods/pangolin.nix
     # ../mods/ipfs.nix
   ];
 
-  # todo, modularize
-  services.pangolin = {
-    enable = true;
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+  nix = {
     settings = {
-      domains.domain1 = {
-        prefer_wildcard_cert = true;
-      };
-      flags = {
-        disable_signup_without_invite = true;
-        disable_user_create_org = true;
-        enable_integration_api = true;
-      };
+      warn-dirty = false;
+      experimental-features = [
+        "nix-command"
+        "flakes"
+        "pipe-operators"
+      ];
+      trusted-users = [
+        "root"
+        "jack"
+      ]; # enable cachix
     };
+    # garbage collection
+    gc.automatic = true;
+  };
 
-    dnsProvider = "mijnhost";
-    baseDomain = "spectrumtijger.nl";
-    letsEncryptEmail = "pangolin@jackr.eu";
-    openFirewall = true;
-    environmentFile = "/etc/nixos/secrets/pangolin.env";
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.jack = {
+    isNormalUser = true;
+    description = "jack";
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "nix-users"
+    ];
   };
-  services.traefik = {
-    # # geoblock
-    # dynamicConfigOptions = {
-    #   http.middlewares.my-GeoBlock.plugin.geoblock = {
-    #     silentStartUp = false;
-    #     allowLocalRequests = true;
-    #     logLocalRequests = false;
-    #     logAllowedRequests = false;
-    #     logApiRequests = false;
-    #     api = "https://get.geojs.io/v1/ip/country/{ip}";
-    #     apiTimeoutMs = 500;
-    #     cacheSize = 25;
-    #     forceMonthlyUpdate = true;
-    #     allowUnknownCountries = false;
-    #     unknownCountryApiResponse = "nil";
-    #     countries = [ "NL" "DE" ];
-    #   };
-    # };
-    environmentFiles = [ "/etc/nixos/secrets/traefik.env" ];
-  };
+
 
   environment.systemPackages = with pkgs; [
     fastfetch

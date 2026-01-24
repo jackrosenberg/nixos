@@ -47,7 +47,7 @@ rec {
       systems = {
         pantheon = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILPdyrnxYVvwgr874QrS9nrXrqpK299d4isNCmUkOqwq";
         hermes = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDIMO9+9IsmigiZMJuibxsqnK2/GxFCgAwESQb/XA0Yc";
-        # kharon = null;
+        kharon = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJLR0auVu+tHf54o9svD8ATWZAvq7HiEagH4gpQi3EPk";
       };
     in
     lib.recursiveUpdate 
@@ -60,23 +60,21 @@ rec {
             ./configurations/${hostName}.nix
             nvf.nixosModules.default
             home-manager.nixosModules.home-manager
+            agenix.nixosModules.default
+            agenix-rekey.nixosModules.default
             {
               nixpkgs.hostPlatform = "x86_64-linux"; # thanks isabelroses
               networking = { inherit hostName; };
+              age.rekey = {
+                hostPubkey = systems.${hostName}; # big baller moves 
+              };
             }
           ]
           ++ lib.optionals (hostName != "kharon") [
             ./configurations/common.nix # thanks Katalin
             disko.nixosModules.disko
             lanzaboote.nixosModules.lanzaboote
-            agenix.nixosModules.default
-            agenix-rekey.nixosModules.default
             ./configurations/disko-config.nix
-            {
-              age.rekey = {
-                hostPubkey = systems.${hostName}; # big baller moves 
-              };
-            }
           ]
           # import additional hw/disko configurations
           ++ (ifExists ./configurations/hw-${hostName}.nix)
