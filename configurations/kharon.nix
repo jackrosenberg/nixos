@@ -5,10 +5,10 @@
     (modulesPath + "/virtualisation/digital-ocean-config.nix")
     ../mods/ssh.nix
     ../mods/secrets.nix
-    # ../mods/shell.nix ../mods/home.nix
+    ../mods/shell.nix 
+    ../mods/home.nix
     ../mods/jelly.nix
     ../mods/pangolin.nix
-    # ../mods/ipfs.nix
   ];
 
   # Allow unfree packages
