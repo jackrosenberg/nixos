@@ -29,12 +29,12 @@
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
   };
+  # TODO
   # # make paths for the folders
-  etc.environment."/etc/nixos/tmp".source = (pkgs.fetchGit {
-    url = "ssh://git@github.com/jackrosenberg/nixos.git";
-    ref = "master"; # maybe automatically pulls in default branch
-    leaveDotGit = true;
-  });
+  # etc.environment."/etc/nixos/tmp".source = (builtins.fetchGit {
+  #   url = "https://github.com/jackrosenberg/nixos.git";
+  #   ref = "master"; # maybe automatically pulls in default branch
+  # });
 
   system.activationScripts.diff = {
     # thanks hexa
@@ -191,7 +191,6 @@
       haskellPackages.cabal-install
       haskellPackages.haskell-language-server
       haskell.compiler.native-bignum.ghc98
-      citrix_workspace
       nix-output-monitor
     ];
   };

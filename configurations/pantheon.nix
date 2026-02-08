@@ -25,6 +25,7 @@
   environment = {
     systemPackages = with pkgs; [
       siyuan
+      citrix_workspace
     ];
   };
   programs.steam.enable = true;

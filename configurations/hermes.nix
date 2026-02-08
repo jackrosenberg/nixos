@@ -2,7 +2,6 @@
 {
   imports = [
     ../mods/bluetooth.nix
-    ../mods/foxfit.nix
   ];
   environment.systemPackages = with pkgs; [
   ];
