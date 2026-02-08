@@ -22,7 +22,6 @@
     baseDomain = "spectrumtijger.nl";
     letsEncryptEmail = "pangolin@jackr.eu";
     openFirewall = true;
-    # environmentFile = "/etc/nixos/secrets/pangolin.env";
     environmentFile = config.age.secrets.pangolin.path;
   };
   services.traefik = {
