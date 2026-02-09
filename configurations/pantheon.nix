@@ -5,7 +5,7 @@
     # ../mods/backups.nix
     ../mods/zfs.nix
     # ../mods/kanidm.nix
-    # ../mods/nextcloud.nix # stupid downgrading is not enabled
+    ../mods/nextcloud.nix # stupid downgrading is not enabled
     # ../mods/wiki.nix
     ../mods/immich.nix
     ../mods/jelly.nix
@@ -20,11 +20,12 @@
     ../mods/alloy.nix
     ../mods/uptimekuma.nix
     ../mods/gitlabrunner.nix
-    ../mods/dawarich.nix ## reenable once dawarich hits unstable
+    ../mods/dawarich.nix
   ];
 
   environment = {
     systemPackages = with pkgs; [
+      siyuan
     ];
   };
   programs.steam.enable = true;

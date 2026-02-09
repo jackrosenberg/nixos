@@ -3,13 +3,14 @@ let
   port = 8081;
 in
 {
-  age.secrets.todo.rekeyedFile = ../secrets/todo.age;
+  age.secrets.nextcloud.rekeyFile = ../secrets/nextcloud.age;
+
   services.nextcloud = {
     enable = true;
     package = pkgs.nextcloud32;
     hostName = "nextcloud";
     config = {
-      adminpassFile = config.age.secrets.todo.path;
+      adminpassFile = config.age.secrets.nextcloud.path;
       dbtype = "sqlite";
     };
     settings = {
