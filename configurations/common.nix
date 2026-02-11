@@ -126,13 +126,10 @@
         "jack"
       ]; # enable cachix
     };
-    # garbage collection
-    gc.automatic = true;
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.jack = {
-    shell = pkgs.zsh;
     isNormalUser = true;
     description = "jack";
     extraGroups = [
@@ -164,8 +161,6 @@
       neofetch
       kitty
       lshw
-      zsh
-      zsh-powerlevel10k
       smartmontools
       tree
       morph
