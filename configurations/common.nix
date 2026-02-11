@@ -8,7 +8,7 @@
 
 {
   imports = [
-    ../mods/security.nix 
+    ../mods/security.nix
     ../mods/secrets.nix
     ../mods/shell.nix
     ../mods/ssh.nix
@@ -149,7 +149,7 @@
     variables.NIX_BUILD_CORES = 0;
     systemPackages = with pkgs; [
       neovim
-      # inputs.agenix.packages."${system}".default
+      inputs.agenix-rekey.packages."${system}".default
       jujutsu
       unzip
       zip
@@ -166,8 +166,6 @@
       lshw
       zsh
       zsh-powerlevel10k
-      docker-compose
-      dive # look into docker image layers
       smartmontools
       tree
       morph
@@ -215,6 +213,12 @@
     # sets some env vars like $EDITOR
     zsh.enable = true;
     neovim.enable = true;
+    nh = {
+      enable = true;
+      clean.enable = true;
+      clean.extraArgs = "--keep-since 4d --keep 3";
+      flake = "/etc/nixos"; # sets NH_OS_FLAKE variable for you
+    };
   };
   system.stateVersion = "25.05"; # Did you read the comment?
 }

@@ -48,8 +48,8 @@ in
   # agenix
   age = {
     secrets."vpn.ovpn".rekeyFile = ../secrets/ovpn.age;
-    secrets.vpn_user_auth.rekeyFile  = ../secrets/vpn_user_auth.age;
-    secrets.transmisson_creds.rekeyFile  = ../secrets/transmisson_creds.age;
+    secrets.vpn_user_auth.rekeyFile = ../secrets/vpn_user_auth.age;
+    secrets.transmisson_creds.rekeyFile = ../secrets/transmisson_creds.age;
   };
 
   # setup service on host to run VPN
@@ -179,8 +179,8 @@ in
           };
           ######## TODO ##########
           ## redo so that overflows dont happen
-          ## make sure everything goes into 
-          ## /mnt/media/.### transmission 
+          ## make sure everything goes into
+          ## /mnt/media/.### transmission
           ########################
 
           # stupid ass fix for transmission

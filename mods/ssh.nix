@@ -29,7 +29,7 @@
     extraConfig = ''
       Host kharon
         Hostname 24.144.79.217
-        # Port 67
+        Port 67
         User root
         IdentityFile ~/.ssh/id_ed25519
     '';

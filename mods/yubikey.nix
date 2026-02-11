@@ -6,7 +6,7 @@
     udev.packages = with pkgs; [ yubikey-personalization ];
     pcscd.enable = true;
   };
-  environment.systemPackages =  with pkgs; [ 
+  environment.systemPackages = with pkgs; [
     yubikey-manager
     age-plugin-yubikey
   ];

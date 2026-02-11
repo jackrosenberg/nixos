@@ -65,6 +65,7 @@
     TERMINAL = "kitty";
     TERM = "kitty";
     EDITOR = "nvim";
+    SHELL = "zsh";
     POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD = "true";
   };
   programs = {

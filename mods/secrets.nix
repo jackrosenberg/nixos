@@ -3,14 +3,14 @@
   # secret management via yubikey
   # https://github.com/oddlama/agenix-rekey
 
-  # generate keyspairs with: 
+  # generate keyspairs with:
   # age-keygen -pq
 
   environment.systemPackages = with pkgs; [ age ];
-  
+
   age.rekey = {
     storageMode = "local";
-    masterIdentities = [ 
+    masterIdentities = [
       "/etc/nixos/secrets/yubikey.pub"
       {
         identity = "/etc/nixos/secrets/identity.age";

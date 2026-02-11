@@ -50,54 +50,52 @@ rec {
         kharon = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJLR0auVu+tHf54o9svD8ATWZAvq7HiEagH4gpQi3EPk";
       };
     in
-    lib.recursiveUpdate 
-    {
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-tree;
-      nixosConfigurations = lib.genAttrs (builtins.attrNames systems) (
-        hostName:
-        lib.nixosSystem {
-          modules = [
-            ./configurations/${hostName}.nix
-            nvf.nixosModules.default
-            home-manager.nixosModules.home-manager
-            agenix.nixosModules.default
-            agenix-rekey.nixosModules.default
-            {
-              nixpkgs.hostPlatform = "x86_64-linux"; # thanks isabelroses
-              networking = { inherit hostName; };
-              age.rekey = {
-                hostPubkey = systems.${hostName}; # big baller moves 
-              };
-            }
-          ]
-          ++ lib.optionals (hostName != "kharon") [
-            ./configurations/common.nix # thanks Katalin
-            disko.nixosModules.disko
-            lanzaboote.nixosModules.lanzaboote
-            ./configurations/disko-config.nix
-          ]
-          # import additional hw/disko configurations
-          ++ (ifExists ./configurations/hw-${hostName}.nix)
-          ++ (ifExists ./configurations/disko-${hostName}.nix);
-          specialArgs = {
-            inherit self;
-            inherit (self) inputs;
+    lib.recursiveUpdate
+      {
+        formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-tree;
+        nixosConfigurations = lib.genAttrs (builtins.attrNames systems) (
+          hostName:
+          lib.nixosSystem {
+            modules = [
+              ./configurations/${hostName}.nix
+              nvf.nixosModules.default
+              home-manager.nixosModules.home-manager
+              agenix.nixosModules.default
+              agenix-rekey.nixosModules.default
+              {
+                nixpkgs.hostPlatform = "x86_64-linux"; # thanks isabelroses
+                networking = { inherit hostName; };
+                age.rekey = {
+                  hostPubkey = systems.${hostName}; # big baller moves
+                };
+              }
+            ]
+            ++ lib.optionals (hostName != "kharon") [
+              ./configurations/common.nix # thanks Katalin
+              disko.nixosModules.disko
+              lanzaboote.nixosModules.lanzaboote
+              ./configurations/disko-config.nix
+            ]
+            # import additional hw/disko configurations
+            ++ (ifExists ./configurations/hw-${hostName}.nix)
+            ++ (ifExists ./configurations/disko-${hostName}.nix);
+            specialArgs = {
+              inherit self;
+              inherit (self) inputs;
+            };
+          }
+        );
+        agenix-rekey = agenix-rekey.configure {
+          userFlake = self;
+          nixosConfigurations = self.nixosConfigurations;
+        };
+      }
+      (
+        flake-utils.lib.eachDefaultSystem (system: {
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [ agenix-rekey.overlays.default ];
           };
-        }
+        })
       );
-      agenix-rekey = agenix-rekey.configure {
-        userFlake = self;
-        nixosConfigurations = self.nixosConfigurations;
-      };
-    }
-    (flake-utils.lib.eachDefaultSystem (system: rec {
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [ agenix-rekey.overlays.default ];
-      };
-      devShells.default = pkgs.mkShell {
-        packages = [ pkgs.agenix-rekey ];
-        # ...
-      };
-    }));
 }
