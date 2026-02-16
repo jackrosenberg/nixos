@@ -19,7 +19,7 @@
           tls-server-name = "spectrumtijger.nl";
           targets = [
             {
-              site = "unequaled-uperodon-systoma";
+              site = "skeletal-bank-vole";
               hostname = "localhost";
               method = "http";
               port = 8096;
@@ -35,7 +35,7 @@
           tls-server-name = "spectrumtijger.nl";
           targets = [
             {
-              site = "unequaled-uperodon-systoma";
+              site = "skeletal-bank-vole";
               hostname = "localhost";
               method = "http";
               port = 2283;

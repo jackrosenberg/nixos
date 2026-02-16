@@ -12,6 +12,7 @@
         prefer_wildcard_cert = true;
       };
       flags = {
+        allow_raw_resources = true;
         disable_signup_without_invite = true;
         disable_user_create_org = true;
         enable_integration_api = true;
@@ -24,7 +25,12 @@
     openFirewall = true;
     environmentFile = config.age.secrets.pangolin.path;
   };
+  networking.firewall.allowedTCPPorts = [ 7777 ];
+
   services.traefik = {
+    static.settings = {
+      entryPoints.tcp-7777.address = ":7777/tcp";
+    };
     # # geoblock
     # dynamicConfigOptions = {
     #   http.middlewares.my-GeoBlock.plugin.geoblock = {
