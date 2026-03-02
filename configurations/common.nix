@@ -176,7 +176,6 @@
       nodejs_20
       go
       sqlite
-      rustup
       gcc
       dig
       netcat
@@ -196,6 +195,7 @@
   };
   programs = {
     # sets some env vars like $EDITOR
+    direnv.enable = true;
     zsh.enable = true;
     neovim.enable = true;
     nh = {

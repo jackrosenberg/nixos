@@ -12,6 +12,7 @@
     storageMode = "local";
     masterIdentities = [
       "/etc/nixos/secrets/yubikey.pub"
+      "/etc/nixos/secrets/yubikey-backup.pub"
       {
         identity = "/etc/nixos/secrets/identity.age";
         pubkey = "age1z5f9zy4qf4a2uns554wvlljs6dvxp5nev2fq07g732gnnr43my9qdnucu4";

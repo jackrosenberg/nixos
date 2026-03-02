@@ -17,6 +17,7 @@
           plugins = [
             "git"
             "vi-mode"
+            "direnv"
           ];
         };
 
@@ -34,6 +35,8 @@
 
           # Add keybinds
           bindkey -M viins '^R' history-incremental-search-backward
+          # Use direnv
+          eval "$(direnv hook zsh)"
         '';
 
         shellAliases = {

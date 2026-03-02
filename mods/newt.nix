@@ -1,4 +1,6 @@
 { config, pkgs, ... }:
+let site = "excitable-platypus";
+in
 {
   # agenix
   age.secrets.newtConf.rekeyFile = ../secrets/newtConf.age;
@@ -19,7 +21,7 @@
           tls-server-name = "spectrumtijger.nl";
           targets = [
             {
-              site = "skeletal-bank-vole";
+              inherit site;
               hostname = "localhost";
               method = "http";
               port = 8096;
@@ -35,7 +37,7 @@
           tls-server-name = "spectrumtijger.nl";
           targets = [
             {
-              site = "skeletal-bank-vole";
+              inherit site;
               hostname = "localhost";
               method = "http";
               port = 2283;
