@@ -38,7 +38,7 @@
         userpresence = 0;
         # prompt b4 checking if yubikey
         # cue = true;
-        debug = true;
+        # debug = true;
         # dont text prompt me hoe
         # interactive = true;
         origin = "pam://yubi";
