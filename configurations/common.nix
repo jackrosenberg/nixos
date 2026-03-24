@@ -148,7 +148,6 @@
       floorp-bin
       dust
       btop
-      neofetch
       kitty
       lshw
       smartmontools
