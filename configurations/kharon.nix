@@ -7,7 +7,7 @@
     ../mods/secrets.nix
     ../mods/shell.nix
     ../mods/home.nix
-    ../mods/jelly.nix
+    # ../mods/jelly.nix
     ../mods/pangolin.nix
   ];
 
