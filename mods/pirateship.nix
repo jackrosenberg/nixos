@@ -83,6 +83,11 @@ in
         group = "media";
         mode = "0770";
       };
+      "/mnt/media/transmission".d = {
+        user = "root";
+        group = "media";
+        mode = "0770";
+      };
     };
   };
   # remake users
@@ -129,6 +134,11 @@ in
         # path in container
         hostPath = "/mnt/media"; # path in host
         isReadOnly = false; # allow container to write to outside container here
+      };
+      # make sure the downloads dont overflow '/'
+      "/var/lib/transmission" = {
+        hostPath = "/mnt/media/transmission";
+        isReadOnly = false;
       };
     };
 
@@ -177,12 +187,6 @@ in
               "Downloads/books/audiobooks"
             ];
           };
-          ######## TODO ##########
-          ## redo so that overflows dont happen
-          ## make sure everything goes into
-          ## /mnt/media/.### transmission
-          ########################
-
           # stupid ass fix for transmission
           services.transmission.serviceConfig = {
             ## following 3 lines are needed to make transmission work in a container
