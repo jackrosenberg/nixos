@@ -14,10 +14,6 @@
     age-plugin-yubikey
   ];
 
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
   # allow yubikey login and sudo
   security.pam = {
     services = {

@@ -28,7 +28,6 @@
         KbdInteractiveAuthentication = false;
       };
     };
-    ssh-agent.enable = true;
   };
   # todo, make declarative file
   # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGDBf83p/RKzM7wlWuC0E7mG3LYGRWqNjO2I0wGVPdbr"
@@ -57,6 +56,6 @@
 
           AddKeysToAgent yes
         '';
-    addKeysToAgent = true;
+    startAgent = true;
   };
 }

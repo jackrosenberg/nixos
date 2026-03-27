@@ -19,22 +19,11 @@
     ../mods/udisk.nix
     ../mods/yubikey.nix
   ];
-  # # REMOVE ME WHEN DONE
-  nixpkgs.config.permittedInsecurePackages = [
-    "libxml2-2.13.8"
-    "libsoup-2.74.3"
-  ];
   # Bootloader.
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
   };
-  # TODO
-  # # make paths for the folders
-  # etc.environment."/etc/nixos/tmp".source = (builtins.fetchGit {
-  #   url = "https://github.com/jackrosenberg/nixos.git";
-  #   ref = "master"; # maybe automatically pulls in default branch
-  # });
 
   system.activationScripts.diff = {
     # thanks hexa
@@ -101,15 +90,31 @@
     containers.enable = true;
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+
+  nixpkgs = {
+    # Allow unfree packages
+    config = {
+      allowUnfree = true;
+      permittedInsecurePackages = [
+        "libsoup-2.74.3"
+      ];
+    };
+    overlays = [ (final: prev: {
+      inherit (prev.lixPackageSets.stable)
+      # nixpkgs-review
+      nix-eval-jobs
+      nix-fast-build
+      ;
+    }) ];
+  };
   nix = {
+    package = pkgs.lixPackageSets.stable.lix;
     settings = {
       warn-dirty = false;
       experimental-features = [
         "nix-command"
         "flakes"
-        "pipe-operators"
+        # "pipe-operators"
       ];
       trusted-users = [
         "root"

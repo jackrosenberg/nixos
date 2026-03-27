@@ -53,12 +53,16 @@
       git = {
         enable = true;
         settings = {
-          user.name = "jack";
-          user.email = "github@jackr.eu";
+          user = {
+            name = "jack";
+            email = "github@jackr.eu";
+          };
           init.defaultBranch = "main";
           safe.directory = "/etc/nixos";
-          core.whitespace = "cr-at-eol";
-          core.autocrlf = true;
+          core = { 
+            whitespace = "cr-at-eol";
+            autocrlf = "input";
+          };
         };
       };
       kitty.enable = true;
