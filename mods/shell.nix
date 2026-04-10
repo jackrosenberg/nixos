@@ -1,10 +1,60 @@
 { pkgs, config, ... }:
+let 
+  keytext = "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIJGljEPDxM2BHivJPo+F48MSvWL4W1ah7SYU4cOAML0UAAAABHNzaDo=";
+  key = builtins.toFile "ssh_pub_key" keytext;
+  name = "Jack Rosenberg";
+  email = "github@jackr.eu";
+  in
 {
   home-manager.users.jack = {
     programs = {
-      jujutsu.settings = {
-        # snapshot.max-new-file-size = "5MiB";
-        ui.default-command = "log";
+      jujutsu = {
+        enable = true;
+        settings = {
+          # snapshot.max-new-file-size = "5MiB";
+          ui.editor = "nvim";
+          operation = {
+            hostname = config.networking.hostName;
+            username = name;
+          };
+          user = {
+            inherit 
+            name
+            email;
+          };
+          signing = {
+            inherit key;
+            backend = "ssh";
+            sign-all = true;
+            behavior = "drop";
+          };
+          git.sign-on-push = true;
+        };
+      };
+      git = {
+        enable = true;
+        settings = {
+          user = {
+            inherit 
+            name
+            email;
+            # create a dummy file in the store containing my pubkey
+            signingkey = key;
+          };
+          gpg = {
+            format = "ssh";
+            ssh.allowedSignersFile = builtins.toFile "git_allowed_signers" ''
+              "${email} ${keytext}"
+            '';
+          };
+          commit.gpgsign = true;
+          init.defaultBranch = "main";
+          safe.directory = "/etc/nixos";
+          core = { 
+            whitespace = "cr-at-eol";
+            autocrlf = "input";
+          };
+        };
       };
       zsh = {
         enable = true;
@@ -49,21 +99,6 @@
         };
 
         history.size = 10000;
-      };
-      git = {
-        enable = true;
-        settings = {
-          user = {
-            name = "jack";
-            email = "github@jackr.eu";
-          };
-          init.defaultBranch = "main";
-          safe.directory = "/etc/nixos";
-          core = { 
-            whitespace = "cr-at-eol";
-            autocrlf = "input";
-          };
-        };
       };
       kitty.enable = true;
     };
