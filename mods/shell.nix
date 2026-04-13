@@ -1,10 +1,10 @@
 { pkgs, config, ... }:
-let 
+let
   keytext = "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIJGljEPDxM2BHivJPo+F48MSvWL4W1ah7SYU4cOAML0UAAAABHNzaDo=";
   key = builtins.toFile "ssh_pub_key" keytext;
   name = "Jack Rosenberg";
   email = "github@jackr.eu";
-  in
+in
 {
   home-manager.users.jack = {
     programs = {
@@ -18,9 +18,10 @@ let
             username = name;
           };
           user = {
-            inherit 
-            name
-            email;
+            inherit
+              name
+              email
+              ;
           };
           signing = {
             inherit key;
@@ -35,9 +36,10 @@ let
         enable = true;
         settings = {
           user = {
-            inherit 
-            name
-            email;
+            inherit
+              name
+              email
+              ;
             # create a dummy file in the store containing my pubkey
             signingkey = key;
           };
@@ -50,7 +52,7 @@ let
           commit.gpgsign = true;
           init.defaultBranch = "main";
           safe.directory = "/etc/nixos";
-          core = { 
+          core = {
             whitespace = "cr-at-eol";
             autocrlf = "input";
           };
@@ -106,7 +108,7 @@ let
 
   # set default, shouldn't be needed, but i've been burnt b4
   environment = {
-    systemPackages = with pkgs; [ 
+    systemPackages = with pkgs; [
       zsh
       zsh-powerlevel10k
     ];

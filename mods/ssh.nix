@@ -1,9 +1,14 @@
-{ self, config, lib, ... }:
+{
+  self,
+  config,
+  lib,
+  ...
+}:
 {
   # use an sshkey that requires yubikey and PasswordAuthentication
   # (agenix) encrypt the public key and part of the private key, and put them into the store
   # point the identityfile to /run/agenix.d/... and voila
-  ## even if the yubikey is stolen/lost, you would still need 
+  ## even if the yubikey is stolen/lost, you would still need
   ## a password to impersonate me
   age.secrets = {
     ssh_id_ed25519_sk = {
@@ -36,18 +41,20 @@
   ];
 
   # for client
-  programs.ssh = 
-  # for all the hosts named in my flake
-  # use port 67, and my sshkey
-  let genConfig = hostName: ''
-      Host ${hostName}
-        Port 67
-        User root
+  programs.ssh =
+    # for all the hosts named in my flake
+    # use port 67, and my sshkey
+    let
+      genConfig = hostName: ''
+        Host ${hostName}
+          Port 67
+          User root
       '';
-  in 
-  {
-    extraConfig = (lib.concatMapStringsSep "\n" genConfig (builtins.attrNames self.nixosConfigurations))
-        + '' 
+    in
+    {
+      extraConfig =
+        (lib.concatMapStringsSep "\n" genConfig (builtins.attrNames self.nixosConfigurations))
+        + ''
 
           Host kharon
             Hostname 24.144.79.217
@@ -56,6 +63,6 @@
 
           AddKeysToAgent yes
         '';
-    startAgent = true;
-  };
+      startAgent = true;
+    };
 }

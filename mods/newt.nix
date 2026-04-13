@@ -1,5 +1,6 @@
 { config, pkgs, ... }:
-let site = "excitable-platypus";
+let
+  site = "excitable-platypus";
 in
 {
   # agenix

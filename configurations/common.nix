@@ -90,7 +90,6 @@
     containers.enable = true;
   };
 
-
   nixpkgs = {
     # Allow unfree packages
     config = {
@@ -99,13 +98,15 @@
         "libsoup-2.74.3"
       ];
     };
-    overlays = [ (final: prev: {
-      inherit (prev.lixPackageSets.stable)
-      # nixpkgs-review
-      nix-eval-jobs
-      nix-fast-build
-      ;
-    }) ];
+    overlays = [
+      (final: prev: {
+        inherit (prev.lixPackageSets.stable)
+          # nixpkgs-review
+          nix-eval-jobs
+          nix-fast-build
+          ;
+      })
+    ];
   };
   nix = {
     package = pkgs.lixPackageSets.stable.lix;
